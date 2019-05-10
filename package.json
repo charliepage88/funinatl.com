@@ -1,0 +1,26 @@
+{
+  "name": "FunInATL",
+  "version": "1.0.0",
+  "description": "A full list of events going on in Atlanta",
+  "author": "Charlie Page",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "nuxt": "^2.6.3",
+    "nuxt-buefy": "^0.3.6",
+    "@nuxtjs/axios": "^5.4.1",
+    "@nuxtjs/pwa": "^3.0.0-beta.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "prettier": "^1.17.0"
+  }
+}
