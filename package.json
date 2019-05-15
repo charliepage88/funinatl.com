@@ -8,19 +8,34 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint"
   },
   "dependencies": {
     "cross-env": "^5.2.0",
-    "nuxt": "^2.6.3",
-    "nuxt-buefy": "^0.3.6",
+    "nuxt": "^2.7.1",
     "@nuxtjs/axios": "^5.4.1",
     "@nuxtjs/pwa": "^3.0.0-beta.16"
   },
   "devDependencies": {
     "nodemon": "^1.19.0",
+    "@nuxtjs/eslint-config": "^0.0.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": ">=12.0.0",
+    "eslint-plugin-import": ">=2.17.2",
+    "eslint-plugin-jest": ">=22.5.1",
+    "eslint-plugin-node": ">=9.0.1",
+    "eslint-plugin-nuxt": ">=0.4.3",
+    "eslint-plugin-promise": ">=4.1.1",
+    "eslint-plugin-standard": ">=4.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-vue": "^5.2.2",
     "eslint-config-prettier": "^4.2.0",
-    "eslint-plugin-prettier": "^3.0.1",
-    "prettier": "^1.17.0"
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.17.1",
+    "autoprefixer": "^9.5.1",
+    "tailwindcss": "^1.0.1"
   }
 }
