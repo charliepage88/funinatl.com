@@ -1,0 +1,28 @@
+{
+  events {
+    id
+    name
+    slug
+    location_id
+    user_id
+    category_id
+    event_type_id
+    start_date
+    end_date
+    price
+    start_time
+    end_time
+    short_description
+    description
+    featured
+    active
+    is_sold_out
+    website
+    spotify_artist_id
+    photo
+    category
+    event_type
+    tags { name, slug }
+    location { id, name, slug, website, address, city, state, zip, description }
+  }
+}

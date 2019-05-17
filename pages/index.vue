@@ -1,47 +1,27 @@
 <template>
   <section class="section">
-    <div class="columns is-mobile">
-
-      <card
-        title="Free"
-        icon="github-circle"
-      >
-        Open source on <a href="https://github.com/buefy/buefy"> GitHub</a>
-      </card>
-
-      <card
-        title="Responsive"
-        icon="cellphone-link"
-      >
-        <b class="has-text-grey">Every</b> component is responsive
-      </card>
-
-      <card
-        title="Modern"
-        icon="alert-decagram"
-      >
-        Built with <a href="https://vuejs.org/">Vue.js</a> and <a href="http://bulma.io/">Bulma</a>
-      </card>
-
-      <card
-        title="Lightweight"
-        icon="arrange-bring-to-front"
-      >
-        No other internal dependency
-      </card>
-
-    </div>
+    <h3>Events</h3>
+    <ul v-if="events && events.length">
+      <li v-for="event in events" :key="event.id">
+        <NuxtLink :to="`event/${event.slug}`">
+          {{ event.name }} - {{ event.start_date }} @ {{ event.start_time }}
+        </NuxtLink>
+      </li>
+    </ul>
   </section>
 </template>
 
 <script>
-import Card from '~/components/Card'
+import Events from '@/queries/Events'
 
 export default {
-  name: 'HomePage',
+  name: 'index',
 
-  components: {
-    Card
+  apollo: {
+    events: {
+      prefetch: true,
+      query: Events
+    }
   }
 }
 </script>
