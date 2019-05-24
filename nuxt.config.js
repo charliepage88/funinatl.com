@@ -18,23 +18,41 @@ export default {
     ]
   },
 
+  meta: {
+    name: 'FunInATL',
+    author: 'Charlie Page',
+    description: pkg.description,
+    mobileAppIOS: true,
+    ogHost: 'funinatl.com'
+  },
+
+  manifest: {
+    name: 'FunInATL',
+    lang: 'en'
+  },
+
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#3B8070' },
 
   /*
   ** Global CSS
   */
   css: [
-    '~/assets/css/tailwind.css'
+    '~/assets/css/tailwind.css',
+    '~/assets/sass/app.sass'
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
-    //
+    '~plugins/image-loader.js',
+    '~plugins/filters.js',
+    '~plugins/search.js',
+    '~plugins/axios.js',
+    { src: '~plugins/toast.js', ssr: false }
   ],
 
   /*
@@ -44,12 +62,27 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
+    [
+      'nuxt-mq',
+      {
+        // Default breakpoint for SSR
+        defaultBreakpoint: 'default',
+        breakpoints: {
+          sm: 450,
+          md: 1250,
+          lg: Infinity
+        }
+      }
+    ],
+    '@nuxtjs/sitemap',
+    '@nuxtjs/dotenv',
+    '@nuxtjs/recaptcha'
   ],
   /*
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
+    baseURL: process.env.API_ENDPOINT
   },
 
   apollo: {
@@ -95,6 +128,20 @@ export default {
     }
   },
 
+  sitemap: {
+    hostname: 'https://www.funinatl.com',
+    gzip: true,
+    routes: [
+      '/'
+    ]
+  },
+
+  recaptcha: {
+    hideBadge: true,
+    siteKey: '6LcFeaAUAAAAAEopR3oUfEQ2l6YevmqqD0pp8kUm',
+    version: 3,
+  },
+
   /*
   ** Build configuration
   */
@@ -102,6 +149,11 @@ export default {
     /*
     ** You can extend webpack config here
     */
+    transpile: [
+      'vue-instantsearch',
+      'instantsearch.js/es'
+    ],
+
     extend(config, ctx) {
       config.resolve.alias['vue'] = 'vue/dist/vue.common'
 

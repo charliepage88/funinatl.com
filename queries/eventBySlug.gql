@@ -23,6 +23,6 @@ query eventBySlug($slug: String!) {
     category
     event_type
     tags { name, slug }
-    location { id, name, slug, website, address, city, state, zip, description }
+    location { id, name, slug, website, address, city, state, zip, description, photo }
   }
 }

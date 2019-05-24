@@ -1,32 +1,154 @@
 <template>
-  <div>
-    <nav class="font-sans flex flex-col text-center content-center sm:flex-row sm:text-left sm:justify-between py-2 px-6 bg-white shadow sm:items-baseline w-full">
-      <div class="mb-2 sm:mb-0 flex flex-row
-      ">
-        <div class="bg-no-repeat bg-center w-1/2" style="background-image: url('/images/funinatl-bg.png');">
-          <a href="/home" class="text-2xl no-underline text-grey-darkest hover:text-blue-dark font-sans font-bold">FunInATL</a>
+  <div class="main-container">
+    <nav class="flex items-center justify-between flex-wrap bg-black">
+      <div class="flex items-center flex-shrink-0 text-white mr-6 is-brand-name-container has-cursor-pointer">
+        <div class="bg-no-repeat bg-center w-full h-20 relative" style="background-image: url('/images/funinatl-bg.png');">
+          <span class="font-semibold text-xl absolute is-brand-name">FunInATL</span>
         </div>
       </div>
 
-      <div class="sm:mb-0 self-center">
-        <!-- <div class="h-10" style="display: table-cell, vertical-align: middle;"> -->
-        <a href="#" class="text-md no-underline text-black hover:text-blue-dark ml-2 px-1">Link1</a>
-        <a href="#" class="text-md no-underline text-grey-darker hover:text-blue-dark ml-2 px-1">Link2</a>
-        <!-- <a href="/two" class="text-lg no-underline text-grey-darkest hover:text-blue-dark ml-2">About Us</a> -->
-        <a href="#" class="text-md no-underline text-grey-darker hover:text-blue-dark ml-2 px-1">Link3</a>
-        <!-- </div> -->
+      <div class="block lg:hidden">
+        <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+        </button>
+      </div>
+      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+          <a href="/" class="border-b-2 border-gray-300 block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4 no-underline text-lg">
+            About
+          </a>
+          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg">
+            Contact
+          </a>
+          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg">
+            Submit Event
+          </a>
+          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white no-underline text-lg">
+            Subscribe
+          </a>
+        </div>
+        <div class="relative group text-white">
+          <div
+            class="flex items-center cursor-pointer text-sm border border-white border-b-0  hover:border-grey-light rounded-t-lg py-1 px-2"
+            @mouseover="hoverOnUserMenu"
+          >
+            <img src="https://placekitten.com/30/30" class="rounded-full mr-2">
+            John Doe
+            <i class="fas fa-angle-down fa-fw mr-3 text-white"></i>
+          </div>
 
+          <div
+            class="items-center absolute border-1 border-gray-100 rounded-b-lg p-1 bg-white p-2 w-full"
+            :class="{ 'invisible': !userMenuOpen }"
+            @mouseleave="hoverOffUserMenu"
+          >
+           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">View Profile</a>
+           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">Edit Profile</a>
+           <hr class="border-t mx-2 border-gray-400">
+           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">Logout</a>
+          </div>
+        </div>
       </div>
     </nav>
 
     <div class="container">
       <nuxt />
     </div>
+
+    <div class="container bg-indigo-700 p-6 text-gray-100">
+      <div class="sm:flex mb-4">
+        <div class="sm:w-1/4 h-auto">
+          <div class="text-white text-lg mb-2">Orange</div>
+          <ul class="list-reset leading-normal">
+            <li class="">One</li>
+            <li class="">Two</li>
+            <li class="">Three</li>
+            <li class="">Four</li>
+            <li class="">Five</li>
+            <li class="">Six</li>
+            <li class="">Seven</li>
+            <li class="">Eight</li>
+          </ul>
+        </div>
+
+        <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
+          <div class="text-white text-lg mb-2">Blue</div>
+          <ul class="list-reset leading-normal">
+              <li class="">One</li>
+              <li class="">Two</li>
+              <li class="">Three</li>
+          </ul>
+
+          <div class="text-white text-lg mb-2 mt-4">Blue-light</div>
+          <ul class="list-reset leading-normal">
+              <li class="">One</li>
+              <li class="">Two</li>
+              <li class="">Three</li>
+          </ul>
+        </div>
+
+        <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
+          <div class="text-white text-lg mb-2">Green-dark</div>
+          <ul class="list-reset leading-normal">
+            <li class="">One</li>
+            <li class="">Two</li>
+            <li class="">Three</li>
+          </ul>
+
+          <div class="text-white text-lg mb-2 mt-4">Green-light</div>
+          <ul class="list-reset leading-normal">
+              <li class="">One</li>
+              <li class="">Two</li>
+              <li class="">Three</li>
+          </ul>
+        </div>
+
+        <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
+          <div class="text-white text-lg mb-2">Newsletter</div>
+          <p class="text-grey-100 leading-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, consectetur.</p>
+
+          <div class="mt-4 flex">
+            <input type="text" class="p-2 border-1 border-grey-200 round text-grey-700 text-sm h-auto" placeholder="Your email address">
+            <a href="" class="bg-black text-white rounded-sm h-auto py-3 px-4 no-underline">Subscribe</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'default'
+  name: 'default',
+
+  data () {
+    return {
+      userMenuOpen: false
+    }
+  },
+
+  methods: {
+    hoverOnUserMenu () {
+      this.userMenuOpen = true
+    },
+
+    hoverOffUserMenu () {
+      this.userMenuOpen = false
+    }
+  }
 }
 </script>
+
+<style lang="sass" scoped>
+.is-brand-name-container
+  width: 300px!important
+
+.is-brand-name
+  top: 40px
+  left: 10px
+  font-size: 2rem
+
+.main-container
+  margin-left: 8px
+  margin-right: -8px
+</style>
