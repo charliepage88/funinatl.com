@@ -1,32 +1,28 @@
 <template>
-  <div class="container mx-auto">
+  <div>
     <section class="bg-indigo-800 h-50 p-4">
       <div class="container mx-auto py-4">
         <ais-instant-search-ssr>
-          <!-- <input class="w-full h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg" type="search" placeholder="Search..."> -->
-          <ais-search-box />
-          <ais-stats />
-          <ais-refinement-list attribute="name" />
-          <ais-hits>
-            <template
-              slot="item"
-              slot-scope="{ item }"
-            >
-              <p>
-                <ais-highlight
-                  attribute="name"
-                  :hit="item"
-                />
-              </p>
-              <p>
-                <ais-highlight
-                  attribute="location.name"
-                  :hit="item"
-                />
-              </p>
-            </template>
-          </ais-hits>
-          <ais-pagination />
+          <ais-autocomplete :indices="[{ label: 'Events', value: 'funinatl_events' }]">
+            <div slot-scope="{ currentRefinement, indices, refine }">
+              <input
+                class="w-full h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+                type="search"
+                :value="currentRefinement"
+                placeholder="Search for an event"
+                @input="refine($event.currentTarget.value)"
+              >
+              <template v-if="currentRefinement">
+                <ul v-for="index in indices" :key="index.label">
+                  <template v-if="index.label === 'Events'">
+                    <li v-for="hit in index.hits" :key="hit.objectID">
+                      <ais-highlight attribute="name" :hit="hit"/>
+                    </li>
+                  </template>
+                </ul>
+              </template>
+            </div>
+          </ais-autocomplete>
         </ais-instant-search-ssr>
 
         <nav class="flex">
@@ -46,9 +42,9 @@
       <div class="container mx-auto">
         <h3 class="text-2xl text-center">Events</h3>
 
-        <div class="flex flex-wrap justify-center" v-if="events && events.length">
+        <div class="flex flex-wrap justify-center" v-if="events && events.length && 1 === 2">
           <div class="sm:w-full md:w-full lg:w-1/3 xl:w-1/3 m-3 rounded shadow-lg overflow-hidden" v-for="event in events" :key="event.id">
-            <div v-if="event.photo" class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" :style="{ backgroundImage: `url(${event.photo})` }">
+            <div v-if="event.photo" class="h-48 lg:h-48 lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" :style="{ backgroundImage: `url(${event.photo})` }">
             </div>
             <div class="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
               <div class="mb-8">
@@ -68,16 +64,51 @@
             </div>
           </div>
         </div>
-
-        <ul v-if="events && events.length && 1 === 2">
-          <li v-for="event in events" :key="event.id">
-            <NuxtLink :to="`event/${event.slug}`">
-              {{ event.name }} - {{ event.start_date }} @ {{ event.start_time }}
-            </NuxtLink>
-          </li>
-        </ul>
       </div>
     </section>
+
+    <div class="container my-12 mx-auto px-4 md:px-12" v-if="groupedEvents && groupedEvents.length">
+      <div class="flex flex-wrap -mx-1 lg:-mx-4 xl:-mx-2">
+        <!-- Column -->
+        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 xl:w-1/3 xl:px-2" v-for="event in groupedEvents" :key="event.id">
+          <!-- Article -->
+          <article class="overflow-hidden rounded-lg shadow-lg">
+            <NuxtLink :to="`event/${event.slug}`">
+              <img v-if="event.photo" :alt="event.name" class="block h-64 w-64" :src="event.photo">
+            </NuxtLink>
+
+            <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+              <h1 class="text-lg">
+                <a class="no-underline hover:underline text-black" href="#">
+                  {{ event.name }}
+                </a>
+              </h1>
+              <p class="text-grey-darker text-sm">
+                {{ event.start_date | normalDate }} @ {{ event.start_time }}
+                <br v-if="event.end_time">
+                <span v-if="event.end_time">{{ event.end_time }}</span>
+              </p>
+            </header>
+
+            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+              <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline hover:underline text-black">
+                <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
+                <p class="ml-2 text-sm">
+                  {{ event.location.name }}
+                </p>
+              </NuxtLink>
+
+              <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
+                <span class="hidden">Like</span>
+                <i class="fa fa-heart"></i>
+              </a>
+            </footer>
+          </article>
+          <!-- END Article -->
+        </div>
+        <!-- END Column -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -93,6 +124,7 @@ import {
   createInstantSearch
 } from 'vue-instantsearch'
 import algoliasearch from 'algoliasearch/lite'
+import moment from 'moment'
 
 const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
@@ -109,18 +141,28 @@ import Events from '@/queries/Events'
 export default {
   name: 'index',
 
-  asyncData() {
+  asyncData({ params }) {
+    console.log(params)
     return instantsearch
       .findResultsState({
         // find out which parameters to use here using ais-state-results
         query: '',
         hitsPerPage: 5,
+        facets: ['*'],
         // disjunctiveFacets: [ 'events' ],
         // disjunctiveFacetsRefinements: { brand: ['Apple'] }
       })
       .then(() => ({
         instantSearchState: instantsearch.getState()
       }))
+  },
+
+  filters: {
+    normalDate: function (value) {
+      let date = moment(value)
+
+      return date.format('dddd, MMMM Do')
+    }
   },
 
   beforeMount() {
@@ -157,6 +199,16 @@ export default {
     events: {
       prefetch: true,
       query: Events
+    }
+  },
+
+  computed: {
+    groupedEvents () {
+      if (!this.events || !this.events.length) {
+        return []
+      }
+
+      return this.events.slice(0, 12)
     }
   }
 }

@@ -51,7 +51,7 @@
       </div>
     </nav>
 
-    <div class="container">
+    <div class="container mx-auto">
       <nuxt />
     </div>
 
@@ -149,6 +149,6 @@ export default {
   font-size: 2rem
 
 .main-container
-  margin-left: 8px
-  margin-right: -8px
+  // margin-left: 8px
+  // margin-right: -8px
 </style>
