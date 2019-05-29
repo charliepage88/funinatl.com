@@ -58,7 +58,7 @@
     <div class="container bg-indigo-700 p-6 text-gray-100">
       <div class="sm:flex mb-4">
         <div class="sm:w-1/4 h-auto">
-          <div class="text-white text-lg mb-2">Orange</div>
+          <div class="text-white text-lg mb-2">Locations</div>
           <ul class="list-reset leading-normal">
             <li class="">One</li>
             <li class="">Two</li>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
-          <div class="text-white text-lg mb-2">Blue</div>
+          <div class="text-white text-lg mb-2">Categories</div>
           <ul class="list-reset leading-normal">
               <li class="">One</li>
               <li class="">Two</li>
@@ -105,12 +105,16 @@
 
         <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
           <div class="text-white text-lg mb-2">Newsletter</div>
-          <p class="text-grey-100 leading-normal">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi, consectetur.</p>
+          <p class="text-grey-100 leading-normal">Keep updated on events going on in Atlanta.</p>
 
-          <div class="mt-4 flex">
-            <input type="text" class="p-2 border-1 border-grey-200 round text-grey-700 text-sm h-auto" placeholder="Your email address">
-            <a href="" class="bg-black text-white rounded-sm h-auto py-3 px-4 no-underline">Subscribe</a>
-          </div>
+          <form @submit.prevent="subscribe">
+            <div class="mt-4 flex">
+              <input type="text" class="p-2 border-1 border-grey-200 round text-grey-700 text-sm h-auto" placeholder="Your email address" v-model="newsletter.email">
+              <button type="submit" class="bg-black text-white rounded-sm h-auto py-3 px-4 no-underline">
+                Subscribe
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
@@ -118,22 +122,41 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'default',
 
   data () {
     return {
+      newsletter: {
+        email: null
+      },
       userMenuOpen: false
     }
   },
 
   methods: {
+    ...mapActions('site', [
+      'newsletterSubscribe'
+    ]),
+
     hoverOnUserMenu () {
       this.userMenuOpen = true
     },
 
     hoverOffUserMenu () {
       this.userMenuOpen = false
+    },
+
+    async subscribe () {
+      if (!this.newsletter.email || !this.newsletter.email.length) {
+        return false
+      }
+
+      await this.newsletterSubscribe({
+        email: this.newsletter.email
+      })
     }
   }
 }

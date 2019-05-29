@@ -40,8 +40,6 @@
 
     <section class="section">
       <div class="container mx-auto">
-        <h3 class="text-2xl text-center">Events</h3>
-
         <div class="flex flex-wrap justify-center" v-if="events && events.length && 1 === 2">
           <div class="sm:w-full md:w-full lg:w-1/3 xl:w-1/3 m-3 rounded shadow-lg overflow-hidden" v-for="event in events" :key="event.id">
             <div v-if="event.photo" class="h-48 lg:h-48 lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" :style="{ backgroundImage: `url(${event.photo})` }">
@@ -67,48 +65,17 @@
       </div>
     </section>
 
-    <div class="container my-12 mx-auto px-4 md:px-12" v-if="groupedEvents && groupedEvents.length">
-      <div class="flex flex-wrap -mx-1 lg:-mx-4 xl:-mx-2">
-        <!-- Column -->
-        <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 xl:w-1/3 xl:px-2" v-for="event in groupedEvents" :key="event.id">
-          <!-- Article -->
-          <article class="overflow-hidden rounded-lg shadow-lg">
-            <NuxtLink :to="`event/${event.slug}`">
-              <img v-if="event.photo" :alt="event.name" class="block h-64 w-64" :src="event.photo">
-            </NuxtLink>
+    <template v-if="!mode || mode === 'all'">
+      <template v-if="weekdayEvents.length">
+        <h3 class="font-bold">This Week</h3>
 
-            <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-              <h1 class="text-lg">
-                <a class="no-underline hover:underline text-black" href="#">
-                  {{ event.name }}
-                </a>
-              </h1>
-              <p class="text-grey-darker text-sm">
-                {{ event.start_date | normalDate }} @ {{ event.start_time }}
-                <br v-if="event.end_time">
-                <span v-if="event.end_time">{{ event.end_time }}</span>
-              </p>
-            </header>
+        <event-list :events="weekdayEvents" />
+      </template>
+    </template>
 
-            <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-              <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline hover:underline text-black">
-                <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
-                <p class="ml-2 text-sm">
-                  {{ event.location.name }}
-                </p>
-              </NuxtLink>
-
-              <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
-                <span class="hidden">Like</span>
-                <i class="fa fa-heart"></i>
-              </a>
-            </footer>
-          </article>
-          <!-- END Article -->
-        </div>
-        <!-- END Column -->
-      </div>
-    </div>
+    <template v-if="mode === 'recommended'">
+      <span>recommended</span>
+    </template>
   </div>
 </template>
 
@@ -125,6 +92,7 @@ import {
 } from 'vue-instantsearch'
 import algoliasearch from 'algoliasearch/lite'
 import moment from 'moment'
+import groupBy from 'lodash.groupby'
 
 const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
@@ -137,6 +105,7 @@ const { instantsearch, rootMixin } = createInstantSearch({
 })
 
 import Events from '@/queries/Events'
+import EventsList from '@/components/Events/List'
 
 export default {
   name: 'index',
@@ -155,6 +124,10 @@ export default {
       .then(() => ({
         instantSearchState: instantsearch.getState()
       }))
+  },
+
+  components: {
+    EventsList
   },
 
   filters: {
@@ -202,14 +175,53 @@ export default {
     }
   },
 
+  data () {
+    return {
+      mode: 'all'
+    }
+  },
+
   computed: {
     groupedEvents () {
       if (!this.events || !this.events.length) {
         return []
       }
 
-      return this.events.slice(0, 12)
+      return groupBy(this.events, 'start_date')
+    },
+
+    weekdayEvents () {
+      if (!this.events || !this.events.length) {
+        return []
+      }
+
+      return this.events.filter((event) => {
+        let date = moment(event.start_date).format('d')
+
+        if (date !== 0 && date !== 6) {
+          return event
+        }
+      })
+    },
+
+    weekendEvents () {
+      if (!this.events || !this.events.length) {
+        return []
+      }
+
+      return this.events.filter((event) => {
+        let date = moment(event.start_date).format('d')
+
+        if (date === 0 || date === 6) {
+          return event
+        }
+      })
     }
+  },
+
+  mounted () {
+    console.log(moment.weekdays(true))
+    console.log(moment().format('d'))
   }
 }
 </script>

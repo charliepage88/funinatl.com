@@ -2,11 +2,29 @@ query categoryBySlug($slug: String!) {
   categoryBySlug(slug: $slug) {
     id
     name
+    slug
     active
     is_default
     created_at
     updated_at
-    locations { id, name, slug, website, address, city, state, zip, description, photo }
+    locations {
+        id
+        name
+        slug
+        category_id
+        website
+        address
+        city
+        state
+        zip
+        latitude
+        longitude
+        description
+        photo
+        tags { name, slug }
+        created_at
+        updated_at
+    }
     events {
         id
         name

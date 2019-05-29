@@ -12,8 +12,18 @@
     latitude
     longitude
     description
+    photo
+    tags { name, slug }
     created_at
     updated_at
-    category { id, name, active, is_default, created_at, updated_at }
+    category {
+        id
+        name
+        slug
+        active
+        is_default
+        created_at
+        updated_at
+    }
   }
 }
