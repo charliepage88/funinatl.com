@@ -15,10 +15,20 @@
                 {{ event.name }}
               </a>
             </h1>
+
+            <p class="text-grey-darker text-sm" v-if="event.short_description">
+              {{ event.short_description }}
+            </p>
+
+            <p class="text-grey-darker text-sm" v-if="event.description">
+              {{ event.description }}
+            </p>
+
             <p class="text-grey-darker text-sm">
-              {{ event.start_date | normalDate }} @ {{ event.start_time }}
-              <br v-if="event.end_time">
-              <span v-if="event.end_time">{{ event.end_time }}</span>
+              <span v-if="!event.end_time">{{ event.start_time }}</span>
+              <span v-else>{{ event.start_time }} - {{ event.end_time }}</span>
+              <br />
+              <strong class="font-bold">{{ event.price }}</strong>
             </p>
           </header>
 
@@ -29,6 +39,14 @@
                 {{ event.location.name }}
               </p>
             </NuxtLink>
+
+            <span class="font-bold">{{ event.category }}</span>
+
+            <div class="tags" v-if="event.tags.length">
+              <NuxtLink v-for="tag in event.tags" :to="`tags/${tag.slug}`" class="text-white font-bold py-1 px-3 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline">
+                {{ tag.name }}
+              </NuxtLink>
+            </div>
 
             <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
               <span class="hidden">Like</span>

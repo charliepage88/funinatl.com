@@ -10,5 +10,17 @@ Vue.filter('timeAgo', (val) => {
 })
 
 Vue.filter('truncate', function (text, stop, clamp) {
-    return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+  return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+})
+
+Vue.filter('normalDate', (value) => {
+  let date = moment(value)
+
+  return date.format('dddd, MMMM Do')
+})
+
+Vue.filter('dayOfWeek', (value) => {
+  let date = moment(value)
+
+  return date.format('dddd, MMM Do')
 })

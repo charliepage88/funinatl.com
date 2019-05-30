@@ -65,13 +65,31 @@
       </div>
     </section>
 
-    <template v-if="!mode || mode === 'all'">
-      <template v-if="weekdayEvents.length">
-        <h3 class="font-bold">This Week</h3>
+    <section class="section">
+      <div class="container mx-auto px-12">
+        <template v-if="!mode || mode === 'all'">
+          <template v-if="hasWeekdayEvents">
+            <h3 class="font-bold text-center text-3xl">This Week</h3>
 
-        <event-list :events="weekdayEvents" />
-      </template>
-    </template>
+            <div v-for="(rows, date) in weekdayEvents" :key="date">
+              <h4 class="font-bold text-left text-xl ml-12">{{ date | dayOfWeek }}</h4>
+
+              <events-list :events="rows" />
+            </div>
+          </template>
+
+          <template v-if="hasWeekendEvents">
+            <h3 class="font-bold text-center text-3xl">This Weekend</h3>
+
+            <div v-for="(rows, date) in weekendEvents" :key="date">
+              <h4 class="font-bold text-left text-xl ml-12">{{ date | dayOfWeek }}</h4>
+
+              <events-list :events="rows" />
+            </div>
+          </template>
+        </template>
+      </div>
+    </section>
 
     <template v-if="mode === 'recommended'">
       <span>recommended</span>
@@ -93,6 +111,7 @@ import {
 import algoliasearch from 'algoliasearch/lite'
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
+import isEmpty from 'lodash.isempty'
 
 const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
@@ -126,18 +145,6 @@ export default {
       }))
   },
 
-  components: {
-    EventsList
-  },
-
-  filters: {
-    normalDate: function (value) {
-      let date = moment(value)
-
-      return date.format('dddd, MMMM Do')
-    }
-  },
-
   beforeMount() {
     instantsearch.hydrate(this.instantSearchState)
   },
@@ -153,7 +160,8 @@ export default {
     AisHighlight,
     AisSearchBox,
     AisStats,
-    AisPagination
+    AisPagination,
+    EventsList
   },
 
   head() {
@@ -177,7 +185,9 @@ export default {
 
   data () {
     return {
-      mode: 'all'
+      mode: 'all',
+      start_date: moment().startOf('day').format('YYYY-MM-DD'),
+      end_date: moment().endOf('week').add(1, 'day').format('YYYY-MM-DD')
     }
   },
 
@@ -190,18 +200,33 @@ export default {
       return groupBy(this.events, 'start_date')
     },
 
+    hasWeekdayEvents () {
+      return !isEmpty(this.weekdayEvents)
+    },
+
     weekdayEvents () {
       if (!this.events || !this.events.length) {
         return []
       }
 
-      return this.events.filter((event) => {
-        let date = moment(event.start_date).format('d')
+      let events = this.events.filter((event) => {
+        let date = moment(event.start_date)
 
-        if (date !== 0 && date !== 6) {
+        let dayOfWeek = parseInt(date.format('d'))
+        let ymd = date.format('YYYY-MM-DD')
+
+        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
+
+        if (dayOfWeek !== 0 && dayOfWeek !== 6 && validDate) {
           return event
         }
       })
+
+      return groupBy(events, 'start_date')
+    },
+
+    hasWeekendEvents () {
+      return !isEmpty(this.weekendEvents)
     },
 
     weekendEvents () {
@@ -209,19 +234,21 @@ export default {
         return []
       }
 
-      return this.events.filter((event) => {
-        let date = moment(event.start_date).format('d')
+      let events = this.events.filter((event) => {
+        let date = moment(event.start_date)
 
-        if (date === 0 || date === 6) {
+        let dayOfWeek = parseInt(date.format('d'))
+        let ymd = date.format('YYYY-MM-DD')
+
+        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
+
+        if ((dayOfWeek === 0 || dayOfWeek === 6) && validDate) {
           return event
         }
       })
-    }
-  },
 
-  mounted () {
-    console.log(moment.weekdays(true))
-    console.log(moment().format('d'))
+      return groupBy(events, 'start_date')
+    }
   }
 }
 </script>
