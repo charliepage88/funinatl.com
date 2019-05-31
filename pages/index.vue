@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="container mx-auto">
     <section class="bg-indigo-800 h-50 p-4">
-      <div class="container mx-auto py-4">
+      <div class="py-4">
         <ais-instant-search-ssr>
           <ais-autocomplete :indices="[{ label: 'Events', value: 'funinatl_events' }]">
             <div slot-scope="{ currentRefinement, indices, refine }">
@@ -39,37 +39,10 @@
     </section>
 
     <section class="section">
-      <div class="container mx-auto">
-        <div class="flex flex-wrap justify-center" v-if="events && events.length && 1 === 2">
-          <div class="sm:w-full md:w-full lg:w-1/3 xl:w-1/3 m-3 rounded shadow-lg overflow-hidden" v-for="event in events" :key="event.id">
-            <div v-if="event.photo" class="h-48 lg:h-48 lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" :style="{ backgroundImage: `url(${event.photo})` }">
-            </div>
-            <div class="border-r border-b border-l border-grey-light lg:border-l-0 lg:border-t lg:border-grey-light bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-              <div class="mb-8">
-                <p class="text-sm text-grey-dark flex items-center">
-                  Members only
-                </p>
-                <div class="text-black font-bold text-xl mb-2">{{ event.name }}</div>
-                <p class="text-grey-darker text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-              </div>
-              <div class="flex items-center">
-                <img v-if="event.location && event.location.photo" class="w-10 h-10 rounded-full mr-4" :src="event.location.photo" alt="Avatar of Jonathan Reinink">
-                <div class="text-sm">
-                  <p class="text-black leading-none">{{ event.location.name }}</p>
-                  <p class="text-grey-dark">{{ event.start_date }} {{ event.start_time }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
       <div class="container mx-auto px-12">
         <template v-if="!mode || mode === 'all'">
           <template v-if="hasWeekdayEvents">
-            <h3 class="font-bold text-center text-3xl">This Week</h3>
+            <h3 class="font-bold text-center text-3xl -ml-4">This Week</h3>
 
             <div v-for="(rows, date) in weekdayEvents" :key="date">
               <h4 class="font-bold text-left text-xl ml-12">{{ date | dayOfWeek }}</h4>
@@ -112,6 +85,7 @@ import algoliasearch from 'algoliasearch/lite'
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
 import isEmpty from 'lodash.isempty'
+import orderBy from 'lodash.orderby'
 
 const searchClient = algoliasearch(
   process.env.ALGOLIA_APP_ID,
@@ -209,7 +183,7 @@ export default {
         return []
       }
 
-      let events = this.events.filter((event) => {
+      let filteredEvents = this.events.filter((event) => {
         let date = moment(event.start_date)
 
         let dayOfWeek = parseInt(date.format('d'))
@@ -222,7 +196,25 @@ export default {
         }
       })
 
-      return groupBy(events, 'start_date')
+      let grouped = groupBy(filteredEvents, 'start_date')
+
+      let events = {}
+
+      for(let i in grouped) {
+        let items = []
+
+        for(let key in grouped[i]) {
+          let item = grouped[i][key]
+
+          item.start_at = item.start_time.replace(' PM', '').replace(':')
+
+          items.push(item)
+        }
+
+        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
+      }
+
+      return events
     },
 
     hasWeekendEvents () {

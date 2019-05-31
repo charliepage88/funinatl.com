@@ -1,60 +1,78 @@
 <template>
-  <div class="container my-12 mx-auto px-4 md:px-12">
-    <div class="flex flex-wrap -mx-1 lg:-mx-4 xl:-mx-2">
+  <div class="container mx-auto">
+    <div class="flex flex-wrap events-container overflow-hidden">
       <!-- Column -->
-      <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 xl:w-1/3 xl:px-2" v-for="event in events" :key="event.id">
-        <!-- Article -->
-        <article class="overflow-hidden rounded-lg shadow-lg">
-          <NuxtLink :to="`event/${event.slug}`">
-            <img v-if="event.photo" :alt="event.name" class="block h-64 w-64" :src="event.photo">
-          </NuxtLink>
+      <div class="event-card w-full overflow-hidden md:w-full lg:w-1/2 xl:w-1/3 rounded-lg shadow-lg bg-blue-300" v-for="event in events" :key="event.id">
+        <div class="flex flex-wrap mx-auto">
+          <div class="w-1/2">
+            <NuxtLink :to="`event/${event.slug}`" v-if="event.photo">
+              <img :alt="event.name" class="block h-64 w-64" :src="event.photo">
+            </NuxtLink>
+          </div>
 
-          <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-            <h1 class="text-lg">
-              <a class="no-underline hover:underline text-black" href="#">
-                {{ event.name }}
-              </a>
-            </h1>
+          <div class="w-1/2">
+            <p class="text-grey-darker text-sm ml-6">
+              <strong class="font-bold">Time:</strong>&nbsp;
 
-            <p class="text-grey-darker text-sm" v-if="event.short_description">
-              {{ event.short_description }}
-            </p>
-
-            <p class="text-grey-darker text-sm" v-if="event.description">
-              {{ event.description }}
-            </p>
-
-            <p class="text-grey-darker text-sm">
               <span v-if="!event.end_time">{{ event.start_time }}</span>
               <span v-else>{{ event.start_time }} - {{ event.end_time }}</span>
+
               <br />
-              <strong class="font-bold">{{ event.price }}</strong>
+              <strong class="font-bold">Price:</strong>&nbsp;
+
+              <span>{{ event.price }}</span>
             </p>
-          </header>
 
-          <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-            <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline hover:underline text-black">
-              <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
-              <p class="ml-2 text-sm">
-                {{ event.location.name }}
-              </p>
-            </NuxtLink>
-
-            <span class="font-bold">{{ event.category }}</span>
+            <br />
 
             <div class="tags" v-if="event.tags.length">
-              <NuxtLink v-for="tag in event.tags" :to="`tags/${tag.slug}`" class="text-white font-bold py-1 px-3 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline">
+              <NuxtLink
+                v-for="tag in event.tags"
+                :key="tag.slug"
+                :to="`tags/${tag.slug}`"
+                class="text-white font-bold py-1 px-3 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline"
+              >
                 {{ tag.name }}
               </NuxtLink>
             </div>
+          </div>
+        </div>
 
-            <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
-              <span class="hidden">Like</span>
-              <i class="fa fa-heart"></i>
+        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+          <h1 class="text-lg">
+            <a class="no-underline text-black" href="#">
+              {{ event.name }}
             </a>
-          </footer>
-        </article>
-        <!-- END Article -->
+          </h1>
+
+          <p class="text-grey-darker text-sm" v-if="event.short_description">
+            {{ event.short_description }}
+          </p>
+
+          <p class="text-grey-darker text-sm" v-if="event.description">
+            {{ event.description }}
+          </p>
+        </header>
+
+        <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+          <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
+            <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
+            <p class="ml-2 text-sm">
+              {{ event.location.name }}
+            </p>
+          </NuxtLink>
+
+          <NuxtLink :to="`category/${event.category.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
+            <span class="font-bold">
+              {{ event.category.name }}
+            </span>
+          </NuxtLink>
+
+          <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
+            <span class="hidden">Like</span>
+            <i class="fa fa-heart"></i>
+          </a>
+        </footer>
       </div>
       <!-- END Column -->
     </div>
