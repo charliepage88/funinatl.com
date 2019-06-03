@@ -29,7 +29,7 @@
         </div>
         <div class="relative group text-white">
           <div
-            class="flex items-center cursor-pointer text-sm border border-white border-b-0  hover:border-grey-light rounded-t-lg py-1 px-2"
+            class="flex items-center cursor-pointer text-sm hover:border-grey-light rounded-t-lg py-1 px-2"
             @mouseover="hoverOnUserMenu"
           >
             <img src="https://placekitten.com/30/30" class="rounded-full mr-2">
@@ -38,14 +38,14 @@
           </div>
 
           <div
-            class="items-center absolute border-1 border-gray-100 rounded-b-lg p-1 bg-white p-2 w-full"
+            class="items-center absolute border-1 border-gray-100 p-1 bg-white p-2 w-full"
             :class="{ 'invisible': !userMenuOpen }"
             @mouseleave="hoverOffUserMenu"
           >
-           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">View Profile</a>
-           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">Edit Profile</a>
+           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">View Profile</a>
+           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">Edit Profile</a>
            <hr class="border-t mx-2 border-gray-400">
-           <a href="#" class="px-4 py-2 block text-black hover:bg-grey-200 no-underline">Logout</a>
+           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">Logout</a>
           </div>
         </div>
       </div>

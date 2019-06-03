@@ -38,24 +38,45 @@
       </div>
     </section>
 
-    <section class="section">
+    <nav class="bg-white px-8 pt-2 shadow-md">
+     <div class="-mb-px flex justify-center">
+      <a
+        class="no-underline text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
+        href=""
+        @click.prevent="changeMode('all')"
+        :class="{ 'border-gray-800': mode === 'all', 'border-transparent': mode !== 'all' }"
+      >
+        All Events
+      </a>
+      <a
+        class="no-underline text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
+        href=""
+        @click.prevent="changeMode('recommended')"
+        :class="{ 'border-gray-800': mode === 'recommended', 'border-transparent': mode !== 'recommended' }"
+      >
+        Recommended
+      </a>
+     </div>
+    </nav>
+
+    <section class="section mb-6 mt-6">
       <div class="container mx-auto px-12">
         <template v-if="!mode || mode === 'all'">
           <template v-if="hasWeekdayEvents">
-            <h3 class="font-bold text-center text-3xl -ml-4">This Week</h3>
+            <h3 class="font-bold text-center text-3xl">This Week</h3>
 
             <div v-for="(rows, date) in weekdayEvents" :key="date">
-              <h4 class="font-bold text-left text-xl ml-12">{{ date | dayOfWeek }}</h4>
+              <h4 class="font-bold text-left text-xl mt-12 mb-2">{{ date | dayOfWeek }}</h4>
 
               <events-list :events="rows" />
             </div>
           </template>
 
           <template v-if="hasWeekendEvents">
-            <h3 class="font-bold text-center text-3xl">This Weekend</h3>
+            <h3 class="font-bold text-center text-3xl mt-20">This Weekend</h3>
 
             <div v-for="(rows, date) in weekendEvents" :key="date">
-              <h4 class="font-bold text-left text-xl ml-12">{{ date | dayOfWeek }}</h4>
+              <h4 class="font-bold text-left text-xl mt-12 mb-2">{{ date | dayOfWeek }}</h4>
 
               <events-list :events="rows" />
             </div>
@@ -190,13 +211,16 @@ export default {
         let ymd = date.format('YYYY-MM-DD')
 
         let validDate = (ymd >= this.start_date && ymd <= this.end_date)
+        let isWeekday = (dayOfWeek !== 5 && dayOfWeek !== 6 && dayOfWeek !== 0)
 
-        if (dayOfWeek !== 0 && dayOfWeek !== 6 && validDate) {
+        if (isWeekday && validDate) {
           return event
         }
       })
 
-      let grouped = groupBy(filteredEvents, 'start_date')
+      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc'])
+
+      let grouped = groupBy(orderedEvents, 'start_date')
 
       let events = {}
 
@@ -226,20 +250,47 @@ export default {
         return []
       }
 
-      let events = this.events.filter((event) => {
+      let filteredEvents = this.events.filter((event) => {
         let date = moment(event.start_date)
 
         let dayOfWeek = parseInt(date.format('d'))
         let ymd = date.format('YYYY-MM-DD')
 
         let validDate = (ymd >= this.start_date && ymd <= this.end_date)
+        let isWeekend = (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0)
 
-        if ((dayOfWeek === 0 || dayOfWeek === 6) && validDate) {
+        if (isWeekend && validDate) {
           return event
         }
       })
 
-      return groupBy(events, 'start_date')
+      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc'])
+
+      let grouped = groupBy(orderedEvents, 'start_date')
+
+      let events = {}
+
+      for(let i in grouped) {
+        let items = []
+
+        for(let key in grouped[i]) {
+          let item = grouped[i][key]
+
+          item.start_at = item.start_time.replace(' PM', '').replace(':')
+
+          items.push(item)
+        }
+
+        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
+      }
+
+      return events
+    }
+  },
+
+  methods: {
+    changeMode (value) {
+      this.mode = value
     }
   }
 }

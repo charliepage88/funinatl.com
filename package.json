@@ -58,6 +58,6 @@
     "eslint-plugin-vue": "^5.2.2",
     "nodemon": "^1.19.1",
     "prettier": "^1.17.1",
-    "tailwindcss": "^1.0.2"
+    "tailwindcss": "^1.0.3"
   }
 }
