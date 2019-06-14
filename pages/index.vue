@@ -41,7 +41,7 @@
     <nav class="bg-white px-8 pt-2 shadow-md">
      <div class="-mb-px flex justify-center">
       <a
-        class="no-underline text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
+        class="no-underline outline-none text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
         href=""
         @click.prevent="changeMode('all')"
         :class="{ 'border-gray-800': mode === 'all', 'border-transparent': mode !== 'all' }"
@@ -49,7 +49,7 @@
         All Events
       </a>
       <a
-        class="no-underline text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
+        class="no-underline outline-none text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
         href=""
         @click.prevent="changeMode('recommended')"
         :class="{ 'border-gray-800': mode === 'recommended', 'border-transparent': mode !== 'recommended' }"

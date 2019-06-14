@@ -1,9 +1,7 @@
 <template>
-  <section class="section" v-if="event">
-    <h3>{{ event.name }}</h3>
-    
-    <pre>{{ event }}</pre>
-  </section>
+  <div class="container mx-auto" v-if="event">
+    {{ event.name }}
+  </div>
 </template>
 
 <script>
@@ -15,6 +13,18 @@ export default {
   computed: {
     event () {
       return this.eventBySlug
+    }
+  },
+
+  data () {
+    return {
+      mode: 'event'
+    }
+  },
+
+  methods: {
+    changeMode (value) {
+      this.mode = value
     }
   },
 

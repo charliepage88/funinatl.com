@@ -3,7 +3,9 @@
     <nav class="flex items-center justify-between flex-wrap bg-black">
       <div class="flex items-center flex-shrink-0 text-white mr-6 is-brand-name-container has-cursor-pointer">
         <div class="bg-no-repeat bg-center w-full h-20 relative" style="background-image: url('/images/funinatl-bg.png');">
-          <span class="font-semibold text-xl absolute is-brand-name">FunInATL</span>
+          <NuxtLink to="/">
+            <span class="font-semibold text-xl absolute is-brand-name">FunInATL</span>
+          </NuxtLink>
         </div>
       </div>
 
