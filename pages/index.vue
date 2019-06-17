@@ -3,7 +3,11 @@
     <section class="bg-indigo-800 h-50 p-4">
       <div class="py-4">
         <ais-instant-search-ssr>
-          <ais-autocomplete :indices="[{ label: 'Events', value: 'funinatl_events' }]">
+          <ais-autocomplete
+            :indices="[{ label: 'Events', value: 'funinatl_events' }]"
+            :index-name="indexName"
+            :class-names="{ 'relative': true }"
+          >
             <div slot-scope="{ currentRefinement, indices, refine }">
               <input
                 class="w-full h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
@@ -13,13 +17,27 @@
                 @input="refine($event.currentTarget.value)"
               >
               <template v-if="currentRefinement">
-                <ul v-for="index in indices" :key="index.label">
-                  <template v-if="index.label === 'Events'">
-                    <li v-for="hit in index.hits" :key="hit.objectID">
-                      <ais-highlight attribute="name" :hit="hit"/>
-                    </li>
-                  </template>
-                </ul>
+                <div class="font-sans flex items-center justify-center bg-blue-darker w-full py-8">
+                  <div class="overflow-hidden bg-white rounded max-w-xs w-full shadow-lg  leading-normal">
+                    <template v-for="index in indices">
+                      <template v-if="index.label === 'Events'">
+                        <a
+                          href="#"
+                          class="block group hover:bg-blue p-4 border-b"
+                          v-for="hit in index.hits"
+                          :key="hit.objectID"
+                        >
+                          <p class="font-bold text-lg mb-1 text-black group-hover:text-white">
+                            <ais-highlight attribute="name" :hit="hit"/>
+                          </p>
+                          <p class="text-grey-darker mb-2 group-hover:text-white">
+                            {{ hit.start_date }}
+                          </p>
+                        </a>
+                      </template>
+                    </template>
+                  </div>
+                </div>
               </template>
             </div>
           </ais-autocomplete>
@@ -236,7 +254,8 @@ export default {
     return {
       mode: 'all',
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().endOf('week').add(1, 'day').format('YYYY-MM-DD')
+      end_date: moment().endOf('week').add(1, 'day').format('YYYY-MM-DD'),
+      indexName: process.env.ALGOLIA_SEARCH_INDEX
     }
   },
 
