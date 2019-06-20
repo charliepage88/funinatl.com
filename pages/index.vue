@@ -8,26 +8,42 @@
             :index-name="indexName"
             :class-names="{ 'relative': true }"
           >
-            <div slot-scope="{ currentRefinement, indices, refine }">
+            <div class="relative" slot-scope="{ currentRefinement, indices, refine }">
               <input
-                class="w-full h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+                class="w-1/2 h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
                 type="search"
                 :value="currentRefinement"
                 placeholder="Search for an event"
                 @input="refine($event.currentTarget.value)"
               >
+
+              <select v-model="filters.category" class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl">
+                <option value="null">Category</option>
+                <option v-for="category in categories" :key="category.id" :value="category.id">
+                  {{ category.name }}
+                </option>
+              </select>
+
+              <select v-model="filters.location" class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl">
+                <option value="null">Location</option>
+                <option v-for="location in locations" :key="location.id" :value="location.id">
+                  {{ location.name }}
+                </option>
+              </select>
+
               <template v-if="currentRefinement">
-                <div class="font-sans flex items-center justify-center bg-blue-darker w-full py-8">
-                  <div class="overflow-hidden bg-white rounded max-w-xs w-full shadow-lg  leading-normal">
+                <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;">
+                  <div class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg  leading-normal">
                     <template v-for="index in indices">
                       <template v-if="index.label === 'Events'">
                         <a
-                          href="#"
-                          class="block group hover:bg-blue p-4 border-b"
-                          v-for="hit in index.hits"
+                          href=""
+                          class="block group hover:bg-blue-300 p-2 border border-blue-300"
+                          v-for="(hit, index) in index.hits"
                           :key="hit.objectID"
+                          @click.prevent="chooseSearchItem(hit, index)"
                         >
-                          <p class="font-bold text-lg mb-1 text-black group-hover:text-white">
+                          <p class="font-bold text-sm mb-1 text-black group-hover:text-white">
                             <ais-highlight attribute="name" :hit="hit"/>
                           </p>
                           <p class="text-grey-darker mb-2 group-hover:text-white">
@@ -191,6 +207,8 @@ const { instantsearch, rootMixin } = createInstantSearch({
 })
 
 import Events from '@/queries/Events'
+import Categories from '@/queries/Categories'
+import Locations from '@/queries/Locations'
 import EventsList from '@/components/Events/List'
 
 export default {
@@ -247,6 +265,16 @@ export default {
     events: {
       prefetch: true,
       query: Events
+    },
+
+    categories: {
+      prefetch: true,
+      query: Categories
+    },
+
+    locations: {
+      prefetch: true,
+      query: Locations
     }
   },
 
@@ -255,7 +283,11 @@ export default {
       mode: 'all',
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
       end_date: moment().endOf('week').add(1, 'day').format('YYYY-MM-DD'),
-      indexName: process.env.ALGOLIA_SEARCH_INDEX
+      indexName: process.env.ALGOLIA_SEARCH_INDEX,
+      filters: {
+        category: null,
+        location: null
+      }
     }
   },
 
@@ -364,6 +396,12 @@ export default {
   methods: {
     changeMode (value) {
       this.mode = value
+    },
+
+    chooseSearchItem (item, index) {
+      console.log('chooseSearchItem')
+      console.log(index)
+      console.log(item)
     }
   }
 }

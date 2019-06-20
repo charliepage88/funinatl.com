@@ -46,7 +46,10 @@ query categoryBySlug($slug: String!) {
         website
         spotify_artist_id
         photo
-        category
+        category {
+            name
+            slug
+        }
         event_type
         tags { name, slug }
     }
