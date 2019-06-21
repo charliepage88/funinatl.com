@@ -14,6 +14,7 @@ query locationBySlug($slug: String!) {
     description
     photo
     tags { name, slug }
+    is_family_friendly
     created_at
     updated_at
     category {

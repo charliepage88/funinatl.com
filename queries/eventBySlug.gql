@@ -19,6 +19,7 @@ query eventBySlug($slug: String!) {
     is_sold_out
     website
     spotify_artist_id
+    is_family_friendly
     photo
     category {
         name

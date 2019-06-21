@@ -22,6 +22,7 @@
         description
         photo
         tags { name, slug }
+        is_family_friendly
         created_at
         updated_at
     }
@@ -45,13 +46,17 @@
         is_sold_out
         website
         spotify_artist_id
+        is_family_friendly
         photo
         category {
             name
             slug
         }
         event_type
-        tags { name, slug }
+        tags {
+            name
+            slug
+        }
     }
   }
 }
