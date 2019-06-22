@@ -6,23 +6,40 @@
         <div class="flex flex-wrap mx-auto p-3">
           <div class="w-1/2">
             <NuxtLink :to="`event/${event.slug}`" v-if="event.photo">
-              <img :alt="event.name" class="block h-64 w-64" :src="event.photo">
+              <img :alt="event.name" class="block h-64 w-64 pr-2" :src="event.photo">
             </NuxtLink>
           </div>
 
           <div class="w-1/2">
             <p class="text-grey-darker text-sm ml-6">
-              <strong class="font-bold">Time:</strong>&nbsp;
+              <div v-if="event.start_time" class="block">
+                <strong class="font-bold inline-block mr-1">Start Time:</strong>
 
-              <span v-if="!event.end_time">{{ event.start_time }}</span>
-              <span v-else>{{ event.start_time }} - {{ event.end_time }}</span>
+                <span class="inline-block">
+                  {{ event.start_time }}
+                </span>
+              </div>
 
-              <template v-if="event.price">
-                <br />
-                <strong class="font-bold">Price:</strong>&nbsp;
+              <div v-if="event.end_time" class="block">
+                <strong class="font-bold inline-block mr-1">End Time:</strong>
 
-                <span>{{ event.price }}</span>
-              </template>
+                <span class="inline-block">
+                  {{ event.end_time }}
+                </span>
+              </div>
+
+              <div v-if="event.price" class="block">
+                <strong class="font-bold inline-block mr-1">Price:</strong>
+
+                <span class="inline-block">
+                  {{ event.price }}
+                </span>
+              </div>
+
+              <div v-if="event.is_family_friendly" class="block">
+                <i class="fas fa-child mr-1"></i>
+                <span class="text-gray-800">Family Friendly</span>
+              </div>
             </p>
 
             <br />

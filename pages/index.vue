@@ -39,16 +39,29 @@
                         <a
                           href=""
                           class="block group hover:bg-blue-300 p-2 border border-blue-300"
-                          v-for="(hit, index) in index.hits"
-                          :key="hit.objectID"
-                          @click.prevent="chooseSearchItem(hit, index)"
+                          v-for="(event, index) in index.hits"
+                          :key="event.objectID"
+                          @click.prevent="chooseSearchItem(event, index)"
                         >
-                          <p class="font-bold text-sm mb-1 text-black group-hover:text-white">
-                            <ais-highlight attribute="name" :hit="hit"/>
-                          </p>
-                          <p class="text-grey-darker mb-2 group-hover:text-white">
-                            {{ hit.start_date }}
-                          </p>
+                          <div class="flex flex-wrap">
+                            <div class="w-1/4" v-if="event.photo">
+                              <img :alt="event.name" class="block h-16 w-16" :src="event.photo">
+                            </div>
+
+                            <div class="w-3/4">
+                              <div class="w-full font-bold text-sm mb-1 text-black group-hover:text-white">
+                                <ais-highlight attribute="name" :hit="event"/>
+                              </div>
+                              <div class="flex w-full">
+                                <div class="w-2/3 text-grey-darker mb-2 group-hover:text-white">
+                                  {{ event.start_date | friendlyDate }}
+                                </div>
+                                <div class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 pt-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center">
+                                  {{ event.category.name }}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </a>
                       </template>
                     </template>
@@ -282,12 +295,18 @@ export default {
     return {
       mode: 'all',
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().endOf('week').add(1, 'day').format('YYYY-MM-DD'),
+      end_date: moment().add(7, 'day').format('YYYY-MM-DD'),
       indexName: process.env.ALGOLIA_SEARCH_INDEX,
       filters: {
         category: null,
         location: null
       }
+    }
+  },
+
+  filters: {
+    friendlyDate: function (date) {
+      return moment(date).format('dddd, MMM Do')
     }
   },
 
