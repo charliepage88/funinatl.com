@@ -5,6 +5,7 @@ query categoryBySlug($slug: String!) {
     slug
     active
     is_default
+    photo
     created_at
     updated_at
     locations {
@@ -21,7 +22,10 @@ query categoryBySlug($slug: String!) {
         longitude
         description
         photo
-        tags { name, slug }
+        tags {
+            name
+            slug
+        }
         is_family_friendly
         created_at
         updated_at
@@ -53,7 +57,10 @@ query categoryBySlug($slug: String!) {
             slug
         }
         event_type
-        tags { name, slug }
+        tags {
+            name
+            slug
+        }
     }
   }
 }

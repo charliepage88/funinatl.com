@@ -5,6 +5,7 @@
     slug
     active
     is_default
+    photo
     created_at
     updated_at
     locations {
@@ -21,7 +22,10 @@
         longitude
         description
         photo
-        tags { name, slug }
+        tags {
+            name
+            slug
+        }
         is_family_friendly
         created_at
         updated_at
