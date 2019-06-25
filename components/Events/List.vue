@@ -15,7 +15,7 @@
               <div v-if="event.start_time" class="block">
                 <strong class="font-bold inline-block mr-1">Start Time:</strong>
 
-                <span class="inline-block">
+                <span class="inline-block float-right">
                   {{ event.start_time }}
                 </span>
               </div>
@@ -23,7 +23,7 @@
               <div v-if="event.end_time" class="block">
                 <strong class="font-bold inline-block mr-1">End Time:</strong>
 
-                <span class="inline-block">
+                <span class="inline-block float-right">
                   {{ event.end_time }}
                 </span>
               </div>
@@ -31,20 +31,20 @@
               <div v-if="event.price" class="block">
                 <strong class="font-bold inline-block mr-1">Price:</strong>
 
-                <span class="inline-block">
+                <span class="inline-block float-right">
                   {{ event.price }}
                 </span>
               </div>
 
               <div v-if="event.is_family_friendly" class="block">
                 <i class="fas fa-child mr-1"></i>
-                <span class="text-gray-800">Family Friendly</span>
+                <span class="text-gray-800 inline-block float-right">Family Friendly</span>
               </div>
             </p>
 
             <br />
 
-            <div class="tags ml-6" v-if="event.tags.length">
+            <div class="tags" v-if="event.tags.length">
               <NuxtLink
                 v-for="(tag, tagIndex) in event.tags"
                 :key="tag.slug"

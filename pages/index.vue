@@ -10,7 +10,7 @@
           >
             <div class="relative" slot-scope="{ currentRefinement, indices, refine }">
               <input
-                class="w-1/2 h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+                class="w-2/5 h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
                 type="search"
                 :value="currentRefinement"
                 placeholder="Search for an event"
@@ -30,6 +30,20 @@
                   {{ location.name }}
                 </option>
               </select>
+
+              <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
+                <div class="flex flex-wrap">
+                  <div class="w-1/2 pt-3">
+                    <label class="font-bold text-white text-sm">
+                    Family Friendly
+                  </label>
+                  </div>
+
+                  <div class="w-1/2 pt-3">
+                    <Checkbox v-model="filters.is_family_friendly" @change="updateIsFamilyFriendly" />
+                  </div>
+                </div>
+              </div>
 
               <template v-if="currentRefinement">
                 <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;">
@@ -56,7 +70,7 @@
                                 <div class="w-2/3 text-grey-darker mb-2 group-hover:text-white">
                                   {{ event.start_date | friendlyDate }}
                                 </div>
-                                <div class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 pt-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center">
+                                <div class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center">
                                   {{ event.category.name }}
                                 </div>
                               </div>
@@ -223,6 +237,7 @@ import Events from '@/queries/Events'
 import Categories from '@/queries/Categories'
 import Locations from '@/queries/Locations'
 import EventsList from '@/components/Events/List'
+import Checkbox from '@/components/Common/Checkbox'
 
 export default {
   name: 'index',
@@ -259,7 +274,8 @@ export default {
     AisSearchBox,
     AisStats,
     AisPagination,
-    EventsList
+    EventsList,
+    Checkbox
   },
 
   head() {
@@ -299,7 +315,8 @@ export default {
       indexName: process.env.ALGOLIA_SEARCH_INDEX,
       filters: {
         category: null,
-        location: null
+        location: null,
+        is_family_friendly: false
       }
     }
   },
@@ -421,6 +438,10 @@ export default {
       console.log('chooseSearchItem')
       console.log(index)
       console.log(item)
+    },
+
+    updateIsFamilyFriendly (value) {
+      this.$set(this.filters, 'is_family_friendly', value)
     }
   }
 }
