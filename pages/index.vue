@@ -15,6 +15,12 @@
                 :value="currentRefinement"
                 placeholder="Search for an event"
                 @input="refine($event.currentTarget.value)"
+                v-on:blur="closeKeypad"
+                @keydown.down="down",
+                @keydown.up="up",
+                @keydown="enter($event)",
+                @keyup.escape="reset"
+                ref="searchInput"
               >
 
               <select v-model="filters.category" class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl">
@@ -442,6 +448,32 @@ export default {
 
     updateIsFamilyFriendly (value) {
       this.$set(this.filters, 'is_family_friendly', value)
+    },
+
+    closeKeypad () {
+      console.log('closeKeypad')
+
+      document.activeElement.blur()
+      Array.prototype.forEach.call(document.querySelectorAll('body, textarea'), function (it) {
+        it.blur()
+      })
+    },
+
+    down () {
+      console.log('down')
+    },
+
+    up () {
+      console.log('up')
+    },
+
+    reset () {
+      console.log('reset')
+    },
+
+    enter ($event) {
+      console.log('enter')
+      console.log($event)
     }
   }
 }
