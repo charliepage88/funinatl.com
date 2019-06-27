@@ -2,36 +2,42 @@
   <div class="main-container">
     <nav class="flex items-center justify-between flex-wrap bg-black">
       <div class="flex items-center flex-shrink-0 text-white mr-6 is-brand-name-container has-cursor-pointer">
-        <div class="bg-no-repeat bg-center w-full h-20 relative" style="background-image: url('/images/funinatl-bg.png');">
-          <NuxtLink to="/">
-            <span class="font-semibold text-xl absolute is-brand-name">FunInATL</span>
-          </NuxtLink>
+        <div class="bg-no-repeat bg-center w-full h-20 relative" style="background-image: url('/images/funinatl-bg.png');" @click.prevent="goHome">
+          <span class="font-semibold text-xl absolute is-brand-name">FunInATL</span>
         </div>
       </div>
 
       <div class="block lg:hidden">
         <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
-          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+          <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <title>Menu</title>
+            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+          </svg>
         </button>
       </div>
+
       <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
         <div class="text-sm lg:flex-grow">
-          <a href="/" class="border-b-2 border-gray-300 block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4 no-underline text-lg">
+          <nuxt-link to="/about" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
             About
-          </a>
-          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg">
+          </nuxt-link>
+
+          <nuxt-link to="/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
             Contact
-          </a>
-          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg">
+          </nuxt-link>
+
+          <nuxt-link to="/submit-event" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4 no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
             Submit Event
-          </a>
-          <a href="/" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white no-underline text-lg">
+          </nuxt-link>
+
+          <nuxt-link to="/subscribe" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
             Subscribe
-          </a>
+          </nuxt-link>
         </div>
+
         <div class="relative group text-white">
           <div
-            class="flex items-center cursor-pointer text-sm hover:border-grey-light rounded-t-lg py-1 px-2"
+            class="flex items-center cursor-pointer text-sm hover:border-gray-300 rounded-t-lg py-1 px-2"
             @mouseover="hoverOnUserMenu"
           >
             <img src="https://placekitten.com/30/30" class="rounded-full mr-2">
@@ -44,10 +50,19 @@
             :class="{ 'invisible': !userMenuOpen }"
             @mouseleave="hoverOffUserMenu"
           >
-           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">View Profile</a>
-           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">Edit Profile</a>
-           <hr class="border-t mx-2 border-gray-400">
-           <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">Logout</a>
+            <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">
+              View Profile
+            </a>
+
+            <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">
+              Edit Profile
+            </a>
+
+            <hr class="border-t mx-2 border-gray-400">
+
+            <a href="#" class="px-4 py-2 block text-black hover:bg-gray-300 no-underline">
+              Logout
+            </a>
           </div>
         </div>
       </div>
@@ -76,16 +91,16 @@
         <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
           <div class="text-white text-lg mb-2">Categories</div>
           <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
+            <li class="">One</li>
+            <li class="">Two</li>
+            <li class="">Three</li>
           </ul>
 
           <div class="text-white text-lg mb-2 mt-4">Blue-light</div>
           <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
+            <li class="">One</li>
+            <li class="">Two</li>
+            <li class="">Three</li>
           </ul>
         </div>
 
@@ -99,19 +114,21 @@
 
           <div class="text-white text-lg mb-2 mt-4">Green-light</div>
           <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
+            <li class="">One</li>
+            <li class="">Two</li>
+            <li class="">Three</li>
           </ul>
         </div>
 
         <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
           <div class="text-white text-lg mb-2">Newsletter</div>
-          <p class="text-grey-100 leading-normal">Keep updated on events going on in Atlanta.</p>
+
+          <p class="text-gray-300 leading-normal">Keep updated on events going on in Atlanta.</p>
 
           <form @submit.prevent="subscribe">
             <div class="mt-4 flex">
-              <input type="text" class="p-2 border-1 border-grey-200 round text-grey-700 text-sm h-auto" placeholder="Your email address" v-model="newsletter.email">
+              <input type="text" class="p-2 border-1 border-gray-200 round text-gray-700 text-sm h-auto" placeholder="Your email address" v-model="newsletter.email">
+
               <button type="submit" class="bg-black text-white rounded-sm h-auto py-3 px-4 no-underline">
                 Subscribe
               </button>
@@ -159,6 +176,10 @@ export default {
       await this.newsletterSubscribe({
         email: this.newsletter.email
       })
+    },
+
+    goHome () {
+      this.$router.push('/')
     }
   }
 }

@@ -16,9 +16,9 @@
                 placeholder="Search for an event"
                 @input="refine($event.currentTarget.value)"
                 v-on:blur="closeKeypad"
-                @keydown.down="down",
-                @keydown.up="up",
-                @keydown="enter($event)",
+                @keydown.down="down"
+                @keydown.up="up"
+                @keydown="enter($event)"
                 @keyup.escape="reset"
                 ref="searchInput"
               >
@@ -41,8 +41,8 @@
                 <div class="flex flex-wrap">
                   <div class="w-1/2 pt-3">
                     <label class="font-bold text-white text-sm">
-                    Family Friendly
-                  </label>
+                      Family Friendly
+                    </label>
                   </div>
 
                   <div class="w-1/2 pt-3">
