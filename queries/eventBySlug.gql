@@ -15,7 +15,6 @@ query eventBySlug($slug: String!) {
     short_description
     description
     featured
-    active
     is_sold_out
     website
     spotify_artist_id

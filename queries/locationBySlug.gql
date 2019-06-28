@@ -24,7 +24,6 @@ query locationBySlug($slug: String!) {
         id
         name
         slug
-        active
         is_default
         photo
         created_at
