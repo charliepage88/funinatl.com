@@ -47,6 +47,24 @@ const actions = {
     return result
   },
 
+  async submitEvent({ commit, state }, form) {
+    let result = false
+
+    try {
+      commit('setLoading', true)
+
+      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/events/submit`, form)
+
+      result = true
+    } catch (err) {
+      commit('setErrors', get(err, 'response.data.errors', {}))
+    } finally {
+      commit('setLoading', false)
+    }
+
+    return result
+  },
+
   logout({ commit, state }) {
     commit('unsetToken')
     commit('setUser', null)

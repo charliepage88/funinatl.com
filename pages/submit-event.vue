@@ -64,7 +64,7 @@
 
 	        <date-picker
 	        	v-model="form.start_date"
-	        	:more-classes="errors.start_date ? 'border-red-500' : ''"
+	        	:has-error="errors.start_date"
 	        	@change="updateForm('start_date', $event)"
 	        />
 
@@ -124,6 +124,7 @@
                 id="is_family_friendly"
                 class="form-switch-checkbox"
                 value="1"
+                v-model="form.is_family_friendly"
               >
               <label class="form-switch-label" for="is_family_friendly"></label>
             </div>
@@ -161,16 +162,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import DatePicker from '@/components/Common/DatePicker'
 import Categories from '@/queries/Categories'
 import Locations from '@/queries/Locations'
+import ToastMixin from '@/mixins/ToastMixin'
 
 export default {
 	name: 'submit-event',
 
 	components: {
 		DatePicker
-	},
+  },
+  
+  mixins: [
+    ToastMixin
+  ],
 
 	apollo: {
     categories: {
@@ -212,22 +219,64 @@ export default {
 	},
 
 	methods: {
+    ...mapActions('site', [
+      'submitEvent'
+    ]),
+
 		async submit () {
 			let validate = this.validate()
 
 			if (!validate) {
-				this.toastError('Errors found.')
-			}
+        this.toastError('Errors found, please correct the form errors and try again.')
+
+        console.log(this.errors)
+        
+        return false
+      }
+      
+      let resp = await this.submitEvent(this.form)
+
+      if (resp) {
+        let msg = 'Event has been submitted, thank you! Please allow for 24-48 hours for us to review, before going on the site.'
+
+        this.toastSuccess(msg)
+
+        this.form = {
+          name: null,
+          location_id: null,
+          category_id: null,
+          start_date: null,
+          end_date: null,
+          start_time: null,
+          end_time: null,
+          price: null,
+          description: null,
+          is_family_friendly: false,
+          website: null
+        }
+      } else {
+        this.toastError('Could not submit event, please try again.')
+      }
 		},
 
 		validate () {
+      let errorsCount = 0
+
 			for (let i in this.form) {
 				let value = this.form[i]
 
 				if (typeof this.errors[i] !== 'undefined') {
-					this.$set(this.errors, i, (value.length))
+          let hasError = (value ? false : true)
+
+          if (hasError) {
+            errorsCount++
+          }
+
+					this.$set(this.errors, i, hasError)
 				}
-			}
+      }
+      
+      return errorsCount === 0
 		},
 
 		updateForm (key, value) {

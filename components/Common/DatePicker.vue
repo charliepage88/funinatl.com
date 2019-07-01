@@ -1,6 +1,11 @@
 <template>
   <div>
-    <flat-pickr :class="config.altInputClass" v-model="date" :config="config"></flat-pickr>
+    <flat-pickr
+      class="appearance-none block w-full bg-gray-300 text-gray-700 border rounded py-3 px-4 mb-3"
+      v-model="date"
+      :config="config"
+      :class="{ 'border-gray-300': !hasError, 'border-red-500': hasError }"
+    ></flat-pickr>
   </div>
 </template>
 
@@ -17,9 +22,10 @@
         required: false
       },
 
-      moreClasses: {
-        type: String,
-        required: false
+      hasError: {
+        type: Boolean,
+        required: false,
+        defaut: false
       }
     },
 
@@ -34,18 +40,6 @@
         this.updatedValue(newVal)
 
         this.$emit('change', newVal)
-      }
-    },
-
-    computed: {
-      inputClass () {
-        let classes = 'appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3'
-
-        if (this.moreClasses && this.moreClasses.length) {
-          classes = `${classes} ${this.moreClasses}`
-        }
-
-        return classes
       }
     },
 
