@@ -21,43 +21,56 @@
                 @keydown="enter($event)"
                 @keyup.escape="reset"
                 ref="searchInput"
-              >
+              />
 
-              <select v-model="filters.category" class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl">
+              <select
+                v-model="filters.category"
+                class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+              >
                 <option value="null">Category</option>
-                <option v-for="category in categories" :key="category.id" :value="category.id">
-                  {{ category.name }}
-                </option>
+                <option
+                  v-for="category in categories"
+                  :key="category.id"
+                  :value="category.id"
+                >{{ category.name }}</option>
               </select>
 
-              <select v-model="filters.location" class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl">
+              <select
+                v-model="filters.location"
+                class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+              >
                 <option value="null">Location</option>
-                <option v-for="location in locations" :key="location.id" :value="location.id">
-                  {{ location.name }}
-                </option>
+                <option
+                  v-for="location in locations"
+                  :key="location.id"
+                  :value="location.id"
+                >{{ location.name }}</option>
               </select>
 
               <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
                 <div class="flex flex-wrap">
                   <div class="w-1/2 pt-3">
-                    <label class="font-bold text-white text-sm">
-                      Family Friendly
-                    </label>
+                    <label class="font-bold text-white text-sm">Family Friendly</label>
                   </div>
 
                   <div class="w-1/2 pt-3">
-                    <Checkbox v-model="filters.is_family_friendly" @change="updateIsFamilyFriendly" />
+                    <Checkbox
+                      v-model="filters.is_family_friendly"
+                      @change="updateIsFamilyFriendly"
+                    />
                   </div>
                 </div>
               </div>
 
               <template v-if="currentRefinement">
                 <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;">
-                  <div class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg  leading-normal">
+                  <div
+                    class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg leading-normal"
+                  >
                     <template v-for="index in indices">
                       <template v-if="index.label === 'Events'">
                         <a
-                          href=""
+                          href
                           class="block group hover:bg-blue-300 p-2 border border-blue-300"
                           v-for="(event, index) in index.hits"
                           :key="event.objectID"
@@ -65,20 +78,23 @@
                         >
                           <div class="flex flex-wrap">
                             <div class="w-1/4" v-if="event.photo">
-                              <img :alt="event.name" class="block h-16 w-16" :src="event.photo">
+                              <img :alt="event.name" class="block h-16 w-16" :src="event.photo" />
                             </div>
 
                             <div class="w-3/4">
-                              <div class="w-full font-bold text-sm mb-1 text-black group-hover:text-white">
-                                <ais-highlight attribute="name" :hit="event"/>
+                              <div
+                                class="w-full font-bold text-sm mb-1 text-black group-hover:text-white"
+                              >
+                                <ais-highlight attribute="name" :hit="event" />
                               </div>
                               <div class="flex w-full">
-                                <div class="w-2/3 text-grey-darker mb-2 group-hover:text-white">
-                                  {{ event.start_date | friendlyDate }}
-                                </div>
-                                <div class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center">
-                                  {{ event.category.name }}
-                                </div>
+                                <div
+                                  class="w-2/3 text-grey-darker mb-2 group-hover:text-white"
+                                >{{ event.start_date | friendlyDate }}</div>
+
+                                <div
+                                  class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center"
+                                >{{ event.category.name }}</div>
                               </div>
                             </div>
                           </div>
@@ -93,37 +109,55 @@
         </ais-instant-search-ssr>
 
         <nav class="flex">
-          <a class="no-underline text-white py-3 px-4 font-medium mr-3 bg-indigo-500 hover:bg-indigo-600" href="#">Cardamom</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo" href="#">Cinnamon</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600" href="#">Chamomille</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo" href="#">Apple</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600" href="#">Mint</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo"  href="#">Curry</a>
-          <a class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600" href="#">Fragrance</a>
-          <a class="no-underline text-white py-3 px-4 font-medium ml-auto bg-indigo-600 hover:bg-indigo" href="#">Amchoor</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mr-3 bg-indigo-500 hover:bg-indigo-600"
+            href="#"
+          >Cardamom</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo"
+            href="#"
+          >Cinnamon</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600"
+            href="#"
+          >Chamomille</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo"
+            href="#"
+          >Apple</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600"
+            href="#"
+          >Mint</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo"
+            href="#"
+          >Curry</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-500 hover:bg-indigo-600"
+            href="#"
+          >Fragrance</a>
+          <a
+            class="no-underline text-white py-3 px-4 font-medium ml-auto bg-indigo-600 hover:bg-indigo"
+            href="#"
+          >Amchoor</a>
         </nav>
       </div>
     </section>
 
     <nav class="bg-white px-8 pt-2 shadow-md">
-     <div class="-mb-px flex justify-center">
-      <a
-        class="no-underline outline-none text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
-        href=""
-        @click.prevent="changeMode('all')"
-        :class="{ 'border-gray-800': mode === 'all', 'border-transparent': mode !== 'all' }"
-      >
-        All Events
-      </a>
-      <a
-        class="no-underline outline-none text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
-        href=""
-        @click.prevent="changeMode('recommended')"
-        :class="{ 'border-gray-800': mode === 'recommended', 'border-transparent': mode !== 'recommended' }"
-      >
-        Recommended
-      </a>
-     </div>
+      <div class="-mb-px flex justify-center">
+        <a
+          class="no-underline outline-none text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
+          @click.prevent="changeMode('all')"
+          :class="{ 'border-gray-800': mode === 'all', 'border-transparent': mode !== 'all' }"
+        >All Events</a>
+        <a
+          class="no-underline outline-none text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
+          @click.prevent="changeMode('recommended')"
+          :class="{ 'border-gray-800': mode === 'recommended', 'border-transparent': mode !== 'recommended' }"
+        >Recommended</a>
+      </div>
     </nav>
 
     <section class="section mb-6 mt-6">
@@ -153,61 +187,7 @@
     </section>
 
     <template v-if="mode === 'recommended'">
-      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-        <div class="-mx-3 md:flex mb-6">
-          <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">
-              First Name
-            </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" id="grid-first-name" type="text" placeholder="Jane">
-            <p class="text-red text-xs italic">Please fill out this field.</p>
-          </div>
-          <div class="md:w-1/2 px-3">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">
-              Last Name
-            </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-last-name" type="text" placeholder="Doe">
-          </div>
-        </div>
-        <div class="-mx-3 md:flex mb-6">
-          <div class="md:w-full px-3">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-password">
-              Password
-            </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3" id="grid-password" type="password" placeholder="******************">
-            <p class="text-grey-dark text-xs italic">Make it as long and as crazy as you'd like</p>
-          </div>
-        </div>
-        <div class="-mx-3 md:flex mb-2">
-          <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-city">
-              City
-            </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-city" type="text" placeholder="Albuquerque">
-          </div>
-          <div class="md:w-1/2 px-3">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-state">
-              State
-            </label>
-            <div class="relative">
-              <select class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded" id="grid-state">
-                <option>New Mexico</option>
-                <option>Missouri</option>
-                <option>Texas</option>
-              </select>
-              <div class="pointer-events-none absolute right-0 bottom-0 mt-2 flex items-center px-2 text-grey-darker">
-                <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="md:w-1/2 px-3">
-            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-zip">
-              Zip
-            </label>
-            <input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="grid-zip" type="text" placeholder="90210">
-          </div>
-        </div>
-      </div>
+      <span>recommended yo</span>
     </template>
   </div>
 </template>
