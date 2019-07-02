@@ -1,14 +1,14 @@
 import { mapActions } from 'vuex'
 
 var RecaptchaMixin = {
-  data () {
+  data() {
     return {
       recaptcha_token: null
     }
   },
 
   methods: {
-    ...mapActions('auth', [
+    ...mapActions('site', [
       'startLoading',
       'stopLoading'
     ]),
@@ -40,7 +40,7 @@ var RecaptchaMixin = {
     }
   },
 
-  async mounted () {
+  async mounted() {
     await this.$recaptcha.init()
   }
 }

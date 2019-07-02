@@ -13,17 +13,17 @@ const getters = {
 }
 
 const mutations = {
-  setLoading (state, value) {
+  setLoading(state, value) {
     state.loading = value
   },
 
-  setErrors (state, errors) {
+  setErrors(state, errors) {
     if (!isEmpty(errors)) {
       state.errors = errors
     }
   },
 
-  unsetErrors (state) {
+  unsetErrors(state) {
     state.errors = {}
   }
 }
@@ -47,25 +47,79 @@ const actions = {
     return result
   },
 
-  async submitEvent({ commit, state }, form) {
+  async submitEvent({ commit }, form) {
     let result = false
+    let errors = []
 
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/events/submit`, form)
+      await this.$axios.post(`${process.env.API_ENDPOINT}/api/events/submit`, form)
 
       result = true
     } catch (err) {
-      commit('setErrors', get(err, 'response.data.errors', {}))
+      errors = get(err, 'response.data.errors', {})
+
+      commit('setErrors', errors)
     } finally {
       commit('setLoading', false)
     }
 
-    return result
+    return {
+      status: result,
+      errors: errors
+    }
   },
 
-  logout({ commit, state }) {
+  async submitLocation({ commit }, form) {
+    let result = false
+    let errors = []
+
+    try {
+      commit('setLoading', true)
+
+      await this.$axios.post(`${process.env.API_ENDPOINT}/api/locations/submit`, form)
+
+      result = true
+    } catch (err) {
+      errors = get(err, 'response.data.errors', {})
+
+      commit('setErrors', errors)
+    } finally {
+      commit('setLoading', false)
+    }
+
+    return {
+      status: result,
+      errors: errors
+    }
+  },
+
+  async submitContactForm({ commit }, form) {
+    let result = false
+    let errors = []
+
+    try {
+      commit('setLoading', true)
+
+      await this.$axios.post(`${process.env.API_ENDPOINT}/api/contact/submit`, form)
+
+      result = true
+    } catch (err) {
+      errors = get(err, 'response.data.errors', {})
+
+      commit('setErrors', errors)
+    } finally {
+      commit('setLoading', false)
+    }
+
+    return {
+      status: result,
+      errors: errors
+    }
+  },
+
+  logout({ commit }) {
     commit('unsetToken')
     commit('setUser', null)
     commit('unsetErrors')
@@ -206,11 +260,11 @@ const actions = {
     return result
   },
 
-  startLoading ({ commit }) {
+  startLoading({ commit }) {
     commit('setLoading', true)
   },
 
-  stopLoading ({ commit }) {
+  stopLoading({ commit }) {
     commit('setLoading', false)
   }
 }

@@ -101,17 +101,17 @@ export default {
     },
     // optional
     // errorHandler (error) {
-      // console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
+    // console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
     // },
     // required
     clientConfigs: {
       default: {
-        // required  
+        // required
         httpEndpoint: 'http://localhost:4000/graphql',
         // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
         // httpLinkOptions: {
-          // credentials: 'same-origin'
+        // credentials: 'same-origin'
         // },
         // You can use `wss` for secure connection (recommended in production)
         // Use `null` to disable subscriptions
@@ -138,8 +138,8 @@ export default {
 
   recaptcha: {
     hideBadge: true,
-    siteKey: '6LcFeaAUAAAAAEopR3oUfEQ2l6YevmqqD0pp8kUm',
-    version: 3,
+    siteKey: '6LdWwasUAAAAALZcr7N9x7zNt8mkXzxA3L0LWp5n',
+    version: 3
   },
 
   /*
