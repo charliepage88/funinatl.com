@@ -82,55 +82,111 @@
         <nuxt />
       </div>
 
-      <div class="container bg-indigo-700 p-6 text-gray-100">
-        <div class="sm:flex mb-4">
-          <div class="sm:w-1/4 h-auto">
-            <div class="text-white text-lg mb-2">Locations</div>
-            <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
-              <li class="">Four</li>
-              <li class="">Five</li>
-              <li class="">Six</li>
-              <li class="">Seven</li>
-              <li class="">Eight</li>
-            </ul>
+      <div class="container bg-indigo-700 p-6 text-gray-100 pb-4">
+        <div class="sm:flex">
+          <div class="w-1/6 md:w-1/6 sm:w-1/4">
+            <span class="text-teal-400 text-lg">
+              Categories
+            </span>
+
+            <div class="block mt-4">
+              <nuxt-link to="/category/music" class="text-teal-200 hover:text-white no-underline text-lg" exact-active-class="border-b-2 border-gray-300 text-gray-200">
+                Music
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/category/food-drinks" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Food & Drinks
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/category/comedy" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Comedy
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/category/arts-theatre" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Arts & Theatre
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/category/other" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Other
+              </nuxt-link>
+            </div>
           </div>
 
-          <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
-            <div class="text-white text-lg mb-2">Categories</div>
-            <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
-            </ul>
+          <div class="w-1/6 md:w-1/6 sm:w-1/4 sm:mt-0 mt-8">
+            <span class="text-teal-400 text-lg">
+              Menu
+            </span>
 
-            <div class="text-white text-lg mb-2 mt-4">Blue-light</div>
-            <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
-            </ul>
+            <div class="block mt-4">
+              <nuxt-link to="/" class="text-teal-200 hover:text-white no-underline text-lg" exact-active-class="border-b-2 border-gray-300 text-gray-200">
+                Home
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/about" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                About
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/contact" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Contact
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/submit-event" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Submit Event
+              </nuxt-link>
+            </div>
+
+            <div class="block mt-2">
+              <nuxt-link to="/subscribe" class="text-teal-200 hover:text-white no-underline text-lg" active-class="border-b-2 border-gray-300 text-gray-200">
+                Subscribe
+              </nuxt-link>
+            </div>
           </div>
 
-          <div class="sm:w-1/4 h-auto sm:mt-0 mt-8">
-            <div class="text-white text-lg mb-2">Green-dark</div>
-            <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
-            </ul>
+          <div class="w-1/4 md:w-1/4 sm:w-1/4 sm:mt-0 mt-8">
+            <div class="flex flex-wrap">
+              <nuxt-link to="/get-listed" class="block w-2/3">
+                <div class="flex rounded border-b-2 border-gray-700 overflow-hidden">
+                  <button class="block text-white text-sm shadow-border bg-green-600 hover:bg-green-800 text-lg py-3 px-4 tracking-wide font-bold w-3/4">
+                    Get Listed
+                  </button>
+                  <div class="bg-green-400 hover:bg-green-700 shadow-border p-3 w-1/4">
+                    <div class="w-8 h-8 ml-1">
+                      <i class="fas fa-map fa-2x"></i>
+                    </div>
+                  </div>
+                </div>
+              </nuxt-link>
 
-            <div class="text-white text-lg mb-2 mt-4">Green-light</div>
-            <ul class="list-reset leading-normal">
-              <li class="">One</li>
-              <li class="">Two</li>
-              <li class="">Three</li>
-            </ul>
+              <nuxt-link to="/contact" class="block w-2/3 mt-8">
+                <div class="flex rounded border-b-2 border-gray-700 overflow-hidden">
+                  <button class="block text-white text-sm shadow-border bg-purple-600 hover:bg-purple-800 text-lg py-3 px-4 tracking-wide font-bold w-3/4">
+                    Contact Us
+                  </button>
+                  <div class="bg-purple-400 hover:bg-purple-700 shadow-border p-3 w-1/4">
+                    <div class="w-8 h-8 ml-1">
+                      <i class="far fa-envelope fa-2x"></i>
+                    </div>
+                  </div>
+                </div>
+              </nuxt-link>
+            </div>
           </div>
 
-          <div class="sm:w-1/2 sm:mt-0 mt-8 h-auto">
+          <div class="w-1/4 md:w-1/4 sm:w-1/2 sm:mt-0 mt-8">
             <div class="text-white text-lg mb-2">Newsletter</div>
 
             <p class="text-gray-300 leading-normal">Keep updated on events going on in Atlanta.</p>
@@ -144,6 +200,13 @@
                 </button>
               </div>
             </form>
+          </div>
+
+          <div class="w-1/6 md:w-1/6 sm:w-1/4 sm:mt-0 mt-8 table h-48">
+            <p class="block text-gray-300 text-lg align-middle table-cell">
+              Copyright &copy;2016-2019
+              <a href="https://www.charliepage88.com" target="_blank" class="text-white">Charles Page</a>.
+            </p>
           </div>
         </div>
       </div>

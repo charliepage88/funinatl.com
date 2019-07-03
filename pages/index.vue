@@ -229,7 +229,7 @@ export default {
   name: 'index',
 
   asyncData({ params }) {
-    console.log(params)
+    // console.log(params)
     return instantsearch
       .findResultsState({
         // find out which parameters to use here using ais-state-results
@@ -246,6 +246,13 @@ export default {
 
   beforeMount() {
     instantsearch.hydrate(this.instantSearchState)
+  },
+
+  destroyed () {
+    console.log('destroyed')
+
+    // instantsearch.dispose()
+    // this.instantSearchState.dispose()
   },
 
   mixins: [

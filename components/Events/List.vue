@@ -2,7 +2,11 @@
   <div class="container mx-auto">
     <div class="flex flex-wrap events-container overflow-hidden">
       <!-- Column -->
-      <div class="event-card w-full overflow-hidden md:w-full lg:w-1/2 xl:w-1/3 rounded-lg shadow-lg bg-blue-300" v-for="(event, index) in events" :key="event.id">
+      <div
+        class="event-card w-full overflow-hidden md:w-30 lg:w-30 xl:w-30 rounded-lg shadow-lg bg-blue-300"
+        v-for="event in events"
+        :key="event.id"
+      >
         <div class="flex flex-wrap mx-auto p-3">
           <div class="w-1/2">
             <NuxtLink :to="`event/${event.slug}`" v-if="event.photo">
@@ -11,7 +15,7 @@
           </div>
 
           <div class="w-1/2">
-            <p class="text-grey-darker text-sm ml-6">
+            <div class="text-grey-darker text-sm ml-6">
               <div v-if="event.start_time" class="block">
                 <strong class="font-bold inline-block mr-1">Start Time:</strong>
 
@@ -40,16 +44,16 @@
                 <i class="fas fa-child mr-1"></i>
                 <span class="text-gray-800 inline-block float-right">Family Friendly</span>
               </div>
-            </p>
+            </div>
 
             <br />
 
-            <div class="tags" v-if="event.tags.length">
+            <div class="flex flex-wrap tags ml-6" v-if="event.tags.length">
               <NuxtLink
                 v-for="(tag, tagIndex) in event.tags"
                 :key="tag.slug"
                 :to="`tags/${tag.slug}`"
-                class="text-white font-bold py-1 px-3 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline"
+                class="text-white font-bold py-1 px-2 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline"
                 :class="{ 'mr-1': event.tags.length > 1 && tagIndex < (event.tags.length - 1) }"
               >
                 {{ tag.name }}
@@ -67,19 +71,19 @@
         </header>
 
         <div class="ml-4">
-          <p class="block text-grey-darker text-sm" v-if="event.short_description">
+          <p class="block text-grey-darker text-sm mr-2" v-if="event.short_description">
             {{ event.short_description }}
           </p>
 
-          <p class="block text-grey-darker text-sm" v-if="event.description">
+          <p class="block text-grey-darker text-sm mr-2" v-if="event.description">
             {{ event.description }}
           </p>
         </div>
 
-        <footer class="flex items-center justify-between leading-none p-2 md:p-4">
+        <footer class="flex items-center justify-between leading-none p-2 md:p-4 w-full">
           <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
             <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
-            <p class="ml-2 text-sm">
+            <p class="ml-2 text-lg">
               {{ event.location.name }}
             </p>
           </NuxtLink>
