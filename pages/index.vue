@@ -145,7 +145,7 @@
       </div>
     </section>
 
-    <nav class="bg-white px-8 pt-2 shadow-md">
+    <nav class="bg-white px-8 pt-2 shadow-md" v-if="1 === 2">
       <div class="-mb-px flex justify-center">
         <a
           class="no-underline outline-none text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"

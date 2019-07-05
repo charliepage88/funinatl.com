@@ -17,7 +17,6 @@
     featured
     is_sold_out
     website
-    spotify_artist_id
     is_family_friendly
     photo
     category {
@@ -25,7 +24,10 @@
         slug
     }
     event_type
-    tags { name, slug }
+    tags {
+        name
+        slug
+    }
     location {
         id
         name
@@ -40,9 +42,18 @@
         longitude
         description
         photo
-        tags { name, slug }
+        tags {
+            name
+            slug
+        }
         created_at
         updated_at
+    }
+    bands {
+        id
+        name
+        slug
+        photo
     }
   }
 }

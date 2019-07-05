@@ -11,33 +11,36 @@
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-name"
+            for="name"
           >
             Location Name
             <span class="text-red-500 text-xs italic">*</span>
           </label>
+
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-name"
+            id="name"
             type="text"
             v-model="form.name"
             :class="{ 'border-red-500': errors.name }"
           />
+
           <p class="text-red text-xs italic" v-if="errors.name">Please fill out this field.</p>
         </div>
 
         <div class="md:w-1/4 px-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-location"
+            for="category"
           >
             Category
             <span class="text-red-500 text-xs italic">*</span>
           </label>
+
           <div class="relative">
             <select
               class="block appearance-none w-full bg-gray-300 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded"
-              id="grid-category"
+              id="category"
               v-model="form.category_id"
               :class="{ 'border-red-500': errors.category_id }"
             >
@@ -48,6 +51,7 @@
                 :value="category.id"
               >{{ category.name }}</option>
             </select>
+
             <div
               class="pointer-events-none absolute right-0 top-0 mt-4 flex items-center px-2 text-gray-700"
             >
@@ -65,7 +69,7 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-price"
+            for="website"
           >
             Website URL
             <span class="text-red-500 text-xs italic">*</span>
@@ -73,7 +77,7 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-website"
+            id="website"
             type="text"
             v-model="form.website"
             :class="{ 'border-red-500': errors.website }"
@@ -86,7 +90,7 @@
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-address"
+            for="address"
           >
             Address
             <span class="text-red-500 text-xs italic">*</span>
@@ -94,6 +98,7 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
+            id="address"
             type="text"
             v-model="form.address"
             :class="{ 'border-red-500': errors.address }"
@@ -105,7 +110,7 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-city"
+            for="city"
           >
             City
             <span class="text-red-500 text-xs italic">*</span>
@@ -113,6 +118,7 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
+            id="city"
             type="text"
             v-model="form.city"
             :class="{ 'border-red-500': errors.city }"
@@ -124,7 +130,7 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-zip"
+            for="zip"
           >
             ZIP
             <span class="text-red-500 text-xs italic">*</span>
@@ -132,7 +138,10 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
+            id="zip"
             type="text"
+            maxlength="5"
+            minlength="5"
             v-model="form.zip"
             :class="{ 'border-red-500': errors.zip }"
           />
@@ -145,12 +154,14 @@
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-description"
-          >Description</label>
+            for="description"
+          >
+            Description
+          </label>
 
           <textarea
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-price"
+            id="description"
             v-model="form.description"
             rows="4"
           />
@@ -162,7 +173,9 @@
           <button
             type="submit"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          >Save</button>
+          >
+            Submit
+          </button>
         </div>
       </div>
     </form>

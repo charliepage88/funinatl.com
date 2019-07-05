@@ -11,30 +11,35 @@
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-name"
+            for="name"
           >
             Event Name
             <span class="text-red-500 text-xs italic">*</span>
           </label>
+
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-name"
+            id="name"
             type="text"
             v-model="form.name"
             :class="{ 'border-red-500': errors.name }"
           />
+
           <p class="text-red text-xs italic" v-if="errors.name">Please fill out this field.</p>
         </div>
 
         <div class="md:w-1/4 px-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-location"
-          >Location</label>
+            for="location"
+          >
+            Location
+          </label>
+
           <div class="relative">
             <select
               class="block appearance-none w-full bg-gray-300 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded"
-              id="grid-location"
+              id="location"
               v-model="form.location_id"
             >
               <option value="null">Other Location</option>
@@ -44,6 +49,7 @@
                 :value="location.id"
               >{{ location.name }}</option>
             </select>
+
             <div
               class="pointer-events-none absolute right-0 top-0 mt-4 flex items-center px-2 text-gray-700"
             >
@@ -59,15 +65,16 @@
         <div class="md:w-1/4 px-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-location"
+            for="category"
           >
             Category
             <span class="text-red-500 text-xs italic">*</span>
           </label>
+
           <div class="relative">
             <select
               class="block appearance-none w-full bg-gray-300 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded"
-              id="grid-category"
+              id="category"
               v-model="form.category_id"
               :class="{ 'border-red-500': errors.category_id }"
             >
@@ -78,6 +85,7 @@
                 :value="category.id"
               >{{ category.name }}</option>
             </select>
+
             <div
               class="pointer-events-none absolute right-0 top-0 mt-4 flex items-center px-2 text-gray-700"
             >
@@ -97,7 +105,6 @@
         <div class="md:w-1/4 px-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-start-date"
           >
             Start Date
             <span class="text-red-500 text-xs italic">*</span>
@@ -115,16 +122,20 @@
         <div class="md:w-1/4 px-3">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-end-date"
-          >End Date</label>
+          >
+            End Date
+          </label>
 
-          <date-picker v-model="form.end_date" @change="updateForm('end_date', $event)" />
+          <date-picker
+            v-model="form.end_date"
+            @change="updateForm('end_date', $event)"
+          />
         </div>
 
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-start-time"
+            for="start_time"
           >
             Start Time
             <span class="text-red-500 text-xs italic">*</span>
@@ -132,7 +143,7 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-name"
+            id="start_time"
             type="text"
             v-model="form.start_time"
             :class="{ 'border-red-500': errors.start_time }"
@@ -144,12 +155,14 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-staendrt-time"
-          >End Time</label>
+            for="end_time"
+          >
+            End Time
+          </label>
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-name"
+            id="end_time"
             type="text"
             v-model="form.end_time"
           />
@@ -160,7 +173,7 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-price"
+            for="price"
           >
             Price
             <span class="text-red-500 text-xs italic">*</span>
@@ -168,17 +181,20 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-price"
+            id="price"
             type="text"
             v-model="form.price"
             :class="{ 'border-red-500': errors.price }"
           />
+
           <p class="text-red text-xs italic" v-if="errors.price">Please fill out this field.</p>
 
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             for="is_family_friendly"
-          >Family Friendly</label>
+          >
+            Family Friendly
+          </label>
 
           <div class="mb-2">
             <div class="form-switch inline-block align-middle">
@@ -198,7 +214,7 @@
         <div class="md:w-1/4 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-price"
+            for="website"
           >
             Website URL
             <span class="text-red-500 text-xs italic">*</span>
@@ -206,23 +222,26 @@
 
           <input
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-website"
+            id="website"
             type="text"
             v-model="form.website"
             :class="{ 'border-red-500': errors.website }"
           />
+
           <p class="text-red text-xs italic" v-if="errors.website">Please fill out this field.</p>
         </div>
 
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="grid-description"
-          >Description</label>
+            for="description"
+          >
+            Description
+          </label>
 
           <textarea
             class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="grid-price"
+            id="description"
             v-model="form.description"
             rows="4"
           />
@@ -234,7 +253,9 @@
           <button
             type="submit"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          >Save</button>
+          >
+            Submit
+          </button>
         </div>
       </div>
     </form>

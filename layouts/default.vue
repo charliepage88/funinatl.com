@@ -164,7 +164,7 @@
                     Get Listed
                   </button>
                   <div class="bg-green-400 hover:bg-green-700 shadow-border p-3 w-1/4">
-                    <div class="w-8 h-8 ml-1">
+                    <div class="w-8 h-8 ml-3">
                       <i class="fas fa-map fa-2x"></i>
                     </div>
                   </div>
@@ -177,7 +177,7 @@
                     Contact Us
                   </button>
                   <div class="bg-purple-400 hover:bg-purple-700 shadow-border p-3 w-1/4">
-                    <div class="w-8 h-8 ml-1">
+                    <div class="w-8 h-8 ml-3">
                       <i class="far fa-envelope fa-2x"></i>
                     </div>
                   </div>

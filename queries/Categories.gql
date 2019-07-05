@@ -47,7 +47,6 @@
         featured
         is_sold_out
         website
-        spotify_artist_id
         is_family_friendly
         photo
         category {
@@ -58,6 +57,12 @@
         tags {
             name
             slug
+        }
+        bands {
+            id
+            name
+            slug
+            photo
         }
     }
   }
