@@ -2,120 +2,108 @@
   <div class="container mx-auto">
     <section class="bg-indigo-800 h-50 p-4">
       <div class="py-4">
-        <ais-instant-search-ssr>
-          <ais-autocomplete
-            :indices="[{ label: 'Events', value: 'funinatl_events' }]"
-            :index-name="indexName"
-            :class-names="{ 'relative': true }"
+        <div class="relative">
+          <input
+            class="w-2/5 h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
+            type="search"
+            v-model="query"
+            placeholder="Search for an event"
+            @input="update"
+            v-on:blur="closeKeypad"
+            @keydown.down="down"
+            @keydown.up="up"
+            @keydown="enter($event)"
+            @keyup.escape="reset"
+            ref="searchInput"
+          />
+
+          <select
+            v-model="filters.category"
+            class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
           >
-            <div class="relative" slot-scope="{ currentRefinement, indices, refine }">
-              <input
-                class="w-2/5 h-16 px-3 rounded mb-8 focus:outline-none focus:shadow-outline text-xl px-8 shadow-lg"
-                type="search"
-                :value="currentRefinement"
-                placeholder="Search for an event"
-                @input="refine($event.currentTarget.value)"
-                v-on:blur="closeKeypad"
-                @keydown.down="down"
-                @keydown.up="up"
-                @keydown="enter($event)"
-                @keyup.escape="reset"
-                ref="searchInput"
-              />
+            <option value="null">Category</option>
+            <option
+              v-for="category in categories"
+              :key="category.id"
+              :value="category.id"
+            >{{ category.name }}</option>
+          </select>
 
-              <ais-toggle-refinement attribute="category.name" label="Category" class="inline-block w-1/6 h-16">
-                <select
-                  v-model="filters.category"
-                  class="w-full h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
-                >
-                  <option value="null">Category</option>
-                  <option
-                    v-for="category in categories"
-                    :key="category.id"
-                    :value="category.id"
-                  >{{ category.name }}</option>
-                </select>
-              </ais-toggle-refinement>
+          <select
+            v-model="filters.location"
+            class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+          >
+            <option value="null">Location</option>
+            <option
+              v-for="location in locations"
+              :key="location.id"
+              :value="location.id"
+            >{{ location.name }}</option>
+          </select>
 
-              <ais-toggle-refinement attribute="location.name" label="Location" class="inline-block w-1/6 h-16">
-                <select
-                  v-model="filters.location"
-                  class="w-full h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
-                  slot-scope="{ value, refine, createURL }"
-                  @change="refine(value)"
-                >
-                  <option value="null">Location</option>
-                  <option
-                    v-for="location in locations"
-                    :key="location.id"
-                    :value="location.id"
-                  >{{ location.name }}</option>
-                </select>
-              </ais-toggle-refinement>
+          <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
+            <div class="flex flex-wrap">
+              <div class="w-1/2 pt-3">
+                <label class="font-bold text-white text-sm">Family Friendly</label>
+              </div>
 
-              <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
+              <div class="w-1/2 pt-3">
+                <Checkbox
+                  v-model="filters.is_family_friendly"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="has-no-results absolute left-0 font-sans flex w-full py-8" style="top: 35px;" v-if="query && query.length && emptyItems">
+            <p class="text-gray-700">
+              No results found for <strong>{{ query }}</strong>
+            </p>
+          </div>
+
+          <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;" v-if="hasItems && query && query.length">
+            <div
+              class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg leading-normal search-results"
+            >
+              <div
+                class="block group hover:bg-blue-300 p-2 border border-blue-300"
+                v-for="(event, index) in items"
+                :key="event.id"
+                :class="{ 'active': current === index }"
+                @mousedown="hit"
+                @mouseover="setActive(index)"
+              >
                 <div class="flex flex-wrap">
-                  <div class="w-1/2 pt-3">
-                    <label class="font-bold text-white text-sm">Family Friendly</label>
+                  <div class="w-1/4" v-if="event.photo">
+                    <img :alt="event.name" class="block h-16 w-16" :src="event.photo" />
                   </div>
 
-                  <div class="w-1/2 pt-3">
-                    <ais-toggle-refinement attribute="is_family_friendly" label="Is Family Friendly">
-                      <Checkbox
-                        slot-scope="{ value, refine, createURL }"
-                        v-model="filters.is_family_friendly"
-                        @change="refine(value)"
-                      />
-                    </ais-toggle-refinement>
+                  <div class="w-3/4">
+                    <div
+                      class="w-full font-bold text-sm mb-1 text-black group-hover:text-white"
+                    >
+                      {{ event.name }}
+                    </div>
+
+                    <div class="flex w-full">
+                      <div
+                        class="w-2/3 text-grey-darker mb-2 group-hover:text-white"
+                      >
+                        {{ event.start_date | friendlyDate }}
+                      </div>
+
+                      <div
+                        class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center"
+                      >
+                        {{ event.category.name }}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <template v-if="currentRefinement">
-                <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;">
-                  <div
-                    class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg leading-normal"
-                  >
-                    <template v-for="index in indices">
-                      <template v-if="index.label === 'Events'">
-                        <a
-                          href
-                          class="block group hover:bg-blue-300 p-2 border border-blue-300"
-                          v-for="(event, index) in index.hits"
-                          :key="event.objectID"
-                          @click.prevent="chooseSearchItem(event, index)"
-                        >
-                          <div class="flex flex-wrap">
-                            <div class="w-1/4" v-if="event.photo">
-                              <img :alt="event.name" class="block h-16 w-16" :src="event.photo" />
-                            </div>
-
-                            <div class="w-3/4">
-                              <div
-                                class="w-full font-bold text-sm mb-1 text-black group-hover:text-white"
-                              >
-                                <ais-highlight attribute="name" :hit="event" />
-                              </div>
-                              <div class="flex w-full">
-                                <div
-                                  class="w-2/3 text-grey-darker mb-2 group-hover:text-white"
-                                >{{ event.start_date | friendlyDate }}</div>
-
-                                <div
-                                  class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center"
-                                >{{ event.category.name }}</div>
-                              </div>
-                            </div>
-                          </div>
-                        </a>
-                      </template>
-                    </template>
-                  </div>
-                </div>
-              </template>
             </div>
-          </ais-autocomplete>
-        </ais-instant-search-ssr>
+          </div>
+        </div>
 
         <nav class="flex">
           <a
@@ -202,37 +190,17 @@
 </template>
 
 <script>
-import {
-  AisInstantSearchSsr,
-  AisRefinementList,
-  AisHits,
-  AisHighlight,
-  AisSearchBox,
-  AisStats,
-  AisPagination,
-  createInstantSearch
-} from 'vue-instantsearch'
-import algoliasearch from 'algoliasearch/lite'
 import moment from 'moment'
 import groupBy from 'lodash.groupby'
 import isEmpty from 'lodash.isempty'
 import orderBy from 'lodash.orderby'
-
-const searchClient = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_KEY
-)
-
-const { instantsearch, rootMixin } = createInstantSearch({
-  searchClient,
-  indexName: process.env.ALGOLIA_SEARCH_INDEX
-})
-
 import Events from '@/queries/Events'
 import Categories from '@/queries/Categories'
 import Locations from '@/queries/Locations'
 import EventsList from '@/components/Events/List'
 import Checkbox from '@/components/Common/Checkbox'
+import SearchMixin from '@/mixins/SearchMixin'
+import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'index',
@@ -240,61 +208,18 @@ export default {
   asyncData({ params }) {
     console.log('asyncData')
     console.log(params)
-    return instantsearch
-      .findResultsState({
-        // find out which parameters to use here using ais-state-results
-        query: '',
-        hitsPerPage: 5,
-        facets: ['*'],
-        disjunctiveFacets: [
-          'category.name',
-          'location.name',
-          'is_family_friendly'
-        ]
-        // disjunctiveFacetsRefinements: { brand: ['Apple'] }
-      })
-      .then(() => ({
-        instantSearchState: instantsearch.getState()
-      }))
-  },
 
-  beforeMount() {
-    instantsearch.hydrate(this.instantSearchState)
-  },
-
-  destroyed () {
-    console.log('destroyed')
-
-    // instantsearch.dispose()
-    // this.instantSearchState.dispose()
+    return {}
   },
 
   mixins: [
-    rootMixin
+    SearchMixin,
+    ResponsiveMixin
   ],
 
   components: {
-    AisInstantSearchSsr,
-    AisRefinementList,
-    AisHits,
-    AisHighlight,
-    AisSearchBox,
-    AisStats,
-    AisPagination,
     EventsList,
     Checkbox
-  },
-
-  head() {
-    return {
-      link: [
-        {
-          rel: 'stylesheet',
-          href:
-            'https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/algolia-min.css'
-        }
-      ]
-    }
   },
 
   apollo: {
@@ -314,17 +239,60 @@ export default {
     }
   },
 
+  watch: {
+    query (newVal, oldVal) {
+      if (this.query && this.query.length) {
+        this.$set(this.filters, 'query', newVal)
+      }
+
+      if (this.query && this.query.length && this.emptyItems) {
+        this.emptyItems = false
+      }
+    },
+
+    items (newVal, oldVal) {
+      if (newVal && newVal.length && this.loadAuto) {
+        let items = this.items
+
+        if (items.length) {
+          let query = this.query
+
+          let item = items.find((item) => {
+            return item.slug === query
+          })
+
+          console.log('watch -> items')
+          console.log(item)
+          console.log(item)
+
+          this.items = []
+        }
+
+        this.loadAuto = false
+      }
+    },
+
+    keyword (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.query = newVal
+
+        if (newVal) {
+          this.loadAuto = true
+          this.update()
+        } else {
+          this.reset()
+        }
+      }
+    }
+  },
+
   data () {
     return {
       mode: 'all',
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
       end_date: moment().add(7, 'day').format('YYYY-MM-DD'),
-      indexName: process.env.ALGOLIA_SEARCH_INDEX,
-      filters: {
-        category: null,
-        location: null,
-        is_family_friendly: false
-      }
+      loadAuto: false,
+      emptyItems: false
     }
   },
 
@@ -441,42 +409,73 @@ export default {
       this.mode = value
     },
 
-    chooseSearchItem (item, index) {
-      console.log('chooseSearchItem')
-      console.log(index)
-      console.log(item)
-    },
+    onHit (event) {
+      console.log('onHit -> item')
+      console.log(event)
 
-    updateIsFamilyFriendly (value) {
-      // this.$set(this.filters, 'is_family_friendly', value)
-
-      // this.refine(value)
+      this.$router.push(`/event/${event.slug}`)
     },
 
     closeKeypad () {
-      console.log('closeKeypad')
-
       document.activeElement.blur()
+
       Array.prototype.forEach.call(document.querySelectorAll('body, textarea'), function (it) {
         it.blur()
       })
     },
 
-    down () {
-      console.log('down')
+    reFocus () {
+      if (!this.isMobile) {
+        let self = this
+        setTimeout(() => {
+          if (self.$refs && typeof self.$refs.searchInput !== 'undefined') {
+            self.$refs.searchInput.focus()
+          }
+        }, 100)
+      }
     },
 
-    up () {
-      console.log('up')
+    prepareResponseData (results) {
+      if (!results.data.length) {
+        if (!this.hasItems) {
+          this.emptyItems = true
+        }
+
+        this.reFocus()
+
+        return []
+      }
+
+      return results.data
     },
 
-    reset () {
-      console.log('reset')
+    enter ($event, manualEnter = false) {
+      if (($event && $event.keyCode !== 13) && !manualEnter) {
+        return false
+      }
+
+      if (!this.hasItems) {
+        this.loadAuto = true
+
+        return true
+      }
+
+      if (this.hasItems) {
+        let event = this.items[this.current]
+
+        if (this.current >= 0 && event) {
+          console.log('enter')
+          console.log(event)
+
+          this.$router.push(`/event/${event.slug}`)
+
+          this.items = []
+        }
+      }
     },
 
-    enter ($event) {
-      console.log('enter')
-      console.log($event)
+    removeKeyWords () {
+      this.query = ''
     }
   }
 }

@@ -17,6 +17,14 @@ const mutations = {
     state.loading = value
   },
 
+  startLoading(state) {
+    state.loading = true
+  },
+
+  stopLoading(state) {
+    state.loading = false
+  },
+
   setErrors(state, errors) {
     if (!isEmpty(errors)) {
       state.errors = errors
