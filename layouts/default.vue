@@ -45,7 +45,7 @@
             </nuxt-link>
           </div>
 
-          <div class="relative group text-white">
+          <div class="relative group text-white" v-if="1 === 2">
             <div
               class="flex items-center cursor-pointer text-sm hover:border-gray-300 rounded-t-lg py-1 px-2"
               @mouseover="hoverOnUserMenu"

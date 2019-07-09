@@ -3,7 +3,7 @@
     <div class="flex flex-wrap events-container overflow-hidden">
       <!-- Column -->
       <div
-        class="event-card w-full overflow-hidden md:w-30 lg:w-30 xl:w-30 rounded-lg shadow-lg bg-blue-300"
+        class="event-card overflow-hidden rounded-lg w-full sm:w-full shadow-lg bg-blue-300"
         v-for="event in events"
         :key="event.id"
       >

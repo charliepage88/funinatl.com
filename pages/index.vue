@@ -23,29 +23,35 @@
                 ref="searchInput"
               />
 
-              <select
-                v-model="filters.category"
-                class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
-              >
-                <option value="null">Category</option>
-                <option
-                  v-for="category in categories"
-                  :key="category.id"
-                  :value="category.id"
-                >{{ category.name }}</option>
-              </select>
+              <ais-toggle-refinement attribute="category.name" label="Category" class="inline-block w-1/6 h-16">
+                <select
+                  v-model="filters.category"
+                  class="w-full h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+                >
+                  <option value="null">Category</option>
+                  <option
+                    v-for="category in categories"
+                    :key="category.id"
+                    :value="category.id"
+                  >{{ category.name }}</option>
+                </select>
+              </ais-toggle-refinement>
 
-              <select
-                v-model="filters.location"
-                class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
-              >
-                <option value="null">Location</option>
-                <option
-                  v-for="location in locations"
-                  :key="location.id"
-                  :value="location.id"
-                >{{ location.name }}</option>
-              </select>
+              <ais-toggle-refinement attribute="location.name" label="Location" class="inline-block w-1/6 h-16">
+                <select
+                  v-model="filters.location"
+                  class="w-full h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+                  slot-scope="{ value, refine, createURL }"
+                  @change="refine(value)"
+                >
+                  <option value="null">Location</option>
+                  <option
+                    v-for="location in locations"
+                    :key="location.id"
+                    :value="location.id"
+                  >{{ location.name }}</option>
+                </select>
+              </ais-toggle-refinement>
 
               <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
                 <div class="flex flex-wrap">
@@ -54,10 +60,13 @@
                   </div>
 
                   <div class="w-1/2 pt-3">
-                    <Checkbox
-                      v-model="filters.is_family_friendly"
-                      @change="updateIsFamilyFriendly"
-                    />
+                    <ais-toggle-refinement attribute="is_family_friendly" label="Is Family Friendly">
+                      <Checkbox
+                        slot-scope="{ value, refine, createURL }"
+                        v-model="filters.is_family_friendly"
+                        @change="refine(value)"
+                      />
+                    </ais-toggle-refinement>
                   </div>
                 </div>
               </div>
@@ -161,7 +170,7 @@
     </nav>
 
     <section class="section mb-6 mt-6">
-      <div class="container mx-auto px-12">
+      <div class="container mx-auto px-12 md:px-4">
         <template v-if="!mode || mode === 'all'">
           <template v-if="hasWeekdayEvents">
             <h3 class="font-bold text-center text-3xl">This Week</h3>
@@ -229,14 +238,19 @@ export default {
   name: 'index',
 
   asyncData({ params }) {
-    // console.log(params)
+    console.log('asyncData')
+    console.log(params)
     return instantsearch
       .findResultsState({
         // find out which parameters to use here using ais-state-results
         query: '',
         hitsPerPage: 5,
         facets: ['*'],
-        // disjunctiveFacets: [ 'events' ],
+        disjunctiveFacets: [
+          'category.name',
+          'location.name',
+          'is_family_friendly'
+        ]
         // disjunctiveFacetsRefinements: { brand: ['Apple'] }
       })
       .then(() => ({
@@ -434,7 +448,9 @@ export default {
     },
 
     updateIsFamilyFriendly (value) {
-      this.$set(this.filters, 'is_family_friendly', value)
+      // this.$set(this.filters, 'is_family_friendly', value)
+
+      // this.refine(value)
     },
 
     closeKeypad () {
