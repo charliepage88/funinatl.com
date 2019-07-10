@@ -20,6 +20,7 @@
           <select
             v-model="filters.category"
             class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+            @change="update"
           >
             <option value="null">Category</option>
             <option
@@ -32,6 +33,7 @@
           <select
             v-model="filters.location"
             class="w-1/6 h-16 px-3 rounded mb-8 shadow-lg focus:outline-none focus:shadow-outline text-xl"
+            @change="update"
           >
             <option value="null">Location</option>
             <option
@@ -41,32 +43,43 @@
             >{{ location.name }}</option>
           </select>
 
-          <div class="w-1/5 h-16 inline-block align-middle px-3 mt-0">
+          <div class="w-1/6 h-16 inline-block align-middle px-3 mt-0">
             <div class="flex flex-wrap">
-              <div class="w-1/2 pt-3">
+              <div class="w-2/3 pt-3">
                 <label class="font-bold text-white text-sm">Family Friendly</label>
               </div>
 
-              <div class="w-1/2 pt-3">
+              <div class="w-1/3 pt-3">
                 <Checkbox
                   v-model="filters.is_family_friendly"
+                  @change="updateFamilyFriendlyFilter"
                 />
               </div>
             </div>
           </div>
 
-          <div class="has-no-results absolute left-0 font-sans flex w-full py-8" style="top: 35px;" v-if="query && query.length && emptyItems">
-            <p class="text-gray-700">
-              No results found for <strong>{{ query }}</strong>
-            </p>
+          <div class="w-24 h-16 inline-block align-middle px-3 mt-0">
+            <button class="no-underline text-white py-3 px-4 font-medium mx-3 bg-indigo-600 hover:bg-indigo" @click.prevent="reset">
+              Reset
+            </button>
           </div>
 
-          <div class="absolute left-0 font-sans flex w-full py-8" style="top: 35px;" v-if="hasItems && query && query.length">
+          <div class="absolute left-0 font-sans flex w-2/5 pt-8 has-no-results" v-if="hasQuery && emptyItems">
             <div
-              class="overflow-hidden text-sm bg-white rounded max-w-xs w-full shadow-lg leading-normal search-results"
+              class="overflow-hidden text-sm bg-white rounded w-full shadow-lg leading-normal"
+            >
+              <div class="block group hover:bg-blue-300 p-4 border border-blue-300 cursor-pointer">
+                No results found for <strong>{{ query }}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="absolute left-0 font-sans flex w-2/5 pt-8 search-results-container" v-if="hasItems && hasQuery">
+            <div
+              class="overflow-hidden text-sm bg-white rounded w-full shadow-lg leading-normal search-results"
             >
               <div
-                class="block group hover:bg-blue-300 p-2 border border-blue-300"
+                class="block group hover:bg-blue-300 p-2 border border-blue-300 cursor-pointer"
                 v-for="(event, index) in items"
                 :key="event.id"
                 :class="{ 'active': current === index }"
@@ -75,7 +88,7 @@
               >
                 <div class="flex flex-wrap">
                   <div class="w-1/4" v-if="event.photo">
-                    <img :alt="event.name" class="block h-16 w-16" :src="event.photo" />
+                    <img :alt="event.name" class="block h-24 w-24" :src="event.photo" />
                   </div>
 
                   <div class="w-3/4">
@@ -95,7 +108,7 @@
                       <div
                         class="w-1/3 m-0 text-white mb-2 pr-1 pl-1 rounded text-xs bg-blue-500 hover:bg-blue-800 no-underline text-center"
                       >
-                        {{ event.category.name }}
+                        {{ event.category }}
                       </div>
                     </div>
                   </div>
@@ -241,11 +254,11 @@ export default {
 
   watch: {
     query (newVal, oldVal) {
-      if (this.query && this.query.length) {
+      if (this.hasQuery) {
         this.$set(this.filters, 'query', newVal)
       }
 
-      if (this.query && this.query.length && this.emptyItems) {
+      if (this.hasQuery && this.emptyItems) {
         this.emptyItems = false
       }
     },
@@ -436,7 +449,7 @@ export default {
     },
 
     prepareResponseData (results) {
-      if (!results.data.length) {
+      if (!results.events.length) {
         if (!this.hasItems) {
           this.emptyItems = true
         }
@@ -446,7 +459,7 @@ export default {
         return []
       }
 
-      return results.data
+      return results.events
     },
 
     enter ($event, manualEnter = false) {
@@ -476,7 +489,31 @@ export default {
 
     removeKeyWords () {
       this.query = ''
+    },
+
+    updateFamilyFriendlyFilter (value) {
+      if (typeof value === 'undefined') {
+        value = false
+      }
+
+      this.$set(this.filters, 'is_family_friendly', value)
+
+      if (this.hasQuery) {
+        this.update()
+      }
     }
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.search-results
+  max-height: 246px!important
+  overflow-y: scroll!important
+
+.search-results-container
+  top: 35px!important
+
+.has-no-results
+  top: 35px!important
+</style>

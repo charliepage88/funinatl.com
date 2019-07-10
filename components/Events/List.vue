@@ -15,7 +15,7 @@
           </div>
 
           <div class="w-1/2">
-            <div class="text-grey-darker text-sm ml-6">
+            <div class="text-grey-darker text-sm ml-2">
               <div v-if="event.start_time" class="block">
                 <strong class="font-bold inline-block mr-1">Start Time:</strong>
 
@@ -48,7 +48,7 @@
 
             <br />
 
-            <div class="flex flex-wrap tags ml-6" v-if="event.tags.length">
+            <div class="flex flex-wrap tags ml-2" v-if="event.tags.length">
               <NuxtLink
                 v-for="(tag, tagIndex) in event.tags"
                 :key="tag.slug"
@@ -64,9 +64,9 @@
 
         <header class="flex items-center justify-between leading-tight p-2 md:p-4">
           <h1 class="text-lg">
-            <a class="no-underline text-black" href="#">
+            <NuxtLink :to="`event/${event.slug}`" class="no-underline text-black">
               {{ event.name }}
-            </a>
+            </NuxtLink>
           </h1>
         </header>
 
@@ -94,7 +94,7 @@
             </span>
           </NuxtLink>
 
-          <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
+          <a class="no-underline text-grey-darker hover:text-red-dark" href="#" v-if="1 === 2">
             <span class="hidden">Like</span>
             <i class="fa fa-heart"></i>
           </a>

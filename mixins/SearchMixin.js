@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce'
+import cloneDeep from 'lodash.clonedeep'
 import { mapMutations } from 'vuex'
 
 export default {
@@ -92,7 +93,11 @@ export default {
         return
       }
 
-      const src = `${this.src}?query=${this.query}`
+      let src = cloneDeep(this.src)
+
+      if (this.query && this.query.length) {
+        src += `?query=${this.query}`
+      }
 
       if (this.filters.location) {
         src += `&location=${this.filters.location}`
@@ -125,6 +130,13 @@ export default {
       this.items = []
       this.query = ''
       this.current = -1
+
+      this.filters = {
+        category: null,
+        location: null,
+        is_family_friendly: false,
+        query: ''
+      }
     },
 
     setActive (index) {
@@ -167,7 +179,7 @@ export default {
       }
 
       if (this.current && this.current % (this.visibleItems) === 0 && searchResults.scrollTop !== 0) {
-        searchResults.scrollTop = ((this.current + 1) - this.visibleItems) * 84
+        searchResults.scrollTop = ((this.current + 1) - this.visibleItems) * 114
       }
     },
 
@@ -191,10 +203,10 @@ export default {
       }
 
       if (this.current && this.current % this.visibleItems === 0) {
-        searchResults.scrollTop = (this.current) * 84
+        searchResults.scrollTop = (this.current) * 114
       } else {
-        if ((searchResults.scrollTop - ((this.current) * 84)) <= -252) {
-          searchResults.scrollTop = (this.current) * 84
+        if ((searchResults.scrollTop - ((this.current) * 114)) <= -342) {
+          searchResults.scrollTop = (this.current) * 114
         }
       }
     },
