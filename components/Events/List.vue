@@ -81,7 +81,7 @@
         </div>
 
         <footer class="flex items-center justify-between leading-none p-2 md:p-4 w-full">
-          <NuxtLink :to="`location/${event.location.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
+          <NuxtLink :to="`/location/${event.location.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
             <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
             <p class="ml-2 text-lg">
               {{ event.location.name }}
