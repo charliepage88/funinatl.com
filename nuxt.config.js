@@ -40,7 +40,6 @@ export default {
   ** Global CSS
   */
   css: [
-    '~/assets/css/tailwind.css',
     '~/assets/sass/app.sass'
   ],
 
@@ -52,6 +51,7 @@ export default {
     '~plugins/filters.js',
     '~plugins/search.js',
     '~plugins/axios.js',
+    '~plugins/mq.js',
     { src: '~plugins/toast.js', ssr: false }
   ],
 
@@ -62,6 +62,10 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/apollo',
+    [ 'nuxt-buefy', { 
+      css: true,
+      materialDesignIcons: false
+    }],
     [
       'nuxt-mq',
       {

@@ -19,7 +19,8 @@ export default {
         location: null,
         is_family_friendly: false,
         query: ''
-      }
+      },
+      hasDoneSearch: false
     }
   },
 
@@ -42,6 +43,10 @@ export default {
 
     isDirty () {
       return !!this.query
+    },
+
+    hasNoResults () {
+      return this.hasQuery && !this.hasItems && this.hasDoneSearch
     }
   },
 
@@ -53,7 +58,7 @@ export default {
 
     update: debounce(
       function () {
-        if (!this.query) {
+        if (!this.hasQuery) {
           return this.reset()
         }
 
@@ -73,12 +78,19 @@ export default {
 
               this.items = this.limit ? data.slice(0, this.limit) : data
               this.current = -1
+              this.hasDoneSearch = true
             }
           })
           .finally(() => {
             this.stopLoading()
           })
       }, 300),
+
+    updateFilter () {
+      if (this.hasQuery) {
+        this.update()
+      }
+    },
 
     fetch () {
       if (!this.$axios) {
@@ -127,9 +139,12 @@ export default {
     },
 
     reset () {
+      console.log('reset')
+
       this.items = []
       this.query = ''
       this.current = -1
+      this.hasDoneSearch = false
 
       this.filters = {
         category: null,
@@ -179,7 +194,7 @@ export default {
       }
 
       if (this.current && this.current % (this.visibleItems) === 0 && searchResults.scrollTop !== 0) {
-        searchResults.scrollTop = ((this.current + 1) - this.visibleItems) * 114
+        searchResults.scrollTop = ((this.current + 1) - this.visibleItems) * 84
       }
     },
 
@@ -203,10 +218,10 @@ export default {
       }
 
       if (this.current && this.current % this.visibleItems === 0) {
-        searchResults.scrollTop = (this.current) * 114
+        searchResults.scrollTop = (this.current) * 84
       } else {
-        if ((searchResults.scrollTop - ((this.current) * 114)) <= -342) {
-          searchResults.scrollTop = (this.current) * 114
+        if ((searchResults.scrollTop - ((this.current) * 84)) <= -342) {
+          searchResults.scrollTop = (this.current) * 84
         }
       }
     },

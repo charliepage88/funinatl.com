@@ -24,3 +24,7 @@ Vue.filter('dayOfWeek', (value) => {
 
   return date.format('dddd, MMM Do')
 })
+
+Vue.filter('friendlyDate', (value) => {
+  return moment(value).format('dddd, MMM Do')
+})

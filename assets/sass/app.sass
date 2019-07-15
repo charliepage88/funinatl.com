@@ -1,22 +1,11 @@
+// $footer-background-color: #000
+
+@import "~bulmaswatch/lux/_variables.scss"
+@import "~bulma"
+@import "~bulmaswatch/lux/_overrides.scss"
+
 // Components
 @import 'components/index';
-
-body
-  font-family: "Roboto"
-  font-size: 14px
-  margin: 0!important
-  padding: 0!important
-  overflow-x: hidden
-
-h1, h2, h3, h4, h5, h6
-  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif
-
-.is-font-normal
-  font-family: "Roboto"!important
-  font-size: 14px
-
-.is-font-title
-  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif!important
 
 .has-cursor-pointer
   cursor: pointer!important
@@ -33,3 +22,159 @@ h1, h2, h3, h4, h5, h6
 
 .w-30
   width: 30%
+
+.is-indigo
+  background-color: indigo
+  color: #fff
+
+// margin & padding helpers
+@for $i from 1 through 8
+  // margin
+  .mt-#{$i}
+    margin-top: 1rem * $i
+
+  .mr-#{$i}
+    margin-right: 1rem * $i
+
+  .ml-#{$i}
+    margin-left: 1rem * $i
+
+  .mb-#{$i}
+    margin-bottom: 1rem * $i
+
+  .m-#{$i}
+    margin: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)
+
+  // padding
+  .pt-#{$i}
+    padding-top: 1rem * $i
+
+  .pr-#{$i}
+    padding-right: 1rem * $i
+
+  .pl-#{$i}
+    padding-left: 1rem * $i
+
+  .pb-#{$i}
+    padding-bottom: 1rem * $i
+
+  .p-#{$i}
+    padding: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)
+
+// px helpers for margin/padding
+@for $i from 1 through 30
+  // margin
+  .mt-px-#{$i}
+    margin-top: 1px * $i
+
+  .mr-px-#{$i}
+    margin-right: 1px * $i
+
+  .ml-px-#{$i}
+    margin-left: 1px * $i
+
+  .mb-px-#{$i}
+    margin-bottom: 1px * $i
+
+  .m-px-#{$i}
+    margin: (1px * $i) (1px * $i) (1px * $i) (1px * $i)
+
+  // padding
+  .pt-px-#{$i}
+    padding-top: 1px * $i
+
+  .pr-px-#{$i}
+    padding-right: 1px * $i
+
+  .pl-px-#{$i}
+    padding-left: 1px * $i
+
+  .pb-px-#{$i}
+    padding-bottom: 1px * $i
+
+  .p-px-#{$i}
+    padding: (1px * $i) (1px * $i) (1px * $i) (1px * $i)
+
+// no padding
+.p-0
+  padding: 0!important
+
+.pt-0
+  padding-top: 0!important
+
+.pb-0
+  padding-bottom: 0!important
+
+.pl-0
+  padding-left: 0!important
+
+.pr-0
+  padding-right: 0!important
+
+// no margin
+.m-0
+  margin: 0!important
+
+.mt-0
+  margin-top: 0!important
+
+.mb-0
+  margin-bottom: 0!important
+
+.ml-0
+  margin-left: 0!important
+
+.mr-0
+  margin-right: 0!important
+
+// position classes
+.relative
+  position: relative!important
+
+.absolute
+  position: absolute!important
+
+// shadows
+
+.shadow
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)
+
+.shadow-md
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)
+
+.shadow-lg
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)
+
+.shadow-xl
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)
+
+.shadow-2xl
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25)
+
+.shadow-inner
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)
+
+.shadow-outline
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5)
+
+.shadow-none
+  box-shadow: none
+
+// borders
+@for $i from 1 through 5
+  // primary
+  .border-primary-#{$i}
+    border: (1px * $i) solid #209cee
+
+  .border-t-primary-#{$i}
+    border-top: (1px * $i) solid #209cee
+
+  .border-b-primary-#{$i}
+    border-bottom: (1px * $i) solid #209cee
+
+  .border-l-primary-#{$i}
+    border-left: (1px * $i) solid #209cee
+
+  .border-r-primary-#{$i}
+    border-right: (1px * $i) solid #209cee
+
