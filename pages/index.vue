@@ -1,5 +1,5 @@
 <template>
-  <div class="centered-container">
+  <div>
     <Search @change="searchSetValue" />
 
     <nav class="bg-white px-8 pt-2 shadow-md" v-if="1 === 2">
@@ -17,24 +17,24 @@
       </div>
     </nav>
 
-    <section class="section mb-6 mt-6">
+    <section class="section">
       <div class="centered-container">
         <template v-if="!mode || mode === 'all'">
           <template v-if="hasWeekdayEvents">
-            <h3 class="subtitle has-text-centered is-4">This Week</h3>
+            <h3 class="subtitle has-text-centered is-2">This Week's Events</h3>
 
             <div v-for="(rows, date) in weekdayEvents" :key="date">
-              <h4 class="subtitle is-6 mt-12 mb-2">{{ date | dayOfWeek }}</h4>
+              <h4 class="subtitle is-4 mt-6 mb-2">{{ date | dayOfWeek }}</h4>
 
               <events-list :events="rows" />
             </div>
           </template>
 
           <template v-if="hasWeekendEvents">
-            <h3 class="subtitle has-text-centered is-4 mt-20">This Weekend</h3>
+            <h3 class="subtitle has-text-centered is-2 mt-8">This Weekend's Events</h3>
 
             <div v-for="(rows, date) in weekendEvents" :key="date">
-              <h4 class="subtitle is-6 mt-12 mb-2">{{ date | dayOfWeek }}</h4>
+              <h4 class="subtitle is-4 mt-6 mb-2">{{ date | dayOfWeek }}</h4>
 
               <events-list :events="rows" />
             </div>

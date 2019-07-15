@@ -60,10 +60,8 @@
       </div>
     </nav>
 
-    <section class="section is-content">
-      <div class="container is-fluid">
-        <nuxt></nuxt>
-      </div>
+    <section class="section is-content has-background-white-bis pr-0 pl-0">
+      <nuxt></nuxt>
     </section>
 
     <footer class="footer">
@@ -187,7 +185,7 @@
             <p class="is-footer-text">
               Copyright &copy;2016-2019
               <br />
-              <a href="https://www.charliepage88.com" target="_blank" class="text-white">Charles Page</a>.
+              <a href="https://www.charliepage88.com" target="_blank" class="text-white">Charles Page</a>
             </p>
           </div>
         </div>

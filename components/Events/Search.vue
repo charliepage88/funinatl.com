@@ -2,7 +2,7 @@
   <section class="hero is-info">
     <div class="hero-body">
       <div class="columns">
-        <div class="column is-4">
+        <div class="column">
           <b-field class="relative search-input-container">
             <input
               class="input is-large"
@@ -80,7 +80,7 @@
           </b-field>
         </div>
 
-        <div class="column is-2">
+        <div class="column is-3">
           <b-field>
             <b-select
               v-model="filters.category"
@@ -102,7 +102,7 @@
           </b-field>
         </div>
 
-        <div class="column is-2">
+        <div class="column is-3">
           <b-field>
             <b-select
               v-model="filters.location"
@@ -124,19 +124,19 @@
           </b-field>
         </div>
 
-        <div class="column is-2">
+        <div class="column is-narrow mt-1">
           <b-field>
             <b-checkbox
               v-model="filters.is_family_friendly"
               @input="updateFilter"
-              size="is-large"
+              size="is-medium"
             >
               Family Friendly
             </b-checkbox>
           </b-field>
         </div>
 
-        <div class="column is-2">
+        <div class="column is-narrow">
           <button class="button is-large is-danger" @click.prevent="reset">
             Reset
           </button>

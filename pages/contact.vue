@@ -1,92 +1,82 @@
 <template>
-	<div class="container mx-auto px-64">
-	  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-	    <form @submit.prevent="submit">
-	      <h1 class="text-xl mb-2">Contact</h1>
+  <div class="container is-fluid pl-4 pr-4">
+  	<div class="centered-container">
+  	  <div class="box shadow-md rounded">
+  	    <form @submit.prevent="submit">
+  	      <h1 class="title is-1">Contact</h1>
 
-	      <p
-	        class="text-gray-700 mb-8"
-	      >
-	      	Have any feedback for us on the site? Feel free to fill out this form with any questions as well as any other sort of request, we will respond as soon as possible. Thank you!
-	      </p>
+  	      <p
+  	        class="has-text-grey-light mb-2"
+  	      >
+  	      	Have any feedback for us on the site? Feel free to fill out this form with any questions as well as any other sort of request, we will respond as soon as possible. Thank you!
+  	      </p>
 
-	      <div class="-mx-3 md:flex mb-6">
-	        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-	          <label
-	            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-	            for="name"
-	          >
+	        <div class="field">
+	          <label class="label">
 	            Your Name
-	            <span class="text-red-500 text-xs italic">*</span>
+	            <span class="has-text-danger is-italic">*</span>
 	          </label>
 
-	          <input
-	            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-	            id="name"
-	            type="text"
-	            v-model="form.name"
-	            :class="{ 'border-red-500': errors.name }"
-	          />
+            <div class="control">
+  	          <input
+  	            class="input is-large"
+  	            type="text"
+  	            v-model="form.name"
+  	            :class="{ 'is-danger': errors.name }"
+  	          />
+            </div>
 
-	          <p class="text-red text-xs italic" v-if="errors.name">Please fill out this field.</p>
+	          <p class="help is-danger" v-if="errors.name">Please fill out this field.</p>
 	        </div>
 
-	        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-	          <label
-	            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-	            for="email"
-	          >
-	            Email Address
-	            <span class="text-red-500 text-xs italic">*</span>
-	          </label>
+          <div class="field">
+            <label class="label">
+              Email Address
+              <span class="has-text-danger is-italic">*</span>
+            </label>
 
-	          <input
-	            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-	            id="email"
-	            type="email"
-	            v-model="form.email"
-	            :class="{ 'border-red-500': errors.email }"
-	          />
+            <div class="control">
+              <input
+                class="input is-large"
+                type="email"
+                v-model="form.email"
+                :class="{ 'is-danger': errors.email }"
+              />
+            </div>
 
-	          <p class="text-red text-xs italic" v-if="errors.email">Please fill out this field.</p>
-	        </div>
-	      </div>
+            <p class="help is-danger" v-if="errors.email">Please fill out this field.</p>
+          </div>
 
-	      <div class="-mx-3 md:flex mb-2">
-	        <div class="w-full px-3 mb-6 md:mb-0">
-	          <label
-	            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-	            for="body"
-	          >
-	        		Message 
-	        		<span class="text-red-500 text-xs italic">*</span>
-	        	</label>
+          <div class="field">
+            <label class="label">
+              Message
+              <span class="has-text-danger is-italic">*</span>
+            </label>
 
-	          <textarea
-	            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-	            id="body"
-	            v-model="form.body"
-	            rows="12"
-	            :class="{ 'border-red-500': errors.body }"
-	          />
+            <div class="control">
+              <textarea
+                class="textarea is-large"
+                v-model="form.body"
+                rows="12"
+                :class="{ 'is-danger': errors.body }"
+              />
+            </div>
 
-	          <p class="text-red text-xs italic" v-if="errors.body">Please fill out this field.</p>
-	        </div>
-	      </div>
+            <p class="help is-danger" v-if="errors.body">Please fill out this field.</p>
+          </div>
 
-	      <div class="-mx-3 md:flex mb-2">
-	        <div class="w-full px-3 mb-6 md:mb-0">
+	        <div class="field">
 	          <button
 	            type="submit"
-	            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+	            class="button is-large is-info"
 	          >
               Submit
             </button>
 	        </div>
-	      </div>
-	    </form>
-	  </div>
-	</div>
+  	    </form>
+  	  </div>
+  	</div>
+  </div>
 </template>
 
 <script>

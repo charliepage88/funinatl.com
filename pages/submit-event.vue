@@ -1,269 +1,249 @@
 <template>
-  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-    <form @submit.prevent="submit">
-      <h1 class="text-xl mb-2">Submit Event</h1>
+  <div class="container is-fluid pl-4 pr-4">
+    <div class="centered-container">
+      <div class="box shadow-md rounded">
+        <form @submit.prevent="submit">
+          <h1 class="title is-1">Submit Event</h1>
 
-      <p
-        class="text-gray-700 mb-8"
-      >See an event upcoming in Atlanta that's not listed here? Please feel free to use the form below. After a review period, we'll publish it to the site.</p>
+          <p class="has-text-grey-light mb-2">
+            See an event upcoming in Atlanta that's not listed here? Please feel free to use the form below. After a review period, we'll publish it to the site.
+          </p>
 
-      <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="name"
-          >
-            Event Name
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
+          <div class="columns is-multiline">
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">
+                  Event Name
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
 
-          <input
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="name"
-            type="text"
-            v-model="form.name"
-            :class="{ 'border-red-500': errors.name }"
-          />
-
-          <p class="text-red text-xs italic" v-if="errors.name">Please fill out this field.</p>
-        </div>
-
-        <div class="md:w-1/4 px-3">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="location"
-          >
-            Location
-          </label>
-
-          <div class="relative">
-            <select
-              class="block appearance-none w-full bg-gray-300 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded"
-              id="location"
-              v-model="form.location_id"
-            >
-              <option value="null">Other Location</option>
-              <option
-                v-for="location in locations"
-                :key="location.id"
-                :value="location.id"
-              >{{ location.name }}</option>
-            </select>
-
-            <div
-              class="pointer-events-none absolute right-0 top-0 mt-4 flex items-center px-2 text-gray-700"
-            >
-              <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path
-                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                <input
+                  class="input is-medium"
+                  id="name"
+                  type="text"
+                  v-model="form.name"
+                  :class="{ 'is-danger': errors.name }"
                 />
-              </svg>
+
+                <p class="help is-danger" v-if="errors.name">Please fill out this field.</p>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="md:w-1/4 px-3">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="category"
-          >
-            Category
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  Location
+                </label>
 
-          <div class="relative">
-            <select
-              class="block appearance-none w-full bg-gray-300 border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded"
-              id="category"
-              v-model="form.category_id"
-              :class="{ 'border-red-500': errors.category_id }"
-            >
-              <option value="null"></option>
-              <option
-                v-for="category in categories"
-                :key="category.id"
-                :value="category.id"
-              >{{ category.name }}</option>
-            </select>
+                <div class="control">
+                  <div
+                    class="select is-medium is-fullwidth"
+                    :class="{ 'is-danger': errors.location_id }"
+                  >
+                    <select v-model="form.location_id">
+                      <option value="null">Choose Location</option>
+                      <option
+                        v-for="location in locations"
+                        :key="location.id"
+                        :value="location.id"
+                      >
+                        {{ location.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
 
-            <div
-              class="pointer-events-none absolute right-0 top-0 mt-4 flex items-center px-2 text-gray-700"
-            >
-              <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path
-                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                <p class="help is-danger" v-if="errors.location_id">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  Category
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
+
+                <div class="control">
+                  <div
+                    class="select is-medium is-fullwidth"
+                    :class="{ 'is-danger': errors.category_id }"
+                  >
+                    <select v-model="form.category_id">
+                      <option value="null">Choose Category</option>
+                      <option
+                        v-for="category in categories"
+                        :key="category.id"
+                        :value="category.id"
+                      >
+                        {{ category.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <p class="help is-danger" v-if="errors.category_id">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  Start Date
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
+
+                <b-datepicker
+                  v-model="form.start_date"
+                  :min-date="minDate"
+                  :max-date="maxDate"
+                  :first-day-of-week="1"
+                  size="is-medium"
+                  :mobile-native="false"
+                  :class="{ 'is-danger': errors.start_date }"
+                  :date-formatter="formatDate"
                 />
-              </svg>
+
+                <p class="help is-danger" v-if="errors.start_date">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  End Date
+                </label>
+
+                <b-datepicker
+                  v-model="form.end_date"
+                  :min-date="minDate"
+                  :max-date="maxDate"
+                  :first-day-of-week="1"
+                  size="is-medium"
+                  :mobile-native="false"
+                  :class="{ 'is-danger': errors.end_date }"
+                  :date-formatter="formatDate"
+                />
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  Start Time
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
+
+                <b-timepicker
+                  v-model="form.start_time"
+                  :class="{ 'is-danger': errors.start_time }"
+                  :time-formatter="formatTime"
+                  size="is-small"
+                  hour-format="12"
+                  inline
+                />
+
+                <p class="help is-danger" v-if="errors.start_time">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  End Time
+                </label>
+
+                <b-timepicker
+                  v-model="form.end_time"
+                  :class="{ 'is-danger': errors.end_time }"
+                  :time-formatter="formatTime"
+                  size="is-small"
+                  hour-format="12"
+                  inline
+                />
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <div class="field">
+                <label class="label">
+                  Price
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
+
+                <input
+                  class="input is-medium"
+                  type="text"
+                  v-model="form.price"
+                  :class="{ 'is-danger': errors.price }"
+                />
+
+                <p class="help is-danger" v-if="errors.price">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-one-quarter">
+              <b-field class="mt-2">
+                <b-checkbox
+                  v-model="form.is_family_friendly"
+                  size="is-medium"
+                >
+                  Family Friendly
+                </b-checkbox>
+              </b-field>
+            </div>
+
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">
+                  Website URL
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
+
+                <input
+                  class="input is-medium"
+                  type="text"
+                  v-model="form.website"
+                  :class="{ 'is-danger': errors.website }"
+                />
+
+                <p class="help is-danger" v-if="errors.website">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-half">
+              <div class="field">
+                <label class="label">
+                  Description
+                </label>
+
+                <textarea
+                  class="textarea is-medium"
+                  id="description"
+                  v-model="form.description"
+                  rows="6"
+                />
+              </div>
+            </div>
+
+            <div class="column is-12">
+              <button
+                type="submit"
+                class="button is-large is-info is-fullwidth"
+              >
+                Submit
+              </button>
             </div>
           </div>
-
-          <p class="text-red text-xs italic" v-if="errors.category_id">Please fill out this field.</p>
-        </div>
+        </form>
       </div>
-
-      <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/4 px-3">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          >
-            Start Date
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
-
-          <date-picker
-            v-model="form.start_date"
-            :has-error="errors.start_date"
-            @change="updateForm('start_date', $event)"
-          />
-
-          <p class="text-red text-xs italic" v-if="errors.start_date">Please fill out this field.</p>
-        </div>
-
-        <div class="md:w-1/4 px-3">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-          >
-            End Date
-          </label>
-
-          <date-picker
-            v-model="form.end_date"
-            @change="updateForm('end_date', $event)"
-          />
-        </div>
-
-        <div class="md:w-1/4 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="start_time"
-          >
-            Start Time
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
-
-          <input
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="start_time"
-            type="text"
-            v-model="form.start_time"
-            :class="{ 'border-red-500': errors.start_time }"
-          />
-
-          <p class="text-red text-xs italic" v-if="errors.start_time">Please fill out this field.</p>
-        </div>
-
-        <div class="md:w-1/4 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="end_time"
-          >
-            End Time
-          </label>
-
-          <input
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="end_time"
-            type="text"
-            v-model="form.end_time"
-          />
-        </div>
-      </div>
-
-      <div class="-mx-3 md:flex mb-2">
-        <div class="md:w-1/4 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="price"
-          >
-            Price
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
-
-          <input
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="price"
-            type="text"
-            v-model="form.price"
-            :class="{ 'border-red-500': errors.price }"
-          />
-
-          <p class="text-red text-xs italic" v-if="errors.price">Please fill out this field.</p>
-
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="is_family_friendly"
-          >
-            Family Friendly
-          </label>
-
-          <div class="mb-2">
-            <div class="form-switch inline-block align-middle">
-              <input
-                type="checkbox"
-                name="is_family_friendly"
-                id="is_family_friendly"
-                class="form-switch-checkbox"
-                value="1"
-                v-model="form.is_family_friendly"
-              />
-              <label class="form-switch-label" for="is_family_friendly"></label>
-            </div>
-          </div>
-        </div>
-
-        <div class="md:w-1/4 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="website"
-          >
-            Website URL
-            <span class="text-red-500 text-xs italic">*</span>
-          </label>
-
-          <input
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="website"
-            type="text"
-            v-model="form.website"
-            :class="{ 'border-red-500': errors.website }"
-          />
-
-          <p class="text-red text-xs italic" v-if="errors.website">Please fill out this field.</p>
-        </div>
-
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-          <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="description"
-          >
-            Description
-          </label>
-
-          <textarea
-            class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-            id="description"
-            v-model="form.description"
-            rows="4"
-          />
-        </div>
-      </div>
-
-      <div class="-mx-3 md:flex mb-2">
-        <div class="w-full px-3 mb-6 md:mb-0">
-          <button
-            type="submit"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import moment from 'moment'
 import DatePicker from '@/components/Common/DatePicker'
 import Categories from '@/queries/Categories'
 import Locations from '@/queries/Locations'
@@ -317,7 +297,10 @@ export default {
 				start_time: false,
 				price: false,
 				website: false
-			}
+			},
+
+      minDate: new Date(),
+      maxDate: moment().add(4, 'month').toDate()
 		}
 	},
 
@@ -400,9 +383,13 @@ export default {
       return errorsCount === 0
 		},
 
-		updateForm (key, value) {
-			this.$set(this.form, key, value)
-		}
+		formatDate (date) {
+      return moment(date).format('YYYY-MM-DD')
+    },
+
+    formatTime (time) {
+      return moment(time).format('h:m A')
+    }
 	}
 }
 </script>

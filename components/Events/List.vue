@@ -1,7 +1,121 @@
 <template>
-  <div class="container mx-auto">
+  <div class="row columns">
+    <div
+      class="column is-one-third has-cursor-pointer"
+      v-for="event in events"
+      :key="event.id"
+    >
+      <div class="card large">
+        <div class="card-image" v-if="event.photo">
+          <NuxtLink :to="`event/${event.slug}`">
+            <figure class="image">
+              <img :alt="event.name" class="event-image" :src="event.photo">
+            </figure>
+          </NuxtLink>
+        </div>
+
+        <div class="card-content">
+          <div class="media">
+            <div class="media-left">
+              <NuxtLink :to="`/location/${event.location.slug}`">
+                <figure class="image is-96x96">
+                  <img v-if="event.location.photo" :alt="event.location.name" :src="event.location.photo">
+                </figure>
+              </NuxtLink>
+            </div>
+
+            <div class="media-content">
+              <p class="title is-4 mb-0">
+                {{ event.name }}
+              </p>
+
+              <p>
+                <span class="title is-6">
+                  <NuxtLink :to="`/location/${event.location.slug}`">
+                    {{ event.location.name }}
+                  </NuxtLink>
+                </span>
+              </p>
+
+              <span class="tag is-success">
+                {{ event.category.name }}
+              </span>
+            </div>
+          </div>
+
+          <div class="content">
+            <!-- start/end date -->
+            <h4 class="title is-6 has-text-normal has-text-grey-dark has-text-centered" v-if="event.end_date">
+              {{ event.start_date | fullDate }} - {{ event.end_date | fullDate }}
+            </h4>
+
+            <h4 class="title is-6 has-text-normal has-text-grey-dark has-text-centered" v-else>
+              {{ event.start_date | fullDate }}
+            </h4>
+
+            <!-- start time/end time -->
+            <h4 class="subtitle is-6 has-text-normal has-text-grey-light has-text-centered" v-if="event.end_time">
+              {{ event.start_time }} - {{ event.end_time }}
+            </h4>
+
+            <h4 class="subtitle is-6 has-text-normal has-text-grey-light has-text-centered" v-else>
+              {{ event.start_time }}
+            </h4>
+
+            <!-- price -->
+            <b-button
+              type="is-light"
+              class="is-centered"
+              size="is-medium"
+            >
+              {{ event.price }}
+            </b-button>
+
+            <!-- descriptions -->
+            <p class="has-text-grey-dark mt-1" v-if="event.short_description">
+              {{ event.short_description }}
+            </p>
+
+            <p class="has-text-grey-dark mt-1" v-if="event.description">
+              {{ event.description }}
+            </p>
+
+            <!-- family friendly (if active) -->
+            <b-button
+              type="is-warning"
+              icon-left="child"
+              icon-pack="fas"
+              v-if="event.is_family_friendly"
+              class="is-centered mb-2"
+            >
+              Family Friendly
+            </b-button>
+
+            <!-- tags list -->
+            <div class="tags mt-1" v-if="event.tags.length">
+              <NuxtLink
+                v-for="tag in event.tags"
+                :key="tag.slug"
+                :to="`/tags/${tag.slug}`"
+                class="tag is-info"
+              >
+                {{ tag.name }}
+              </NuxtLink>
+            </div>
+          </div>
+
+          <footer class="card-footer" v-if="1 === 2">
+            <p class="card-footer-item">
+
+            </p>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="container mx-auto">
     <div class="flex flex-wrap events-container overflow-hidden">
-      <!-- Column -->
       <div
         class="event-card overflow-hidden rounded-lg w-full sm:w-full shadow-lg bg-blue-300"
         v-for="event in events"
@@ -100,9 +214,8 @@
           </a>
         </footer>
       </div>
-      <!-- END Column -->
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -116,3 +229,9 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.event-image
+  width: 100%!important
+  height: 250px!important
+</style>

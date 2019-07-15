@@ -1,44 +1,47 @@
 <template>
-  <div class="container mx-auto px-64">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
-      <form @submit.prevent="submit">
-        <h1 class="text-xl mb-2">Subscribe</h1>
+  <div class="container is-fluid pl-4 pr-4">
+    <div class="centered-container">
+      <div class="box shadow-md rounded">
+        <form @submit.prevent="submit">
+          <h1 class="title is-1">Subscribe</h1>
 
-        <p class="text-gray-700 mb-8">
-          Keep updated on events going on in Atlanta. Unsubscribe anytime you want!
-        </p>
+          <p class="has-text-grey-light mb-2">
+            Keep updated on events going on in Atlanta. Unsubscribe anytime you want!
+          </p>
 
-        <div class="-mx-3 md:flex">
-          <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-            <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="email"
-            >
-              Email Address
-              <span class="text-red-500 text-xs italic">*</span>
-            </label>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <div class="field">
+                <label class="label">
+                  Email Address
+                  <span class="has-text-danger is-italic">*</span>
+                </label>
 
-            <input
-              class="appearance-none block w-full bg-gray-300 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3"
-              id="email"
-              type="email"
-              placeholder="Your email address"
-              v-model="form.email"
-              :class="{ 'border-red-500': errors.email }"
-            />
-            <p class="text-red text-xs italic" v-if="errors.email">Please fill out this field.</p>
+                <div class="control">
+                  <input
+                    class="input is-large"
+                    type="email"
+                    placeholder="Your email address"
+                    v-model="form.email"
+                    :class="{ 'is-danger': errors.email }"
+                  />
+                </div>
+
+                <p class="help is-danger" v-if="errors.email">Please fill out this field.</p>
+              </div>
+            </div>
+
+            <div class="column is-12">
+              <button
+                type="submit"
+                class="button is-large is-info is-fullwidth"
+              >
+                Subscribe
+              </button>
+            </div>
           </div>
-
-          <div class="w-auto mt-6">
-            <button
-              type="submit"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-10 border border-blue-700 rounded"
-            >
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>

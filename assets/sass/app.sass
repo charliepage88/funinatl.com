@@ -1,4 +1,4 @@
-// $footer-background-color: #000
+$footer-background-color: whitesmoke
 
 @import "~bulmaswatch/lux/_variables.scss"
 @import "~bulma"
@@ -27,73 +27,97 @@
   background-color: indigo
   color: #fff
 
+  &:hover
+    color: #fafafa!important
+
+// misc
+.media-content
+  overflow: hidden
+
+.card
+  overflow: hidden
+
+  &.large
+  height: 730px
+  -webkit-backface-visibility: hidden
+  backface-visibility: initial
+  border-radius: 5px
+
+.is-centered
+  margin: 0 auto!important
+  display: block
+
+.has-text-normal
+  text-transform: initial
+  letter-spacing: initial
+
 // margin & padding helpers
 @for $i from 1 through 8
   // margin
   .mt-#{$i}
-    margin-top: 1rem * $i
+    margin-top: (1rem * $i)!important
 
   .mr-#{$i}
-    margin-right: 1rem * $i
+    margin-right: (1rem * $i)!important
 
   .ml-#{$i}
-    margin-left: 1rem * $i
+    margin-left: (1rem * $i)!important
 
   .mb-#{$i}
-    margin-bottom: 1rem * $i
+    margin-bottom: (1rem * $i)!important
 
   .m-#{$i}
-    margin: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)
+    margin: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)!important
 
   // padding
   .pt-#{$i}
-    padding-top: 1rem * $i
+    padding-top: (1rem * $i)!important
 
   .pr-#{$i}
-    padding-right: 1rem * $i
+    padding-right: (1rem * $i)!important
 
   .pl-#{$i}
-    padding-left: 1rem * $i
+    padding-left: (1rem * $i)!important
 
   .pb-#{$i}
-    padding-bottom: 1rem * $i
+    padding-bottom: (1rem * $i)!important
 
   .p-#{$i}
-    padding: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)
+    padding: (1rem * $i) (1rem * $i) (1rem * $i) (1rem * $i)!important
 
 // px helpers for margin/padding
 @for $i from 1 through 30
   // margin
   .mt-px-#{$i}
-    margin-top: 1px * $i
+    margin-top: (1px * $i)!important
 
   .mr-px-#{$i}
-    margin-right: 1px * $i
+    margin-right: (1px * $i)!important
 
   .ml-px-#{$i}
-    margin-left: 1px * $i
+    margin-left: (1px * $i)!important
 
   .mb-px-#{$i}
-    margin-bottom: 1px * $i
+    margin-bottom: (1px * $i)!important
 
   .m-px-#{$i}
-    margin: (1px * $i) (1px * $i) (1px * $i) (1px * $i)
+    margin: (1px * $i) (1px * $i) (1px * $i) (1px * $i)!important
 
   // padding
   .pt-px-#{$i}
-    padding-top: 1px * $i
+    padding-top: (1px * $i)!important
 
   .pr-px-#{$i}
-    padding-right: 1px * $i
+    padding-right: (1px * $i)!important
 
   .pl-px-#{$i}
-    padding-left: 1px * $i
+    padding-left: (1px * $i)!important
 
   .pb-px-#{$i}
-    padding-bottom: 1px * $i
+    padding-bottom: (1px * $i)!important
 
   .p-px-#{$i}
-    padding: (1px * $i) (1px * $i) (1px * $i) (1px * $i)
+    padding: (1px * $i) (1px * $i) (1px * $i) (1px * $i)!important
 
 // no padding
 .p-0
@@ -178,3 +202,18 @@
   .border-r-primary-#{$i}
     border-right: (1px * $i) solid #209cee
 
+  // danger
+  .border-danger-#{$i}
+    border: (1px * $i) solid #d9534f
+
+  .border-t-danger-#{$i}
+    border-top: (1px * $i) solid #d9534f
+
+  .border-b-danger-#{$i}
+    border-bottom: (1px * $i) solid #d9534f
+
+  .border-l-danger-#{$i}
+    border-left: (1px * $i) solid #d9534f
+
+  .border-r-danger-#{$i}
+    border-right: (1px * $i) solid #d9534f
