@@ -47,6 +47,10 @@ export default {
 
     hasNoResults () {
       return this.hasQuery && !this.hasItems && this.hasDoneSearch
+    },
+
+    hasResults () {
+      return this.hasQuery && this.hasItems
     }
   },
 

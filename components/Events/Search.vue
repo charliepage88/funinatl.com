@@ -24,7 +24,7 @@
               </span>
             </div>
 
-            <div class="absolute search-results-container" v-if="hasQuery && hasItems">
+            <div class="absolute search-results-container" v-if="hasResults">
               <div
                 class="has-background-white shadow-lg search-results"
               >
@@ -51,11 +51,7 @@
                       class="column is-9 mb-0 mt-px-5"
                       :class="{ 'pb-1': !event.is_last, 'pb-0': event.is_last }"
                     >
-                      <span
-                        class="has-text-black"
-                      >
-                        {{ event.name }}
-                      </span>
+                      <span class="has-text-black" v-html="item.highlight" />
 
                       <div class="columns">
                         <div
@@ -68,7 +64,7 @@
 
                         <div class="column is-5">
                           <span class="tag is-success">
-                            {{ event.category }}
+                            {{ event.category.name }}
                           </span>
                         </div>
                       </div>
@@ -264,12 +260,24 @@ export default {
         return []
       }
 
+      let eventsCount = (results.events.length - 1)
+
       let events = results.events.map((event, index) => {
-        let isLast = (index === (results.events.length - 1))
+        let src = item._source
 
-        event.is_last = isLast
+        src.index = item._index
 
-        return event
+        if (item.highlight && item.highlight.name && item.highlight.name[0]) {
+          src.highlight = item.highlight.name[0]
+        } else {
+          src.highlight = src.name
+        }
+
+        let isLast = (index === eventsCount)
+
+        src.is_last = isLast
+
+        return src
       })
 
       this.reFocus()
