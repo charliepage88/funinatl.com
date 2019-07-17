@@ -1,8 +1,8 @@
 <template>
   <section class="hero is-info is-bold">
     <div class="hero-body" :class="{ 'pb-1 pt-1': isMobile }">
-      <div class="columns" :class="{ 'is-multiline': !isDesktop }">
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-third': isDesktop }">
+      <div class="columns" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-third': isDesktopOrWidescreen }">
           <b-field class="relative search-input-container">
             <input
               class="input is-large"
@@ -76,7 +76,7 @@
           </b-field>
         </div>
 
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktop }">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
           <b-field>
             <b-select
               v-model="filters.category"
@@ -99,7 +99,7 @@
           </b-field>
         </div>
 
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktop }">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
           <b-field>
             <b-select
               v-model="filters.location"
@@ -124,7 +124,7 @@
 
         <div
           class="column mt-1"
-          :class="{ 'is-one-quarter': isTablet, 'is-one-fifth': isDesktop }"
+          :class="{ 'is-one-quarter': isTablet, 'is-2': isDesktop, 'is-one-fifth': isWidescreen }"
         >
           <b-field>
             <b-checkbox
@@ -344,7 +344,7 @@ export default {
   left: 0
   border-radius: 2px
   box-shadow: 0 0 10px rgba(0,0,0, 0.25)
-  z-index: 2
+  z-index: 9
   max-height: 252px
   min-height: 84px
 
@@ -354,7 +354,7 @@ export default {
   left: 0
   border-radius: 2px
   box-shadow: 0 0 10px rgba(0,0,0, 0.25)
-  z-index: 2
+  z-index: 9
 
 .search-input-container
   width: 100%

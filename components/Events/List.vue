@@ -4,11 +4,11 @@
       class="column has-cursor-pointer"
       v-for="event in events"
       :key="`event-${event.slug}`"
-      :class="{ 'is-one-third': isDesktop, 'is-half': isTablet }"
+      :class="{ 'is-one-third': isDesktopOrWidescreen, 'is-half': isTablet }"
     >
       <div class="card large">
         <div class="card-image" v-if="event.photo">
-          <NuxtLink :to="`event/${event.slug}`">
+          <NuxtLink :to="`/event/${event.slug}`">
             <figure class="image">
               <clazy-load class="clazy-load-wrapper" :src="event.photo" :ratio="0.2">
                 <transition name="fade">
@@ -35,7 +35,9 @@
 
             <div class="media-content">
               <p class="title is-4 mb-0">
-                {{ event.name }}
+                <NuxtLink :to="`/event/${event.slug}`" class="has-text-black">
+                  {{ event.name }}
+                </NuxtLink>
               </p>
 
               <p>
@@ -47,7 +49,9 @@
               </p>
 
               <span class="tag is-success is-medium">
-                {{ event.category.name }}
+                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white">
+                  {{ event.category.name }}
+                </NuxtLink>
               </span>
             </div>
           </div>
@@ -107,8 +111,8 @@
               <NuxtLink
                 v-for="tag in event.tags"
                 :key="tag.slug"
-                :to="`/tags/${tag.slug}`"
-                class="tag is-info"
+                :to="`/tag/${tag.slug}`"
+                class="tag is-info has-text-white"
               >
                 {{ tag.name }}
               </NuxtLink>

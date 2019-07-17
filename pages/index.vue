@@ -125,11 +125,16 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'index',
 
-  asyncData({ params }) {
-    console.log('asyncData')
-    console.log(params)
+  asyncData (context) {
+    let client = context.app.apolloProvider.defaultClient
 
-    return {}
+    return client.query({
+        query: Events,
+        params: {}
+      })
+      .then(({ data }) => {
+        return data
+      })
   },
 
   mixins: [

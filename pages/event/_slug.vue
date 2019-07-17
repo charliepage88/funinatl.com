@@ -6,7 +6,7 @@
         <div class="columns relative">
           <div
             class="column"
-            :class="{ 'is-half': isDesktop, 'is-two-thirds': !isDesktop }"
+            :class="{ 'is-half': isDesktopOrWidescreen, 'is-two-thirds': !isDesktopOrWidescreen }"
           >
             <h1 class="title is-1 is-size-2-tablet">
               {{ event.name }}
@@ -30,7 +30,7 @@
               <div class="level-right">
                 <span
                   class="tag is-success mr-2"
-                  :class="{ 'is-medium': !isDesktop, 'is-large': isDesktop }"
+                  :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
                 >
                   {{ event.category.name }}
                 </span>
@@ -41,7 +41,7 @@
               <NuxtLink
                 v-for="(tag, tagIndex) in event.tags"
                 :key="tag.slug"
-                :to="`/tags/${tag.slug}`"
+                :to="`/tag/${tag.slug}`"
                 class="tag is-info"
               >
                 {{ tag.name }}
@@ -56,7 +56,7 @@
 
             <div
               class="columns"
-              :class="{ 'absolute bottom-0': isDesktop }"
+              :class="{ 'absolute bottom-0': isDesktopOrWidescreen }"
             >
               <div class="column is-narrow">
                 <div class="columns">
@@ -80,12 +80,12 @@
               <div class="column is-narrow" v-if="event.is_family_friendly">
                 <div
                   class="tag is-warning p-px-22"
-                  :class="{ 'is-medium': !isDesktop, 'is-large': isDesktop }"
+                  :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
                 >
                   <b-icon
                     icon="child"
                     pack="fas"
-                    :size="isDesktop ? 'is-large' : 'is-medium'"
+                    :size="isDesktopOrWidescreen ? 'is-large' : 'is-medium'"
                   />
                   <span>Family Friendly</span>
                 </div>
@@ -95,12 +95,12 @@
               <div class="column is-narrow" v-if="event.is_sold_out">
                 <div
                   class="tag is-danger p-px-22"
-                  :class="{ 'is-medium': !isDesktop, 'is-large': isDesktop }"
+                  :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
                 >
                   <b-icon
                     icon="times-circle"
                     pack="fas"
-                    :size="isDesktop ? 'is-large' : 'is-medium'"
+                    :size="isDesktopOrWidescreen ? 'is-large' : 'is-medium'"
                   />
                   <span>Sold Out</span>
                 </div>
@@ -117,7 +117,7 @@
 
           <div
             class="column"
-            :class="{ 'is-half': isDesktop, 'is-one-third': !isDesktop }"
+            :class="{ 'is-half': isDesktopOrWidescreen, 'is-one-third': !isDesktopOrWidescreen }"
           >
             <figure class="image is-16by9" v-if="event.photo">
               <img :alt="event.name" :src="event.photo">
@@ -133,11 +133,11 @@
 
         <!-- List of Bands (if applicable) -->
         <template v-if="bands.length">
-          <hr :class="{ 'mt-4': isDesktop, 'mt-1': !isDesktop }" />
+          <hr :class="{ 'mt-4': isDesktopOrWidescreen, 'mt-1': !isDesktopOrWidescreen }" />
 
           <h3
             class="subtitle is-2 is-size-4-tablet ml-1"
-            :class="{ 'mt-4 mb-4': isDesktop, 'mt-1 mb-2': !isDesktop }"
+            :class="{ 'mt-4 mb-4': isDesktopOrWidescreen, 'mt-1 mb-2': !isDesktopOrWidescreen }"
           >
             Bands
           </h3>
@@ -153,7 +153,7 @@
                   <div class="column is-narrow" v-if="band.photo">
                     <figure
                       class="image"
-                      :class="{ 'is-128x128': isDesktop, 'is-64x64': !isDesktop }"
+                      :class="{ 'is-128x128': isDesktopOrWidescreen, 'is-64x64': !isDesktopOrWidescreen }"
                     >
                       <img :alt="band.name" :src="band.photo" />
                     </figure>
@@ -184,11 +184,16 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'event-show',
 
-  asyncData({ params }) {
-    console.log('asyncData')
-    console.log(params)
+  asyncData (context) {
+    let client = context.app.apolloProvider.defaultClient
 
-    return {}
+    return client.query({
+        query: eventBySlug,
+        params: context.params
+      })
+      .then(({ data }) => {
+        return data
+      })
   },
 
   mixins: [

@@ -8,6 +8,14 @@ var ResponsiveMixin = {
       return this.$mq === 'desktop'
     },
 
+    isDesktopOrWidescreen () {
+      return this.$mq === 'desktop' || this.$mq === 'widescreen'
+    },
+
+    isWidescreen () {
+      return this.$mq === 'widescreen'
+    },
+
     isTablet () {
       return this.$mq === 'tablet'
     },

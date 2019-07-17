@@ -66,10 +66,10 @@
 
     <footer class="footer">
       <div class="container">
-        <div class="columns" :class="{ 'is-multiline': !isDesktop }">
+        <div class="columns" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
           <div
             class="column"
-            :class="{ 'is-2': isDesktop, 'is-narrow': !isDesktop }"
+            :class="{ 'is-2': isDesktopOrWidescreen, 'is-narrow': !isDesktopOrWidescreen }"
           >
             <h3 class="subtitle is-5 is-size-6-tablet">
               Categories
@@ -148,7 +148,7 @@
                 <nuxt-link
                   to="/get-listed"
                   class="button is-info is-fullwidth"
-                  :class="{ 'is-large': isDesktop, 'is-medium': !isDesktop }"
+                  :class="{ 'is-large': isDesktopOrWidescreen, 'is-medium': !isDesktopOrWidescreen }"
                 >
                   <span class="icon is-large">
                     <i class="fas fa-map fa-2x"></i>
@@ -161,7 +161,7 @@
                 <nuxt-link
                   to="/contact"
                   class="button is-indigo is-fullwidth"
-                  :class="{ 'is-large': isDesktop, 'is-medium': !isDesktop }"
+                  :class="{ 'is-large': isDesktopOrWidescreen, 'is-medium': !isDesktopOrWidescreen }"
                 >
                   <span class="icon is-large">
                     <i class="far fa-envelope fa-2x"></i>
