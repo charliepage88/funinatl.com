@@ -2,7 +2,7 @@
   <div class="container is-fluid pl-4 pr-4">
     <div class="centered-container">
       <div class="box shadow-md rounded">
-        <h1 class="title is-1">About</h1>
+        <h1 class="title is-1 is-size-2-tablet">About</h1>
 
         <p class="has-text-grey-light mb-1">
           Hello and welcome to FunInATL! Our purpose is very simple, provide an intuitive and easy way to find events that are going on in Atlanta, Georgia. One of the ways we try to differentiate ourselves from other websites for Atlanta events is to not focus on "big" events, since those are so well covered, and instead try to focus on things that aren't listed anywhere else or very few places.

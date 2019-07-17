@@ -51,6 +51,24 @@ $footer-background-color: whitesmoke
   text-transform: initial
   letter-spacing: initial
 
+.vue-back-to-top
+  z-index: 0
+
+.btn-to-top
+  width: 60px
+  height: 60px
+  padding: 10px 16px
+  border-radius: 50%
+  font-size: 22px
+  line-height: 22px
+
+.control.is-fullwidth
+  span.select
+    min-width: 100%!important
+
+    select
+      min-width: 100%!important
+
 // margin & padding helpers
 @for $i from 1 through 8
   // margin
@@ -158,6 +176,9 @@ $footer-background-color: whitesmoke
 .absolute
   position: absolute!important
 
+.bottom-0
+  bottom: 0!important
+
 // shadows
 
 .shadow
@@ -217,3 +238,12 @@ $footer-background-color: whitesmoke
 
   .border-r-danger-#{$i}
     border-right: (1px * $i) solid #d9534f
+
+// MOBILE
+@media screen and (max-width: 480px)
+  .is-fullwidth-mobile
+    width: 100%!important
+
+  section.section.is-content
+    padding-top: 10px!important
+

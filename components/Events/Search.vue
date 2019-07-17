@@ -1,8 +1,8 @@
 <template>
-  <section class="hero is-info">
-    <div class="hero-body">
-      <div class="columns">
-        <div class="column">
+  <section class="hero is-info is-bold">
+    <div class="hero-body" :class="{ 'pb-1 pt-1': isMobile }">
+      <div class="columns" :class="{ 'is-multiline': !isDesktop }">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-third': isDesktop }">
           <b-field class="relative search-input-container">
             <input
               class="input is-large"
@@ -51,7 +51,7 @@
                       class="column is-9 mb-0 mt-px-5"
                       :class="{ 'pb-1': !event.is_last, 'pb-0': event.is_last }"
                     >
-                      <span class="has-text-black" v-html="item.highlight" />
+                      <span class="has-text-black" v-html="event.highlight" />
 
                       <div class="columns">
                         <div
@@ -76,7 +76,7 @@
           </b-field>
         </div>
 
-        <div class="column is-3">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktop }">
           <b-field>
             <b-select
               v-model="filters.category"
@@ -86,6 +86,7 @@
               size="is-large"
               @input="updateFilter"
               :loading="loading"
+              class="is-fullwidth"
             >
               <option
                 v-for="category in categories"
@@ -98,7 +99,7 @@
           </b-field>
         </div>
 
-        <div class="column is-3">
+        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktop }">
           <b-field>
             <b-select
               v-model="filters.location"
@@ -108,6 +109,7 @@
               size="is-large"
               @input="updateFilter"
               :loading="loading"
+              class="is-fullwidth"
             >
               <option
                 v-for="location in locations"
@@ -120,7 +122,10 @@
           </b-field>
         </div>
 
-        <div class="column is-narrow mt-1">
+        <div
+          class="column mt-1"
+          :class="{ 'is-one-quarter': isTablet, 'is-one-fifth': isDesktop }"
+        >
           <b-field>
             <b-checkbox
               v-model="filters.is_family_friendly"
@@ -132,8 +137,11 @@
           </b-field>
         </div>
 
-        <div class="column is-narrow">
-          <button class="button is-large is-danger" @click.prevent="reset">
+        <div
+          class="column has-text-right"
+          :class="{ 'is-one-quarter': isTablet }"
+        >
+          <button class="button is-large is-danger is-fullwidth-mobile" @click.prevent="reset">
             Reset
           </button>
         </div>
@@ -146,6 +154,7 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
 import SearchMixin from '@/mixins/SearchMixin'
+import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 import Categories from '@/queries/Categories'
 import Locations from '@/queries/Locations'
 
@@ -153,12 +162,9 @@ export default {
   name: 'search',
 
   mixins: [
-    SearchMixin
+    SearchMixin,
+    ResponsiveMixin
   ],
-
-  components: {
-
-  },
 
   apollo: {
     categories: {
@@ -263,12 +269,12 @@ export default {
       let eventsCount = (results.events.length - 1)
 
       let events = results.events.map((event, index) => {
-        let src = item._source
+        let src = event._source
 
-        src.index = item._index
+        src.index = event._index
 
-        if (item.highlight && item.highlight.name && item.highlight.name[0]) {
-          src.highlight = item.highlight.name[0]
+        if (event.highlight && event.highlight.name && event.highlight.name[0]) {
+          src.highlight = event.highlight.name[0]
         } else {
           src.highlight = src.name
         }

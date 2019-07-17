@@ -1,25 +1,34 @@
 <template>
-  <div class="row columns">
+  <div class="row columns is-multiline">
     <div
-      class="column is-one-third has-cursor-pointer"
+      class="column has-cursor-pointer"
       v-for="event in events"
-      :key="event.id"
+      :key="`event-${event.slug}`"
+      :class="{ 'is-one-third': isDesktop, 'is-half': isTablet }"
     >
       <div class="card large">
         <div class="card-image" v-if="event.photo">
           <NuxtLink :to="`event/${event.slug}`">
             <figure class="image">
-              <img :alt="event.name" class="event-image" :src="event.photo">
+              <clazy-load class="clazy-load-wrapper" :src="event.photo" :ratio="0.2">
+                <transition name="fade">
+                  <img :alt="event.name" class="event-image" :src="event.photo">
+                </transition>
+              </clazy-load>
             </figure>
           </NuxtLink>
         </div>
 
         <div class="card-content">
           <div class="media">
-            <div class="media-left">
+            <div class="media-left" v-if="event.location.photo">
               <NuxtLink :to="`/location/${event.location.slug}`">
                 <figure class="image is-96x96">
-                  <img v-if="event.location.photo" :alt="event.location.name" :src="event.location.photo">
+                  <clazy-load class="clazy-load-wrapper" :src="event.location.photo" :ratio="0.2">
+                    <transition name="fade">
+                      <img :alt="event.location.name" :src="event.location.photo">
+                    </transition>
+                  </clazy-load>
                 </figure>
               </NuxtLink>
             </div>
@@ -30,14 +39,14 @@
               </p>
 
               <p>
-                <span class="title is-6">
+                <span class="subtitle is-6">
                   <NuxtLink :to="`/location/${event.location.slug}`">
                     {{ event.location.name }}
                   </NuxtLink>
                 </span>
               </p>
 
-              <span class="tag is-success">
+              <span class="tag is-success is-medium">
                 {{ event.category.name }}
               </span>
             </div>
@@ -73,11 +82,11 @@
 
             <!-- descriptions -->
             <p class="has-text-grey-dark mt-1" v-if="event.short_description">
-              {{ event.short_description }}
+              {{ event.short_description | truncate(250) }}
             </p>
 
             <p class="has-text-grey-dark mt-1" v-if="event.description">
-              {{ event.description }}
+              {{ event.description | truncate(300) }}
             </p>
 
             <!-- family friendly (if active) -->
@@ -85,8 +94,10 @@
               type="is-warning"
               icon-left="child"
               icon-pack="fas"
+              size="is-medium"
               v-if="event.is_family_friendly"
               class="is-centered mb-2"
+              :class="{ 'mt-2': !event.short_description && !event.description }"
             >
               Family Friendly
             </b-button>
@@ -113,114 +124,17 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="container mx-auto">
-    <div class="flex flex-wrap events-container overflow-hidden">
-      <div
-        class="event-card overflow-hidden rounded-lg w-full sm:w-full shadow-lg bg-blue-300"
-        v-for="event in events"
-        :key="event.id"
-      >
-        <div class="flex flex-wrap mx-auto p-3">
-          <div class="w-1/2">
-            <NuxtLink :to="`event/${event.slug}`" v-if="event.photo">
-              <img :alt="event.name" class="block h-64 w-64 pr-2" :src="event.photo">
-            </NuxtLink>
-          </div>
-
-          <div class="w-1/2">
-            <div class="text-grey-darker text-sm ml-2">
-              <div v-if="event.start_time" class="block">
-                <strong class="font-bold inline-block mr-1">Start Time:</strong>
-
-                <span class="inline-block float-right">
-                  {{ event.start_time }}
-                </span>
-              </div>
-
-              <div v-if="event.end_time" class="block">
-                <strong class="font-bold inline-block mr-1">End Time:</strong>
-
-                <span class="inline-block float-right">
-                  {{ event.end_time }}
-                </span>
-              </div>
-
-              <div v-if="event.price" class="block">
-                <strong class="font-bold inline-block mr-1">Price:</strong>
-
-                <span class="inline-block float-right">
-                  {{ event.price }}
-                </span>
-              </div>
-
-              <div v-if="event.is_family_friendly" class="block">
-                <i class="fas fa-child mr-1"></i>
-                <span class="text-gray-800 inline-block float-right">Family Friendly</span>
-              </div>
-            </div>
-
-            <br />
-
-            <div class="flex flex-wrap tags ml-2" v-if="event.tags.length">
-              <NuxtLink
-                v-for="(tag, tagIndex) in event.tags"
-                :key="tag.slug"
-                :to="`tags/${tag.slug}`"
-                class="text-white font-bold py-1 px-2 rounded text-sm bg-blue-500 hover:bg-blue-800 no-underline"
-                :class="{ 'mr-1': event.tags.length > 1 && tagIndex < (event.tags.length - 1) }"
-              >
-                {{ tag.name }}
-              </NuxtLink>
-            </div>
-          </div>
-        </div>
-
-        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-          <h1 class="text-lg">
-            <NuxtLink :to="`event/${event.slug}`" class="no-underline text-black">
-              {{ event.name }}
-            </NuxtLink>
-          </h1>
-        </header>
-
-        <div class="ml-4">
-          <p class="block text-grey-darker text-sm mr-2" v-if="event.short_description">
-            {{ event.short_description }}
-          </p>
-
-          <p class="block text-grey-darker text-sm mr-2" v-if="event.description">
-            {{ event.description }}
-          </p>
-        </div>
-
-        <footer class="flex items-center justify-between leading-none p-2 md:p-4 w-full">
-          <NuxtLink :to="`/location/${event.location.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
-            <img v-if="event.location.photo" :alt="event.location.name" class="block rounded-full w-8 h-8" :src="event.location.photo">
-            <p class="ml-2 text-lg">
-              {{ event.location.name }}
-            </p>
-          </NuxtLink>
-
-          <NuxtLink :to="`category/${event.category.slug}`" class="flex items-center no-underline text-black hover:text-gray-800">
-            <span class="font-bold">
-              {{ event.category.name }}
-            </span>
-          </NuxtLink>
-
-          <a class="no-underline text-grey-darker hover:text-red-dark" href="#" v-if="1 === 2">
-            <span class="hidden">Like</span>
-            <i class="fa fa-heart"></i>
-          </a>
-        </footer>
-      </div>
-    </div>
-  </div> -->
 </template>
 
 <script>
+import ResponsiveMixin from '@/mixins/ResponsiveMixin'
+
 export default {
   name: 'events-list',
+
+  mixins: [
+    ResponsiveMixin
+  ],
 
   props: {
     events: {

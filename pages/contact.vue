@@ -3,7 +3,7 @@
   	<div class="centered-container">
   	  <div class="box shadow-md rounded">
   	    <form @submit.prevent="submit">
-  	      <h1 class="title is-1">Contact</h1>
+  	      <h1 class="title is-1 is-size-2-tablet">Contact</h1>
 
   	      <p
   	        class="has-text-grey-light mb-2"

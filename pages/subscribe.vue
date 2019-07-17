@@ -3,7 +3,7 @@
     <div class="centered-container">
       <div class="box shadow-md rounded">
         <form @submit.prevent="submit">
-          <h1 class="title is-1">Subscribe</h1>
+          <h1 class="title is-1 is-size-2-tablet">Subscribe</h1>
 
           <p class="has-text-grey-light mb-2">
             Keep updated on events going on in Atlanta. Unsubscribe anytime you want!

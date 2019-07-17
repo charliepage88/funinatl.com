@@ -66,9 +66,12 @@
 
     <footer class="footer">
       <div class="container">
-        <div class="columns">
-          <div class="column is-2">
-            <h3 class="subtitle is-5">
+        <div class="columns" :class="{ 'is-multiline': !isDesktop }">
+          <div
+            class="column"
+            :class="{ 'is-2': isDesktop, 'is-narrow': !isDesktop }"
+          >
+            <h3 class="subtitle is-5 is-size-6-tablet">
               Categories
             </h3>
             
@@ -104,7 +107,7 @@
           </div>
 
           <div class="column is-2">
-            <h3 class="subtitle is-5">
+            <h3 class="subtitle is-5 is-size-6-tablet">
               Menu
             </h3>
 
@@ -141,26 +144,36 @@
 
           <div class="column">
             <div class="is-centered">
-              <nuxt-link to="/get-listed" class="button is-info is-large is-fullwidth">
-                <span class="icon is-large">
-                  <i class="fas fa-map fa-2x"></i>
-                </span>
-                <span>Get Listed</span>
-              </nuxt-link>
+              <div class="pt-2">
+                <nuxt-link
+                  to="/get-listed"
+                  class="button is-info is-fullwidth"
+                  :class="{ 'is-large': isDesktop, 'is-medium': !isDesktop }"
+                >
+                  <span class="icon is-large">
+                    <i class="fas fa-map fa-2x"></i>
+                  </span>
+                  <span>Get Listed</span>
+                </nuxt-link>
+              </div>
 
-              <br />
-
-              <nuxt-link to="/contact" class="button is-indigo is-large is-fullwidth">
-                <span class="icon is-large">
-                  <i class="far fa-envelope fa-2x"></i>
-                </span>
-                <span>Contact Us</span>
-              </nuxt-link>
+              <div class="pt-1">
+                <nuxt-link
+                  to="/contact"
+                  class="button is-indigo is-fullwidth"
+                  :class="{ 'is-large': isDesktop, 'is-medium': !isDesktop }"
+                >
+                  <span class="icon is-large">
+                    <i class="far fa-envelope fa-2x"></i>
+                  </span>
+                  <span>Contact Us</span>
+                </nuxt-link>
+              </div>
             </div>
           </div>
 
           <div class="column is-newsletter-column">
-            <h3 class="subtitle is-5">
+            <h3 class="subtitle is-5 is-size-6-tablet">
               Newsletter
             </h3>
 
@@ -198,9 +211,14 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'default',
+
+  mixins: [
+    ResponsiveMixin
+  ],
 
   computed: {
     ...mapState('site', [

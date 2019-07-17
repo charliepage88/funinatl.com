@@ -18,7 +18,9 @@ export default {
         category: null,
         location: null,
         is_family_friendly: false,
-        query: ''
+        query: '',
+        start_date: null,
+        end_date: null
       },
       hasDoneSearch: false
     }
@@ -127,6 +129,14 @@ export default {
         src += `&is_family_friendly=${this.filters.is_family_friendly}`
       }
 
+      if (this.filters.start_date) {
+        src += `&start_date=${this.filters.start_date}`
+      }
+
+      if (this.filters.end_date) {
+        src += `&end_date=${this.filters.end_date}`
+      }
+
       let params = this.data
 
       params = Object.assign(this.params, params)
@@ -154,7 +164,9 @@ export default {
         category: null,
         location: null,
         is_family_friendly: false,
-        query: ''
+        query: '',
+        start_date: null,
+        end_date: null
       }
     },
 

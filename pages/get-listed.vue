@@ -3,7 +3,7 @@
     <div class="centered-container">
       <div class="box shadow-md rounded">
         <form @submit.prevent="submit">
-          <h1 class="title is-1">Get Listed</h1>
+          <h1 class="title is-1 is-size-2-tablet">Get Listed</h1>
 
           <p class="has-text-grey-light mb-2">
             Don't see any events from a vendor on our site? Or do you work with a venue that would like to get events listed on FunInATL? You've come to the right page!

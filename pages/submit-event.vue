@@ -3,7 +3,7 @@
     <div class="centered-container">
       <div class="box shadow-md rounded">
         <form @submit.prevent="submit">
-          <h1 class="title is-1">Submit Event</h1>
+          <h1 class="title is-1 is-size-2-tablet">Submit Event</h1>
 
           <p class="has-text-grey-light mb-2">
             See an event upcoming in Atlanta that's not listed here? Please feel free to use the form below. After a review period, we'll publish it to the site.
