@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Search ref="search" @change="searchSetValue" />
+    <Search
+      ref="search"
+      @change="searchSetValue"
+      :categories="categories"
+      :locations="locations"
+    />
 
     <nav class="bg-white px-8 pt-2 shadow-md" v-if="1 === 2">
       <div class="-mb-px flex justify-center">
@@ -116,7 +121,9 @@ import moment from 'moment'
 import groupBy from 'lodash.groupby'
 import isEmpty from 'lodash.isempty'
 import orderBy from 'lodash.orderby'
-import Events from '@/queries/Events'
+import Events from '@/queries/events'
+import Categories from '@/queries/categories'
+import Locations from '@/queries/locations'
 import EventsList from '@/components/Events/List'
 import Search from '@/components/Events/Search'
 import FilterByDate from '@/components/Events/FilterByDate'
@@ -125,16 +132,40 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'index',
 
-  asyncData (context) {
+  async asyncData (context) {
     let client = context.app.apolloProvider.defaultClient
 
-    return client.query({
+    const response = {
+      events: [],
+      categories: [],
+      locations: []
+    }
+
+    response.events = await client.query({
         query: Events,
-        params: {}
+        variables: context.params
       })
       .then(({ data }) => {
-        return data
+        return data.events
       })
+
+    response.categories = await client.query({
+        query: Categories,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.categories
+      })
+
+    response.locations = await client.query({
+        query: Locations,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.locations
+      })
+
+    return response
   },
 
   mixins: [
@@ -151,6 +182,16 @@ export default {
     events: {
       prefetch: true,
       query: Events
+    },
+
+    categories: {
+      prefetch: true,
+      query: Categories
+    },
+
+    locations: {
+      prefetch: true,
+      query: Locations
     }
   },
 

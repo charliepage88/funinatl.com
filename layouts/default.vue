@@ -172,7 +172,7 @@
             </div>
           </div>
 
-          <div class="column is-newsletter-column">
+          <div class="column" :class="{ 'is-newsletter-column': !isMobile }">
             <h3 class="subtitle is-5 is-size-6-tablet">
               Newsletter
             </h3>
@@ -198,7 +198,9 @@
             <p class="is-footer-text">
               Copyright &copy;2016-2019
               <br />
-              <a href="https://www.charliepage88.com" target="_blank" class="text-white">Charles Page</a>
+              <a href="https://www.charliepage88.com" target="_blank">
+                Charles Page
+              </a>
             </p>
           </div>
         </div>

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Categories from '@/queries/Categories'
+import Categories from '@/queries/categories'
 
 export default {
   name: 'categories-index',

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Locations from '@/queries/Locations'
+import Locations from '@/queries/locations'
 
 export default {
   name: 'locations-index',

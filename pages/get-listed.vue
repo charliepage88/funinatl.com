@@ -175,12 +175,30 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Categories from '@/queries/Categories'
+import Categories from '@/queries/categories'
 import ToastMixin from '@/mixins/ToastMixin'
 import RecaptchaMixin from '@/mixins/RecaptchaMixin'
 
 export default {
 	name: 'get-listed',
+
+  async asyncData (context) {
+    let client = context.app.apolloProvider.defaultClient
+
+    const response = {
+      categories: []
+    }
+
+    response.categories = await client.query({
+        query: Categories,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.categories
+      })
+
+    return response
+  },
 
   mixins: [
     ToastMixin,

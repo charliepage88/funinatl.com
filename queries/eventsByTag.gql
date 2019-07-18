@@ -1,5 +1,5 @@
-query eventsByLocation($slug: String!) {
-  eventsByLocation(slug: $slug) {
+query eventsByTag($slug: String!) {
+  eventsByTag(slug: $slug) {
     id
     name
     slug

@@ -69,6 +69,12 @@ $footer-background-color: whitesmoke
     select
       min-width: 100%!important
 
+.has-no-underline
+  text-decoration: none!important
+
+  &:hover
+    text-decoration: none!important
+
 // margin & padding helpers
 @for $i from 1 through 8
   // margin
@@ -247,3 +253,9 @@ $footer-background-color: whitesmoke
   section.section.is-content
     padding-top: 10px!important
 
+// route transition
+.page-enter-active, .page-leave-active
+  transition: opacity .5s
+
+.page-enter, .page-leave-to
+  opacity: 0

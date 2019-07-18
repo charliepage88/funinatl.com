@@ -57,42 +57,48 @@ import isEmpty from 'lodash.isempty'
 import categoryBySlug from '@/queries/categoryBySlug'
 import eventsByCategory from '@/queries/eventsByCategory'
 import FilterByDate from '@/components/Events/FilterByDate'
+import EventsList from '@/components/Events/List'
+import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'category-show',
 
+  scrollToTop: true,
+
   async asyncData (context) {
-    return {}
-    // let client = context.app.apolloProvider.defaultClient
+    let client = context.app.apolloProvider.defaultClient
 
-    // const response = {
-    //   category: {},
-    //   events: []
-    // }
+    const response = {
+      categoryBySlug: {},
+      eventsByCategory: []
+    }
 
-    // console.log(context.params)
+    response.categoryBySlug = await client.query({
+        query: categoryBySlug,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.categoryBySlug
+      })
 
-    // response.category = await client.query({
-    //     query: categoryBySlug,
-    //     params: context.params
-    //   })
-    //   .then(({ data }) => {
-    //     return data
-    //   })
+    response.eventsByCategory = await client.query({
+        query: eventsByCategory,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.eventsByCategory
+      })
 
-    // response.events = await client.query({
-    //     query: eventsByCategory,
-    //     params: context.params
-    //   })
-    //   .then(({ data }) => {
-    //     return data
-    //   })
-
-    // return response
+    return response
   },
 
+  mixins: [
+    ResponsiveMixin
+  ],
+
   components: {
-    FilterByDate
+    FilterByDate,
+    EventsList
   },
 
   computed: {

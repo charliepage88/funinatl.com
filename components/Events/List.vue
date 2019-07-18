@@ -35,21 +35,21 @@
 
             <div class="media-content">
               <p class="title is-4 mb-0">
-                <NuxtLink :to="`/event/${event.slug}`" class="has-text-black">
+                <NuxtLink :to="`/event/${event.slug}`" class="has-text-black has-no-underline">
                   {{ event.name }}
                 </NuxtLink>
               </p>
 
               <p>
                 <span class="subtitle is-6">
-                  <NuxtLink :to="`/location/${event.location.slug}`">
+                  <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
                     {{ event.location.name }}
                   </NuxtLink>
                 </span>
               </p>
 
               <span class="tag is-success is-medium">
-                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white">
+                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline">
                   {{ event.category.name }}
                 </NuxtLink>
               </span>
@@ -112,7 +112,7 @@
                 v-for="tag in event.tags"
                 :key="tag.slug"
                 :to="`/tag/${tag.slug}`"
-                class="tag is-info has-text-white"
+                class="tag is-info has-text-white has-no-underline"
               >
                 {{ tag.name }}
               </NuxtLink>

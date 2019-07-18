@@ -155,28 +155,26 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 import SearchMixin from '@/mixins/SearchMixin'
 import ResponsiveMixin from '@/mixins/ResponsiveMixin'
-import Categories from '@/queries/Categories'
-import Locations from '@/queries/Locations'
 
 export default {
   name: 'search',
+
+  props: {
+    categories: {
+      type: Array|Object,
+      required: true
+    },
+
+    locations: {
+      type: Array|Object,
+      required: true
+    }
+  },
 
   mixins: [
     SearchMixin,
     ResponsiveMixin
   ],
-
-  apollo: {
-    categories: {
-      prefetch: true,
-      query: Categories
-    },
-
-    locations: {
-      prefetch: true,
-      query: Locations
-    }
-  },
 
   watch: {
     query (newVal, oldVal) {

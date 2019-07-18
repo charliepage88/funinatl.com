@@ -245,13 +245,40 @@
 import { mapActions } from 'vuex'
 import moment from 'moment'
 import DatePicker from '@/components/Common/DatePicker'
-import Categories from '@/queries/Categories'
-import Locations from '@/queries/Locations'
+import Categories from '@/queries/categories'
+import Locations from '@/queries/locations'
 import ToastMixin from '@/mixins/ToastMixin'
 import RecaptchaMixin from '@/mixins/RecaptchaMixin'
 
 export default {
 	name: 'submit-event',
+
+  async asyncData (context) {
+    let client = context.app.apolloProvider.defaultClient
+
+    const response = {
+      categories: [],
+      locations: []
+    }
+
+    response.categories = await client.query({
+        query: Categories,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.categories
+      })
+
+    response.locations = await client.query({
+        query: Locations,
+        variables: context.params
+      })
+      .then(({ data }) => {
+        return data.locations
+      })
+
+    return response
+  },
 
 	components: {
 		DatePicker
