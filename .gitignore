@@ -82,3 +82,11 @@ dist
 
 # Service worker
 sw.*
+
+# Don't commit build files
+node_modules
+dist
+.nuxt
+.awspublish
+deploy.sh
+
