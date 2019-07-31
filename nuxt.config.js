@@ -1,4 +1,5 @@
 import pkg from './package'
+import axios from 'axios'
 
 export default {
   mode: 'universal',
@@ -42,6 +43,20 @@ export default {
   css: [
     '~/assets/sass/app.sass'
   ],
+
+  workbox: {
+    runtimeCaching: [
+      {
+        // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
+
+        urlPattern: `${process.env.CDN_ENDPOINT}/.*`,
+        // Defaults to `networkFirst` if omitted
+        handler: 'cacheFirst',
+        // Defaults to `GET` if omitted
+        method: 'GET'
+      }
+    ]
+  },
 
   /*
   ** Plugins to load before mounting the App
@@ -111,7 +126,7 @@ export default {
     clientConfigs: {
       default: {
         // required
-        httpEndpoint: 'http://localhost:4000/graphql',
+        httpEndpoint: process.env.GRAPHQL_ENDPOINT,
         // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
         // httpLinkOptions: {
@@ -132,12 +147,20 @@ export default {
     }
   },
 
+  generate: {
+    routes () {
+      return axios.get(`${process.env.API_ENDPOINT}/api/routes`)
+        .then((res) => res.data.routes)
+    }
+  },
+
   sitemap: {
-    hostname: 'https://www.funinatl.com',
+    hostname: process.env.PUBLIC_URL,
     gzip: true,
-    routes: [
-      '/'
-    ]
+    routes () {
+      return axios.get(`${process.env.API_ENDPOINT}/api/routes`)
+        .then(res => res.data.routes.map(row => row.route))
+    }
   },
 
   recaptcha: {

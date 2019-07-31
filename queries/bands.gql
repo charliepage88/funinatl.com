@@ -1,0 +1,8 @@
+{
+  bands {
+    id
+    name
+    slug
+    photo
+  }
+}
