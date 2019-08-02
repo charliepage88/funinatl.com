@@ -1,5 +1,6 @@
 import pkg from './package'
 import axios from 'axios'
+require('dotenv').config()
 
 export default {
   mode: 'universal',
@@ -64,7 +65,6 @@ export default {
   plugins: [
     '~plugins/image-loader.js',
     '~plugins/filters.js',
-    '~plugins/search.js',
     '~plugins/axios.js',
     '~plugins/mq.js',
     { src: '~plugins/toast.js', ssr: false }
@@ -173,14 +173,6 @@ export default {
   ** Build configuration
   */
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    transpile: [
-      'vue-instantsearch',
-      'instantsearch.js/es'
-    ],
-
     extend(config, ctx) {
       config.resolve.alias['vue'] = 'vue/dist/vue.common'
 
