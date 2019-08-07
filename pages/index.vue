@@ -132,6 +132,8 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'index',
 
+  scrollToTop: true,
+
   async asyncData (context) {
     let client = context.app.apolloProvider.defaultClient
 

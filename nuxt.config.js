@@ -3,6 +3,7 @@ import axios from 'axios'
 require('dotenv').config()
 
 export default {
+  // SSR app
   mode: 'universal',
 
   /*
@@ -20,44 +21,19 @@ export default {
     ]
   },
 
-  meta: {
-    name: 'FunInATL',
-    author: 'Charlie Page',
-    description: pkg.description,
-    mobileAppIOS: true,
-    ogHost: 'funinatl.com'
-  },
-
-  manifest: {
-    name: 'FunInATL',
-    lang: 'en'
-  },
-
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#3B8070' },
+  loading: {
+    color: '#3B8070'
+  },
 
   /*
   ** Global CSS
   */
   css: [
-    '~/assets/sass/app.sass'
+    '@/assets/sass/app.sass'
   ],
-
-  workbox: {
-    runtimeCaching: [
-      {
-        // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
-
-        urlPattern: `${process.env.CDN_ENDPOINT}/.*`,
-        // Defaults to `networkFirst` if omitted
-        handler: 'cacheFirst',
-        // Defaults to `GET` if omitted
-        method: 'GET'
-      }
-    ]
-  },
 
   /*
   ** Plugins to load before mounting the App
@@ -75,7 +51,9 @@ export default {
   */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    [ '@nuxtjs/pwa', {
+      icon: false
+    }],
     '@nuxtjs/apollo',
     [ 'nuxt-buefy', { 
       css: true,
@@ -97,6 +75,7 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/recaptcha'
   ],
+
   /*
   ** Axios module configuration
   */
@@ -104,6 +83,7 @@ export default {
     baseURL: process.env.API_ENDPOINT
   },
 
+  // Apollo Server Setup
   apollo: {
     // tokenName: 'yourApolloTokenName', // optional, default: apollo-token
     // tokenExpires: 10, // optional, default: 7 (days)
@@ -118,11 +98,6 @@ export default {
         fetchPolicy: 'cache-and-network',
       },
     },
-    // optional
-    // errorHandler (error) {
-    // console.log('%cError', 'background: red; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;', error.message)
-    // },
-    // required
     clientConfigs: {
       default: {
         // required
@@ -130,7 +105,10 @@ export default {
         // optional
         // See https://www.apollographql.com/docs/link/links/http.html#options
         // httpLinkOptions: {
-        // credentials: 'same-origin'
+        //   credentials: 'include'
+        // },
+        // headers: {
+        //   'Authorization: Bearer': 'TzDnhXuLrKMVTFqMLJTy5rDo1lvYSX3OF3Zau3e0'
         // },
         // You can use `wss` for secure connection (recommended in production)
         // Use `null` to disable subscriptions
@@ -147,49 +125,60 @@ export default {
     }
   },
 
+  // Nuxt PWA -> Workbox
+  workbox: {
+    runtimeCaching: [
+      {
+        // Should be a regex string. Compiles into new RegExp('https://my-cdn.com/.*')
+        urlPattern: `${process.env.CDN_ENDPOINT}/.*`,
+        // Defaults to `networkFirst` if omitted
+        handler: 'cacheFirst',
+        // Defaults to `GET` if omitted
+        method: 'GET'
+      }
+    ],
+    cachingExtensions: '@/plugins/workbox-range-request.js'
+  },
+
+  // Nuxt PWA -> Meta
+  meta: {
+    name: 'FunInATL',
+    author: 'Charlie Page',
+    description: pkg.description,
+    mobileAppIOS: true,
+    ogHost: process.env.PUBLIC_HOST
+  },
+
+  // Nuxt PWA -> Manifest
+  manifest: {
+    name: 'FunInATL',
+    lang: 'en'
+  },
+
+  // Generate
   generate: {
-    routes () {
-      return axios.get(`${process.env.API_ENDPOINT}/api/routes`)
+    concurrency: 3,
+    interval: 0,
+    async routes () {
+      return await axios.get(`${process.env.API_ENDPOINT}/api/routes`)
         .then((res) => res.data.routes)
     }
   },
 
+  // Sitemap
   sitemap: {
     hostname: process.env.PUBLIC_URL,
     gzip: true,
-    routes () {
-      return axios.get(`${process.env.API_ENDPOINT}/api/routes`)
+    async routes () {
+      return await axios.get(`${process.env.API_ENDPOINT}/api/routes`)
         .then(res => res.data.routes.map(row => row.route))
     }
   },
 
+  // Recaptcha
   recaptcha: {
     hideBadge: true,
     siteKey: '6LdWwasUAAAAALZcr7N9x7zNt8mkXzxA3L0LWp5n',
     version: 3
-  },
-
-  /*
-  ** Build configuration
-  */
-  build: {
-    extend(config, ctx) {
-      config.resolve.alias['vue'] = 'vue/dist/vue.common'
-
-      if (ctx.isDev && ctx.isClient) {
-        // config.module.rules.push({
-        //   enforce: 'pre',
-        //   test: /\.(vue)$/,
-        //   loader: 'vue-loader',
-        //   exclude: /(node_modules)/
-        // })
-
-        // config.module.rules.push({
-        //   test: /\.(graphql|gql)$/,
-        //   exclude: /node_modules/,
-        //   loader: 'graphql-tag/loader'
-        // })
-      }
-    }
   }
 }

@@ -30,12 +30,13 @@
               </div>
 
               <div class="level-right">
-                <span
-                  class="tag is-success mr-2"
+                <NuxtLink
+                  :to="`/category/${event.category.slug}`"
+                  class="tag is-success has-no-underline mr-2"
                   :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
                 >
                   {{ event.category.name }}
-                </span>
+                </NuxtLink>
               </div>
             </nav>
 
@@ -44,7 +45,7 @@
                 v-for="(tag, tagIndex) in event.tags"
                 :key="tag.slug"
                 :to="`/tag/${tag.slug}`"
-                class="tag is-info"
+                class="tag is-info has-no-underline"
               >
                 {{ tag.name }}
               </NuxtLink>
@@ -192,6 +193,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'event-show',
 
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.description
+        }
+      ]
+    }
+  },
+
   scrollToTop: true,
 
   async asyncData (context) {
@@ -228,6 +242,28 @@ export default {
       }
 
       return chunk(this.event.bands, 2)
+    },
+
+    title () {
+      let value = `Atlanta Events - ${this.event.name} | `
+
+      value += `${this.event.location.name} | ${this.event.category.name}`
+
+      value += ` | FunInATL`
+
+      return value
+    },
+
+    description () {
+      if (this.event.short_description) {
+        return this.event.short_description
+      }
+
+      if (this.event.description) {
+        return this.event.description
+      }
+
+      return `Atlanta event on ${moment(this.event.start_date).format('dddd, MMMM Do')} with ${this.event.name} at ${this.event.location.name}.`
     }
   },
 

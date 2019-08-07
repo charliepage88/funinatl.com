@@ -67,6 +67,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'tag-show',
 
+  head () {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.description
+        }
+      ]
+    }
+  },
+
   scrollToTop: true,
 
   async asyncData (context) {
@@ -174,6 +187,18 @@ export default {
       }
 
       return dates.slice(0, 10)
+    },
+
+    title () {
+      let value = `Atlanta Events - ${this.tag.name} | FunInATL`
+
+      return value
+    },
+
+    description () {
+      let value = `Atlanta events with tag ${this.tag.name}.`
+
+      return value
     }
   },
 
