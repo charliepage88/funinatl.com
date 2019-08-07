@@ -11,7 +11,9 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "deploy": "./deploy.sh"
+    "staging": "./deploy.sh",
+    "deploy": "gulp deploy",
+    "clear-cache": "aws cloudfront create-invalidation --distribution-id 'E30EDM84KRF20J' --paths '/*'"
   },
   "dependencies": {
     "@inotom/vue-go-top": "^1.1.0",

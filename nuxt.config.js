@@ -157,7 +157,7 @@ export default {
 
   // Generate
   generate: {
-    concurrency: 3,
+    concurrency: 10,
     interval: 0,
     async routes () {
       return await axios.get(`${process.env.API_ENDPOINT}/api/routes`)

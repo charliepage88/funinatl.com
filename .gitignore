@@ -89,4 +89,4 @@ dist
 .nuxt
 .awspublish
 deploy.sh
-
+.awspublish*

@@ -20,20 +20,22 @@ let config = {
   },
 
   // Optional
-  deleteOldVersions: true,                 // NOT FOR PRODUCTION
+  deleteOldVersions: false,                 // NOT FOR PRODUCTION
   distribution: process.env.AWS_CLOUDFRONT_ID, // CloudFront distribution ID
-  wait: true, // Whether to wait until invalidation is completed (default: false)
   region: process.env.AWS_DEFAULT_REGION,
   headers: { /*'Cache-Control': 'max-age=315360000, no-transform, public',*/ },
 
   // Sensible Defaults - gitignore these Files and Dirs
   distDir: 'dist',
-  indexRootPath: true,
   cacheFileName: '.awspublish',
-  concurrentUploads: 10,
+  concurrentUploads: 5,
   indexRootPath: true, // Invalidate index.html root paths (`foo/index.html` and `foo/`) (default: false)
   wait: true,  // wait for CloudFront invalidation to complete (about 30-60 seconds)
+  originPath: '/'
 }
+
+// console.log(config)
+// return false
 
 gulp.task('deploy', function() {
   // create a new publisher using S3 options
