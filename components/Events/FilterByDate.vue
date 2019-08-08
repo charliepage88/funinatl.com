@@ -13,7 +13,6 @@
                 v-model="start_date"
                 icon="calendar-alt"
                 icon-pack="fas"
-                :mobile-native="false"
                 size="is-medium"
                 :min-date="minDate"
                 :max-date="maxDate"
@@ -30,7 +29,6 @@
                 v-model="end_date"
                 icon="calendar-alt"
                 icon-pack="fas"
-                :mobile-native="false"
                 size="is-medium"
                 :min-date="minDate"
                 :max-date="maxDate"
@@ -54,8 +52,8 @@ export default {
 
   data () {
     return {
-      start_date: null,
-      end_date: null,
+      start_date: moment().startOf('day').toDate(),
+      end_date: moment().add(7, 'day').toDate(),
       minDate: moment().startOf('day').toDate(),
       maxDate: moment().add(2, 'month').toDate()
     }
