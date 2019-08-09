@@ -1,5 +1,5 @@
 <template>
-  <div class="row columns is-multiline">
+  <div class="row columns is-multiline" v-if="events.length">
     <div
       class="column has-cursor-pointer"
       v-for="event in events"

@@ -24,91 +24,56 @@
 
     <filter-by-date @change="updateDate" />
 
-    <section class="section pt-0">
-      <div class="centered-container">
-        <template v-show="mode === 'all' && isCustomDatesChoosen">
-          <div v-for="(rows, date) in groupedEvents" :key="`custom-${date}`" :id="`events-${date}`">
-            <nav class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <h4
-                    class="subtitle is-4 mb-2"
-                    :class="{ 'mt-2': isMobile, 'mt-5': !isMobile }"
-                  >
-                    {{ date | dayOfWeek }}
-                  </h4>
-                </div>
-              </div>
+    <template v-show="mode === 'all'">
+      <section class="section pt-0" v-if="hasEvents">
+        <div class="centered-container">
+          <div v-for="row in events" :key="row.label">
+            <h3 class="subtitle has-text-centered is-2 mt-4">
+              {{ row.label }}
+            </h3>
 
-              <div class="level-right">
-                <div class="level-item">
-                  <b-dropdown hoverable aria-role="list">
-                    <button class="button is-info" slot="trigger">
-                      <span>Jump To Date</span>
-                      <b-icon pack="fas" icon="caret-down"></b-icon>
-                    </button>
+            <div v-for="day in row.days" :key="day.date">
+              <template v-if="day.events && day.events.length">
+                <nav class="level">
+                  <div class="level-left">
+                    <div class="level-item">
+                      <h4
+                        class="subtitle is-4 mb-2"
+                        :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
+                      >
+                        {{ day.date | dayOfWeek }}
+                      </h4>
+                    </div>
+                  </div>
 
-                    <b-dropdown-item
-                      aria-role="listitem"
-                      v-for="value in availableDates"
-                      :key="`date-${date}-${value}`"
-                      @click="jumpToDate(value)"
-                    >
-                      {{ value }}
-                    </b-dropdown-item>
-                  </b-dropdown>
-                </div>
-              </div>
-            </nav>
+                  <div class="level-right" v-if="isCustomDatesChoosen">
+                    <div class="level-item">
+                      <b-dropdown hoverable aria-role="list">
+                        <button class="button is-info" slot="trigger">
+                          <span>Jump To Date</span>
+                          <b-icon pack="fas" icon="caret-down"></b-icon>
+                        </button>
 
-            <events-list :events="rows" />
+                        <b-dropdown-item
+                          aria-role="listitem"
+                          v-for="value in availableDates"
+                          :key="`date-${date}-${value}`"
+                          @click="jumpToDate(value)"
+                        >
+                          {{ value }}
+                        </b-dropdown-item>
+                      </b-dropdown>
+                    </div>
+                  </div>
+                </nav>
+
+                <events-list :events="day.events" />
+              </template>
+            </div>
           </div>
-        </template>
-
-        <template v-show="mode === 'all' && !isCustomDatesChoosen">
-
-          <template v-show="hasWeekdayEvents">
-            <h3 class="subtitle has-text-centered is-2">This Week's Events</h3>
-
-            <div v-for="(rows, date) in weekdayEvents" :key="date">
-              <h4 class="subtitle is-4 mt-5 mb-2">{{ date | dayOfWeek }}</h4>
-
-              <events-list :events="rows" />
-            </div>
-          </template>
-
-          <template v-show="hasWeekendEvents">
-            <h3 class="subtitle has-text-centered is-2 mt-8">This Weekend's Events</h3>
-
-            <div v-for="(rows, date) in weekendEvents" :key="date">
-              <h4 class="subtitle is-4 mt-5 mb-2">{{ date | dayOfWeek }}</h4>
-
-              <events-list :events="rows" />
-            </div>
-          </template>
-
-          <template v-show="hasNextWeekdayEvents">
-            <h3 class="subtitle has-text-centered is-2 mt-8">Next Week's Events</h3>
-
-            <div v-for="(rows, date) in nextWeekdayEvents" :key="date">
-              <h4 class="subtitle is-4 mt-6 mb-2">{{ date | dayOfWeek }}</h4>
-
-              <events-list :events="rows" />
-            </div>
-          </template>
-
-          <template v-show="hasNextWeekendEvents">
-            <h3 class="subtitle has-text-centered is-2 mt-8">Next Weekend's Events</h3>
-
-            <div v-for="(rows, date) in nextWeekendEvents" :key="date">
-              <h4 class="subtitle is-4 mt-6 mb-2">{{ date | dayOfWeek }}</h4>
-
-              <events-list :events="rows" />
-            </div>
-          </template>
-        </template>
-      </div>
-    </section>
+        </div>
+      </section>
+    </template>
 
     <template v-show="mode === 'recommended'">
       <span>recommended yo</span>
@@ -118,10 +83,8 @@
 
 <script>
 import moment from 'moment'
-import groupBy from 'lodash.groupby'
 import isEmpty from 'lodash.isempty'
-import orderBy from 'lodash.orderby'
-import Events from '@/queries/events'
+import eventsByPeriod from '@/queries/eventsByPeriod'
 import Categories from '@/queries/categories'
 import Locations from '@/queries/locations'
 import EventsList from '@/components/Events/List'
@@ -138,17 +101,28 @@ export default {
     let client = context.app.apolloProvider.defaultClient
 
     const response = {
-      events: [],
+      eventsByPeriod: {},
       categories: [],
       locations: []
     }
 
-    response.events = await client.query({
-        query: Events,
+    console.log('asyncData')
+    console.log(context.params)
+
+    if (!context.params.start_date) {
+      context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
+    }
+
+    if (!context.params.end_date) {
+      context.params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+    }
+
+    response.eventsByPeriod = await client.query({
+        query: eventsByPeriod,
         variables: context.params
       })
       .then(({ data }) => {
-        return data.events
+        return data.eventsByPeriod
       })
 
     response.categories = await client.query({
@@ -181,9 +155,16 @@ export default {
   },
 
   apollo: {
-    events: {
+    eventsByPeriod: {
       prefetch: true,
-      query: Events
+      variables() {
+        return {
+          slug: this.$route.params.slug,
+          start_date: this.start_date,
+          end_date: this.end_date
+        }
+      },
+      query: eventsByPeriod
     },
 
     categories: {
@@ -202,61 +183,19 @@ export default {
       mode: 'all',
       today: moment().startOf('day'),
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().add(7, 'day').format('YYYY-MM-DD'),
+      end_date: moment().add(2, 'week').format('YYYY-MM-DD'),
       start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date_original: moment().add(7, 'day').format('YYYY-MM-DD')
+      end_date_original: moment().add(2, 'week').format('YYYY-MM-DD')
     }
   },
 
   computed: {
-    groupedEvents () {
-      if (!this.events || !this.events.length) {
-        return []
-      }
-
-      let filteredEvents = this.events.filter((event) => {
-        let ymd = moment(event.start_date).format('YYYY-MM-DD')
-        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
-
-        if (validDate) {
-          return event
-        }
-      })
-
-      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc' ])
-      let grouped = groupBy(orderedEvents, 'start_date')
-
-      let events = {}
-      for(let i in grouped) {
-        let items = []
-
-        for(let key in grouped[i]) {
-          let item = grouped[i][key]
-
-          item.start_at = item.start_time.replace(' PM', '').replace(' AM', '')
-          item.start_at = item.start_at.replace(':', '')
-
-          item.start_at = parseInt(item.start_at)
-
-          if (item.start_time.match(' PM')) {
-            item.start_at = item.start_at + 1200
-          }
-
-          items.push(item)
-        }
-
-        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
-      }
-
-      return events
+    events() {
+      return this.eventsByPeriod
     },
 
     hasEvents () {
-      if (!this.events || !this.events.length) {
-        return false
-      } else {
-        return true
-      }
+      return !isEmpty(this.events)
     },
 
     availableDates () {
@@ -265,312 +204,18 @@ export default {
       }
 
       let dates = []
+      for (let i in this.events) {
+        let days = this.events[i].days
 
-      if (this.isCustomDatesChoosen) {
-        dates.push(Object.keys(this.groupedEvents))
-      } else {
-        if (this.hasWeekdayEvents) {
-          dates.push(Object.keys(this.weekdayEvents))
-        }
+        for (let k in days) {
+          let date = days[k].date
 
-        if (this.hasWeekendEvents) {
-          dates.push(Object.keys(this.weekendEvents))
-        }
-
-        if (this.hasNextWeekdayEvents) {
-          dates.push(Object.keys(this.nextWeekdayEvents))
-        }
-
-        if (this.hasNextWeekendEvents) {
-          dates.push(Object.keys(this.nextWeekendEvents))
+          dates.push(moment(date).format('dddd, MMMM Do'))
         }
       }
 
-      if (dates.length) {
-        dates = [].concat.apply([], dates)
-      }
-
-      return dates.slice(0, 10)
-    },
-
-    hasWeekdayEvents () {
-      return !isEmpty(this.weekdayEvents)
-    },
-
-    weekdayEvents () {
-      if (!this.hasEvents) {
-        return []
-      }
-
-      let firstWeekendDate = null
-      if (this.hasWeekendEvents) {
-        firstWeekendDate = moment(Object.keys(this.weekendEvents)[0])
-      }
-
-      let filteredEvents = this.events.filter((event) => {
-        let date = moment(event.start_date)
-
-        let dayOfWeek = parseInt(date.format('d'))
-        let ymd = date.format('YYYY-MM-DD')
-
-        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
-        let isWeekday = (dayOfWeek !== 5 && dayOfWeek !== 6 && dayOfWeek !== 0)
-
-        // no weekday events should show
-        // if date > first weekend event
-        let shouldShow = true
-        if (firstWeekendDate) {
-          let diff = date.diff(firstWeekendDate, 'days')
-
-          if (diff > 0) {
-            shouldShow = false
-          }
-        }
-
-        if (isWeekday && validDate && shouldShow) {
-          return event
-        }
-      })
-
-      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc' ])
-
-      let grouped = groupBy(orderedEvents, 'start_date')
-
-      let events = {}
-
-      for(let i in grouped) {
-        let items = []
-
-        for(let key in grouped[i]) {
-          let item = grouped[i][key]
-
-          item.start_at = item.start_time.replace(' PM', '').replace(' AM', '')
-          item.start_at = item.start_at.replace(':', '')
-
-          item.start_at = parseInt(item.start_at)
-
-          if (item.start_time.match(' PM')) {
-            item.start_at = item.start_at + 1200
-          }
-
-          items.push(item)
-        }
-
-        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
-      }
-
-      return events
-    },
-
-    hasNextWeekdayEvents () {
-      return !isEmpty(this.nextWeekdayEvents)
-    },
-
-    nextWeekdayEvents () {
-      if (!this.events || !this.events.length) {
-        return []
-      }
-
-      // current weekday dates
-      // should be removed form here
-      let dates = []
-      if (this.hasWeekdayEvents) {
-        dates.push(Object.keys(this.weekdayEvents))
-      }
-
-      if (dates.length) {
-        dates = [].concat.apply([], dates)
-      }
-
-      // get first weekend date to restrict
-      let firstWeekendDate = null
-      if (this.hasNextWeekendEvents) {
-        firstWeekendDate = moment(Object.keys(this.nextWeekendEvents)[0])
-      }
-
-      let filteredEvents = this.events.filter((event) => {
-        let date = moment(event.start_date)
-
-        let dayOfWeek = parseInt(date.format('d'))
-        let ymd = date.format('YYYY-MM-DD')
-
-        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
-        let isWeekday = (dayOfWeek !== 5 && dayOfWeek !== 6 && dayOfWeek !== 0)
-
-        // no weekday events should show
-        // if date > first weekend event
-        let shouldShow = true
-        if (firstWeekendDate) {
-          let diff = date.diff(firstWeekendDate, 'days')
-
-          if (diff > 0) {
-            shouldShow = false
-          }
-        }
-
-        // exlude any events with date
-        // already in use
-        if (shouldShow && dates.length) {
-          shouldShow = (dates.indexOf(ymd) === -1)
-        }
-
-        if (isWeekday && validDate && shouldShow) {
-          return event
-        }
-      })
-
-      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc' ])
-
-      let grouped = groupBy(orderedEvents, 'start_date')
-
-      let events = {}
-
-      for(let i in grouped) {
-        let items = []
-
-        for(let key in grouped[i]) {
-          let item = grouped[i][key]
-
-          item.start_at = item.start_time.replace(' PM', '').replace(' AM', '')
-          item.start_at = item.start_at.replace(':', '')
-
-          item.start_at = parseInt(item.start_at)
-
-          if (item.start_time.match(' PM')) {
-            item.start_at = item.start_at + 1200
-          }
-
-          items.push(item)
-        }
-
-        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
-      }
-
-      return events
-    },
-
-    hasWeekendEvents () {
-      return !isEmpty(this.weekendEvents)
-    },
-
-    weekendEvents () {
-      if (!this.events || !this.events.length) {
-        return []
-      }
-
-      let filteredEvents = this.events.filter((event) => {
-        let date = moment(event.start_date)
-
-        let dayOfWeek = parseInt(date.format('d'))
-        let ymd = date.format('YYYY-MM-DD')
-
-        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
-        let isWeekend = (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0)
-
-        if (isWeekend && validDate) {
-          return event
-        }
-      })
-
-      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc' ])
-
-      let grouped = groupBy(orderedEvents, 'start_date')
-
-      let events = {}
-
-      for(let i in grouped) {
-        let items = []
-
-        for(let key in grouped[i]) {
-          let item = grouped[i][key]
-
-          item.start_at = item.start_time.replace(' PM', '')
-          item.start_at = item.start_at.replace(':', '')
-
-          item.start_at = parseInt(item.start_at)
-
-          if (item.start_time.match(' PM')) {
-            item.start_at = item.start_at + 1200
-          }
-
-          items.push(item)
-        }
-
-        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
-      }
-
-      return events
-    },
-
-    hasNextWeekendEvents () {
-      return !isEmpty(this.nextWeekendEvents)
-    },
-
-    nextWeekendEvents () {
-      if (!this.events || !this.events.length) {
-        return []
-      }
-
-      // current weekend dates
-      // should be removed form here
-      let dates = []
-      if (this.hasWeekendEvents) {
-        dates.push(Object.keys(this.weekendEvents))
-      }
-
-      if (dates.length) {
-        dates = [].concat.apply([], dates)
-      }
-
-      let filteredEvents = this.events.filter((event) => {
-        let date = moment(event.start_date)
-
-        let dayOfWeek = parseInt(date.format('d'))
-        let ymd = date.format('YYYY-MM-DD')
-
-        let validDate = (ymd >= this.start_date && ymd <= this.end_date)
-        let isWeekend = (dayOfWeek === 5 || dayOfWeek === 6 || dayOfWeek === 0)
-
-        // exlude any events with date
-        // already in use
-        let shouldShow = true
-        if (dates.length) {
-          shouldShow = (dates.indexOf(ymd) === -1)
-        }
-
-        if (isWeekend && validDate && shouldShow) {
-          return event
-        }
-      })
-
-      let orderedEvents = orderBy(filteredEvents, [ 'start_date' ], [ 'asc' ])
-
-      let grouped = groupBy(orderedEvents, 'start_date')
-
-      let events = {}
-
-      for(let i in grouped) {
-        let items = []
-
-        for(let key in grouped[i]) {
-          let item = grouped[i][key]
-
-          item.start_at = item.start_time.replace(' PM', '')
-          item.start_at = item.start_at.replace(':', '')
-
-          item.start_at = parseInt(item.start_at)
-
-          if (item.start_time.match(' PM')) {
-            item.start_at = item.start_at + 1200
-          }
-
-          items.push(item)
-        }
-
-        events[i] = orderBy(items, [ 'start_at' ], [ 'asc' ])
-      }
-
-      return events
+      // return dates.slice(0, 10)
+      return dates
     },
 
     isCustomDatesChoosen () {

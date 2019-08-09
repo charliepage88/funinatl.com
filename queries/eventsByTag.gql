@@ -1,59 +1,71 @@
-query eventsByTag($slug: String!) {
-  eventsByTag(slug: $slug) {
-    id
-    name
-    slug
-    location_id
-    user_id
-    category_id
-    event_type_id
-    start_date
-    end_date
-    price
-    start_time
-    end_time
-    short_description
-    description
-    featured
-    is_sold_out
-    website
-    is_family_friendly
-    photo
-    category {
-        name
-        slug
+query eventsByTag($slug: String!, $start_date: String!, $end_date: String!) {
+  eventsByTag(slug: $slug, start_date: $start_date, end_date: $end_date) {
+    tag {
+      name
+      slug
     }
-    event_type
-    tags {
-        name
-        slug
-    }
-    location {
-        id
-        name
-        slug
-        category_id
-        website
-        address
-        city
-        state
-        zip
-        latitude
-        longitude
-        description
-        photo
-        tags {
+    events {
+      label
+      days {
+        date
+        events {
+          id
+          name
+          slug
+          location_id
+          user_id
+          category_id
+          event_type_id
+          start_date
+          end_date
+          price
+          start_time
+          end_time
+          short_description
+          description
+          featured
+          is_sold_out
+          website
+          is_family_friendly
+          photo
+          category {
             name
             slug
+          }
+          event_type
+          tags {
+            name
+            slug
+          }
+          location {
+            id
+            name
+            slug
+            category_id
+            website
+            address
+            city
+            state
+            zip
+            latitude
+            longitude
+            description
+            photo
+            tags {
+              name
+              slug
+            }
+            created_at
+            updated_at
+          }
+          bands {
+            id
+            name
+            slug
+            photo
+          }
         }
-        created_at
-        updated_at
-    }
-    bands {
-        id
-        name
-        slug
-        photo
+      }
     }
   }
 }

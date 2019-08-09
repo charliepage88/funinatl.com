@@ -44,7 +44,7 @@
     "nuxt": "^2.8.1",
     "nuxt-buefy": "^0.3.13",
     "nuxt-mq": "^2.0.0",
-    "sass-loader": "^7.1.0",
+    "sass-loader": "^7.2.0",
     "vue": "2.6.10",
     "vue-clazy-load": "^0.4.2",
     "vue-flatpickr-component": "^8.1.2",
