@@ -35,8 +35,9 @@
                   :class="{ 'active': current === index, 'border-b-primary-1': !event.is_last }"
                   @mousedown="hit"
                   @mouseover="setActive(index)"
+                  @click.prevent="goToUrl(`/event/${event.slug}`)"
                 >
-                  <div class="columns">
+                  <div class="columns is-mobile">
                     <div
                       class="column is-3 mb-0 mt-px-5"
                       :class="{ 'pb-1': !event.is_last, 'pb-0': event.is_last }"
@@ -53,7 +54,7 @@
                     >
                       <span class="has-text-black" v-html="event.highlight" />
 
-                      <div class="columns">
+                      <div class="columns is-mobile">
                         <div
                           class="column is-7"
                         >
@@ -77,7 +78,7 @@
         </div>
 
         <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
-          <b-field>
+          <b-field v-if="categories && categories.length">
             <b-select
               v-model="filters.category"
               placeholder="Category"
@@ -100,7 +101,7 @@
         </div>
 
         <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
-          <b-field>
+          <b-field v-if="locations && locations.length">
             <b-select
               v-model="filters.location"
               placeholder="Location"
@@ -194,9 +195,9 @@ export default {
             return item.slug === query
           })
 
-          console.log('watch -> items')
-          console.log(item)
-          console.log(item)
+          console.debug('watch -> items')
+          console.debug(item)
+          console.debug(item)
 
           this.items = []
         }
@@ -304,8 +305,8 @@ export default {
         let event = this.items[this.current]
 
         if (this.current >= 0 && event) {
-          console.log('enter')
-          console.log(event)
+          console.debug('enter')
+          console.debug(event)
 
           this.$router.push(`/event/${event.slug}`)
 
@@ -316,6 +317,10 @@ export default {
 
     removeKeyWords () {
       this.query = ''
+    },
+
+    goToUrl (url) {
+      this.$router.push(url)
     }
   }
 }

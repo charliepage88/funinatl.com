@@ -48,12 +48,13 @@
     "vue": "2.6.10",
     "vue-clazy-load": "^0.4.2",
     "vue-flatpickr-component": "^8.1.2",
+    "vue-scrollto": "^2.15.0",
     "vue-server-renderer": "2.6.10",
     "vue-template-compiler": "2.6.10",
     "vue-toasted": "^1.1.27"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^1.0.1",
+    "@nuxtjs/eslint-config": "^1.1.2",
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",

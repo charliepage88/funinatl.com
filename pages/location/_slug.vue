@@ -41,13 +41,16 @@
 
     <section class="section pt-0" v-if="hasEvents">
       <div class="centered-container">
-        <div v-for="row in events" :key="row.label">
-          <h3 class="subtitle has-text-centered is-2 mt-4">
+        <div v-for="(row, index) in events" :key="row.label">
+          <h3
+            class="subtitle has-text-centered is-2"
+            :class="{ 'mt-4': index > 0, 'mt-2': index === 0 }"
+          >
             {{ row.label }}
           </h3>
 
-          <div v-for="day in row.days" :key="day.date">
-            <template v-if="day.events && day.events.length">
+          <template v-if="row.days && row.days.length">
+            <div v-for="day in row.days" :key="day.date" :id="`events-${day.date}`">
               <nav class="level">
                 <div class="level-left">
                   <div class="level-item">
@@ -62,7 +65,7 @@
 
                 <div class="level-right" v-if="1 === 2">
                   <div class="level-item">
-                    <b-dropdown hoverable aria-role="list">
+                    <b-dropdown hoverable aria-role="list" :mobile-modal="true">
                       <button class="button is-info" slot="trigger">
                         <span>Jump To Date</span>
                         <b-icon pack="fas" icon="caret-down"></b-icon>
@@ -72,7 +75,7 @@
                         aria-role="listitem"
                         v-for="val in availableDates"
                         :key="`date-${val.value}-${day.date}`"
-                        @click.prevent="jumpToDate(value)"
+                        @click.prevent="jumpToDate(val.value)"
                       >
                         {{ val.formatted }}
                       </b-dropdown-item>
@@ -82,8 +85,8 @@
               </nav>
 
               <events-list :events="day.events" />
-            </template>
-          </div>
+            </div>
+          </template>
         </div>
       </div>
     </section>
@@ -267,9 +270,6 @@ export default {
   methods: {
     updateDate (key, val) {
       let date = moment(val).format('YYYY-MM-DD')
-
-      console.log('updateDate')
-      console.log(date)
 
       this.$set(this, key, date)
     },

@@ -27,13 +27,15 @@
     <template v-show="mode === 'all'">
       <section class="section pt-0" v-if="hasEvents">
         <div class="centered-container">
-          <div v-for="row in events" :key="row.label">
-            <h3 class="subtitle has-text-centered is-2 mt-4">
+          <div v-for="(row, index) in events" :key="row.label">
+            <h3
+              class="subtitle has-text-centered is-2 mt-4"
+            >
               {{ row.label }}
             </h3>
 
-            <div v-for="day in row.days" :key="day.date">
-              <template v-if="day.events && day.events.length">
+            <template v-if="row.days && row.days.length">
+              <div v-for="day in row.days" :key="day.date" :id="`events-${day.date}`">
                 <nav class="level">
                   <div class="level-left">
                     <div class="level-item">
@@ -46,9 +48,9 @@
                     </div>
                   </div>
 
-                  <div class="level-right" v-if="isCustomDatesChoosen">
+                  <div class="level-right" v-if="isCustomDatesChoosen && 1 === 2">
                     <div class="level-item">
-                      <b-dropdown hoverable aria-role="list">
+                      <b-dropdown hoverable aria-role="list" :mobile-modal="true">
                         <button class="button is-info" slot="trigger">
                           <span>Jump To Date</span>
                           <b-icon pack="fas" icon="caret-down"></b-icon>
@@ -56,11 +58,12 @@
 
                         <b-dropdown-item
                           aria-role="listitem"
-                          v-for="value in availableDates"
-                          :key="`date-${date}-${value}`"
-                          @click="jumpToDate(value)"
+                          v-for="val in availableDates"
+                          :key="`date-${val.value}-${day.date}`"
+                          :v-scroll-to="`#events-${day.date}`"
+                          :has-link="true"
                         >
-                          {{ value }}
+                          {{ val.formatted }}
                         </b-dropdown-item>
                       </b-dropdown>
                     </div>
@@ -68,8 +71,8 @@
                 </nav>
 
                 <events-list :events="day.events" />
-              </template>
-            </div>
+              </div>
+            </template>
           </div>
         </div>
       </section>
@@ -105,9 +108,6 @@ export default {
       categories: [],
       locations: []
     }
-
-    console.log('asyncData')
-    console.log(context.params)
 
     if (!context.params.start_date) {
       context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
@@ -208,9 +208,12 @@ export default {
         let days = this.events[i].days
 
         for (let k in days) {
-          let date = days[k].date
+          let date = this.events[i].days[k].date
 
-          dates.push(moment(date).format('dddd, MMMM Do'))
+          dates.push({
+            formatted: moment(date).format('dddd, MMMM Do'),
+            value: date
+          })
         }
       }
 
@@ -237,9 +240,6 @@ export default {
 
     updateDate (key, val) {
       let date = moment(val).format('YYYY-MM-DD')
-
-      console.log('updateDate')
-      console.log(date)
 
       this.$set(this, key, date)
     },

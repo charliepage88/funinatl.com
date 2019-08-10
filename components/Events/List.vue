@@ -10,7 +10,7 @@
         <div class="card-image" v-if="event.photo">
           <NuxtLink :to="`/event/${event.slug}`">
             <figure class="image">
-              <clazy-load class="clazy-load-wrapper" :src="event.photo" :ratio="0.2">
+              <clazy-load class="clazy-load-wrapper" :src="event.photo" :ratio="0.1">
                 <transition name="fade">
                   <img :alt="event.name" class="event-image" :src="event.photo">
                 </transition>
@@ -24,7 +24,7 @@
             <div class="media-left" v-if="event.location.photo">
               <NuxtLink :to="`/location/${event.location.slug}`">
                 <figure class="image is-96x96">
-                  <clazy-load class="clazy-load-wrapper" :src="event.location.photo" :ratio="0.2">
+                  <clazy-load class="clazy-load-wrapper" :src="event.location.photo" :ratio="0.1">
                     <transition name="fade">
                       <img :alt="event.location.name" :src="event.location.photo">
                     </transition>
@@ -79,7 +79,7 @@
             <b-button
               type="is-light"
               class="is-centered"
-              size="is-medium"
+              size="is-large"
             >
               {{ event.price }}
             </b-button>
@@ -100,8 +100,8 @@
               icon-pack="fas"
               size="is-medium"
               v-if="event.is_family_friendly"
-              class="is-centered mb-2"
-              :class="{ 'mt-2': !event.short_description && !event.description }"
+              class="is-centered"
+              :class="{ 'mt-1': !event.short_description && !event.description }"
             >
               Family Friendly
             </b-button>

@@ -43,7 +43,8 @@ export default {
     '~plugins/filters.js',
     '~plugins/axios.js',
     '~plugins/mq.js',
-    { src: '~plugins/toast.js', ssr: false }
+    { src: '~plugins/toast.js', ssr: false },
+    '~plugins/scroll-to.js'
   ],
 
   /*
@@ -73,7 +74,8 @@ export default {
     ],
     '@nuxtjs/sitemap',
     '@nuxtjs/dotenv',
-    '@nuxtjs/recaptcha'
+    '@nuxtjs/recaptcha',
+    'vue-scrollto/nuxt'
   ],
 
   /*

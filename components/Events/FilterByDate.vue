@@ -19,6 +19,7 @@
                 :first-day-of-week="1"
                 :date-formatter="formatDate"
                 @input="changeDate('start_date')"
+                :mobile-native="false"
               />
             </b-field>
           </div>
@@ -35,6 +36,7 @@
                 :first-day-of-week="1"
                 :date-formatter="formatDate"
                 @input="changeDate('end_date')"
+                :mobile-native="false"
               />
             </b-field>
           </div>
@@ -45,6 +47,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -53,18 +56,27 @@ export default {
   data () {
     return {
       start_date: moment().startOf('day').toDate(),
-      end_date: moment().add(7, 'day').toDate(),
+      end_date: moment().add(2, 'week').toDate(),
       minDate: moment().startOf('day').toDate(),
       maxDate: moment().add(2, 'month').toDate()
     }
   },
 
   methods: {
+    ...mapActions('site', [
+      'startLoading',
+      'stopLoading'
+    ]),
+
     formatDate (date) {
       return moment(date).format('YYYY-MM-DD')
     },
 
     changeDate (key) {
+      this.startLoading()
+
+      setTimeout(() => this.stopLoading(), 1500)
+
       this.$emit('change', key, this[key])
     }
   }

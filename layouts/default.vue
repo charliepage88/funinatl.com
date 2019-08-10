@@ -26,7 +26,7 @@
         </a>
       </div>
 
-      <div class="navbar-menu" :class="{ 'is-active': showMobileMenu }">
+      <div class="navbar-menu" :class="{ 'is-active': showMobileMenu }" @click.prevent="toggleMobileMenu">
         <div class="navbar-start">
           <nuxt-link to="/about" class="navbar-item" active-class="is-active">
             About
@@ -68,7 +68,7 @@
       <div class="container">
         <div class="columns" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
           <div
-            class="column"
+            class="column is-half-mobile"
             :class="{ 'is-2': isDesktopOrWidescreen, 'is-narrow': !isDesktopOrWidescreen }"
           >
             <h3 class="subtitle is-5 is-size-6-tablet">
@@ -106,7 +106,7 @@
             </div>
           </div>
 
-          <div class="column is-2">
+          <div class="column is-half-mobile" :class="{ 'is-2': isDesktopOrWidescreen }">
             <h3 class="subtitle is-5 is-size-6-tablet">
               Menu
             </h3>
@@ -142,7 +142,7 @@
             </div>
           </div>
 
-          <div class="column">
+          <div class="column is-full-mobile">
             <div class="is-centered">
               <div class="pt-2">
                 <nuxt-link
@@ -172,7 +172,7 @@
             </div>
           </div>
 
-          <div class="column" :class="{ 'is-newsletter-column': !isMobile }">
+          <div class="column is-full-mobile" :class="{ 'is-newsletter-column': !isMobile }">
             <h3 class="subtitle is-5 is-size-6-tablet">
               Newsletter
             </h3>
@@ -187,7 +187,7 @@
               </div>
 
               <div class="control">
-                <button type="submit" class="button is-primary">
+                <button type="submit" class="button is-primary is-fullwidth-mobile">
                   Subscribe
                 </button>
               </div>
@@ -208,6 +208,7 @@
     </footer>
 
     <b-loading :is-full-page="true" :active.sync="loading" />
+    <b-loading :is-full-page="true" :active="$apollo.loading" />
   </div>
 </template>
 
