@@ -21,16 +21,22 @@
 
         <div class="card-content">
           <div class="media">
-            <div class="media-left" v-if="event.location.photo">
+            <div class="media-left" v-if="event.location.thumb_small">
               <NuxtLink :to="`/location/${event.location.slug}`">
                 <figure class="image is-96x96">
-                  <clazy-load class="clazy-load-wrapper" :src="event.location.photo" :ratio="0.1">
+                  <clazy-load class="clazy-load-wrapper" :src="event.location.thumb_small" :ratio="0.1">
                     <transition name="fade">
-                      <img :alt="event.location.name" :src="event.location.photo">
+                      <img :alt="event.location.name" :src="event.location.thumb_small">
                     </transition>
                   </clazy-load>
                 </figure>
               </NuxtLink>
+
+              <span class="tag is-success is-medium">
+                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline">
+                  {{ event.category.name }}
+                </NuxtLink>
+              </span>
             </div>
 
             <div class="media-content">
@@ -41,37 +47,31 @@
               </p>
 
               <p>
-                <span class="subtitle is-6">
+                <span class="subtitle is-6 is-size-5-mobile">
                   <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
                     {{ event.location.name }}
                   </NuxtLink>
                 </span>
               </p>
-
-              <span class="tag is-success is-medium">
-                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline">
-                  {{ event.category.name }}
-                </NuxtLink>
-              </span>
             </div>
           </div>
 
           <div class="content">
             <!-- start/end date -->
-            <h4 class="title is-6 has-text-normal has-text-grey-dark has-text-centered" v-if="event.end_date">
+            <h4 class="title is-6 is-size-5-mobile has-text-normal has-text-grey-dark has-text-centered" v-if="event.end_date">
               {{ event.start_date | fullDate }} - {{ event.end_date | fullDate }}
             </h4>
 
-            <h4 class="title is-6 has-text-normal has-text-grey-dark has-text-centered" v-else>
+            <h4 class="title is-6 is-size-5-mobile has-text-normal has-text-grey-dark has-text-centered" v-else>
               {{ event.start_date | fullDate }}
             </h4>
 
             <!-- start time/end time -->
-            <h4 class="subtitle is-6 has-text-normal has-text-grey-light has-text-centered" v-if="event.end_time">
+            <h4 class="subtitle is-6 is-size-5-mobile has-text-normal has-text-grey-light has-text-centered" v-if="event.end_time">
               {{ event.start_time }} - {{ event.end_time }}
             </h4>
 
-            <h4 class="subtitle is-6 has-text-normal has-text-grey-light has-text-centered" v-else>
+            <h4 class="subtitle is-6 is-size-5-mobile has-text-normal has-text-grey-light has-text-centered" v-else>
               {{ event.start_time }}
             </h4>
 
@@ -112,7 +112,7 @@
                 v-for="tag in event.tags"
                 :key="tag.slug"
                 :to="`/tag/${tag.slug}`"
-                class="tag is-info has-text-white has-no-underline"
+                class="tag is-info is-medium has-text-white has-no-underline"
               >
                 {{ tag.name }}
               </NuxtLink>

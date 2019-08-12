@@ -14,6 +14,8 @@ query eventsByLocation($slug: String!, $start_date: String!, $end_date: String!)
       longitude
       description
       photo
+      thumb_small
+      thumb_medium
       tags {
           name
           slug
@@ -78,6 +80,8 @@ query eventsByLocation($slug: String!, $start_date: String!, $end_date: String!)
             longitude
             description
             photo
+            thumb_small
+            thumb_medium
             tags {
               name
               slug
@@ -90,6 +94,7 @@ query eventsByLocation($slug: String!, $start_date: String!, $end_date: String!)
             name
             slug
             photo
+            spotify_url
           }
         }
       }

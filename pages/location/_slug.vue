@@ -5,8 +5,14 @@
     <div class="columns is-centered pt-2">
       <div class="column" :class="{ 'is-full': isTablet, 'is-6': isDesktopOrWidescreen }">
         <div class="columns">
-          <div class="column is-one-quarter" v-if="location.photo">
-            <figure class="image" :class="{ 'is-96x96': isDesktopOrWidescreen }">
+          <div class="column is-one-quarter" v-if="location.thumb_medium && isDesktopOrWidescreen">
+            <figure class="image is-128x128">
+              <img :alt="location.name" :src="location.thumb_medium">
+            </figure>
+          </div>
+
+          <div class="column is-one-quarter" v-if="location.photo && !isDesktopOrWidescreen">
+            <figure class="image">
               <img :alt="location.name" :src="location.photo">
             </figure>
           </div>

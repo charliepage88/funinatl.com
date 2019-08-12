@@ -21,6 +21,8 @@ query categoryBySlug($slug: String!) {
         longitude
         description
         photo
+        thumb_small
+        thumb_medium
         tags {
             name
             slug
@@ -63,6 +65,7 @@ query categoryBySlug($slug: String!) {
             name
             slug
             photo
+            spotify_url
         }
     }
   }

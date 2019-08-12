@@ -13,12 +13,16 @@
           class="no-underline outline-none text-teal-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 mr-8"
           @click.prevent="changeMode('all')"
           :class="{ 'border-gray-800': mode === 'all', 'border-transparent': mode !== 'all' }"
-        >All Events</a>
+        >
+          All Events
+        </a>
         <a
           class="no-underline outline-none text-grey-dark border-b-2 uppercase tracking-wide font-bold text-xs py-3 ml-8"
           @click.prevent="changeMode('recommended')"
           :class="{ 'border-gray-800': mode === 'recommended', 'border-transparent': mode !== 'recommended' }"
-        >Recommended</a>
+        >
+          Recommended
+        </a>
       </div>
     </nav>
 

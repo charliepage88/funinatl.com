@@ -4,5 +4,6 @@
     name
     slug
     photo
+    spotify_url
   }
 }

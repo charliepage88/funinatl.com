@@ -13,6 +13,8 @@
     longitude
     description
     photo
+    thumb_small
+    thumb_medium
     tags {
         name
         slug
