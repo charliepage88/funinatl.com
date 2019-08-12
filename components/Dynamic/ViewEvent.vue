@@ -57,7 +57,7 @@
           class="columns is-absolute-computer is-bottom-computer-0"
         >
           <div class="column is-narrow" v-if="event.location">
-            <div class="columns">
+            <div class="columns" :class="{ 'is-mobile': isTablet }">
               <div class="column is-narrow pr-0" v-if="event.location.photo">
                 <nuxt-link :to="`/location/${event.location.slug}`">
                   <figure class="image mr-mobile-1" :class="{ 'is-64x64': !isMobile }">

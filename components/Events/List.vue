@@ -32,7 +32,7 @@
                 </figure>
               </NuxtLink>
 
-              <span class="tag is-success is-medium">
+              <span class="tag is-success is-medium is-w-96">
                 <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline">
                   {{ event.category.name }}
                 </NuxtLink>
@@ -47,7 +47,7 @@
               </p>
 
               <p>
-                <span class="subtitle is-6 is-size-5-mobile">
+                <span class="subtitle is-5">
                   <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
                     {{ event.location.name }}
                   </NuxtLink>
