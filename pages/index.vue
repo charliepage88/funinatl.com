@@ -90,10 +90,9 @@
 
 <script>
 import moment from 'moment'
+import get from 'lodash.get'
 import isEmpty from 'lodash.isempty'
 import eventsByPeriod from '@/queries/eventsByPeriod'
-import Categories from '@/queries/categories'
-import Locations from '@/queries/locations'
 import EventsList from '@/components/Events/List'
 import Search from '@/components/Events/Search'
 import FilterByDate from '@/components/Events/FilterByDate'
@@ -105,14 +104,7 @@ export default {
   scrollToTop: true,
 
   async asyncData (context) {
-    let client = context.app.apolloProvider.defaultClient
-
-    const response = {
-      eventsByPeriod: {},
-      categories: [],
-      locations: []
-    }
-
+    // init start/end date
     if (!context.params.start_date) {
       context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
     }
@@ -121,28 +113,25 @@ export default {
       context.params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
     }
 
+    // return payload if available
+    let payload = get(context, 'payload', false)
+    if (payload) {
+      return payload
+    }
+
+    // fetch data from apollo
+    let client = context.app.apolloProvider.defaultClient
+
+    const response = {
+      eventsByPeriod: {}
+    }
+
     response.eventsByPeriod = await client.query({
         query: eventsByPeriod,
         variables: context.params
       })
       .then(({ data }) => {
         return data.eventsByPeriod
-      })
-
-    response.categories = await client.query({
-        query: Categories,
-        variables: context.params
-      })
-      .then(({ data }) => {
-        return data.categories
-      })
-
-    response.locations = await client.query({
-        query: Locations,
-        variables: context.params
-      })
-      .then(({ data }) => {
-        return data.locations
       })
 
     return response
@@ -169,16 +158,6 @@ export default {
         }
       },
       query: eventsByPeriod
-    },
-
-    categories: {
-      prefetch: true,
-      query: Categories
-    },
-
-    locations: {
-      prefetch: true,
-      query: Locations
     }
   },
 
@@ -195,7 +174,15 @@ export default {
 
   computed: {
     events() {
-      return this.eventsByPeriod
+      return get(this.eventsByPeriod, 'events', {})
+    },
+
+    categories() {
+      return get(this.eventsByPeriod, 'categories', {})
+    },
+
+    locations() {
+      return get(this.eventsByPeriod, 'locations', {})
     },
 
     hasEvents () {

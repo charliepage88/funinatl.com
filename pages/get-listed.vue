@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import get from 'lodash.get'
 import Categories from '@/queries/categories'
 import GetListedForm from '@/components/Static/GetListedForm'
 import ResponsiveMixin from '@/mixins/ResponsiveMixin'
@@ -19,6 +20,13 @@ export default {
 	name: 'get-listed',
 
   async asyncData (context) {
+    // return payload if available
+    let payload = get(context, 'payload', false)
+    if (payload) {
+      return payload
+    }
+
+    // fetch data from apollo
     let client = context.app.apolloProvider.defaultClient
 
     const response = {

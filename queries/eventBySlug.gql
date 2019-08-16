@@ -19,6 +19,9 @@ query eventBySlug($slug: String!) {
     website
     is_family_friendly
     photo
+    thumb_mobile
+    thumb_tablet
+    thumb_desktop
     category {
         name
         slug

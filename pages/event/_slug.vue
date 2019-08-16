@@ -12,6 +12,7 @@
 
 <script>
 import moment from 'moment'
+import get from 'lodash.get'
 import eventBySlug from '@/queries/eventBySlug'
 import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 import ViewEvent from '@/components/Dynamic/ViewEvent'
@@ -35,6 +36,13 @@ export default {
   scrollToTop: true,
 
   async asyncData (context) {
+    // return payload if available
+    let payload = get(context, 'payload', false)
+    if (payload) {
+      return payload
+    }
+
+    // fetch data from apollo
     let client = context.app.apolloProvider.defaultClient
 
     const event = await client.query({

@@ -236,7 +236,6 @@
 <script>
 import { mapActions } from 'vuex'
 import moment from 'moment'
-import DatePicker from '@/components/Common/DatePicker'
 import ToastMixin from '@/mixins/ToastMixin'
 import RecaptchaMixin from '@/mixins/RecaptchaMixin'
 
@@ -251,10 +250,6 @@ export default {
     locations: {
       type: Array|Object
     }
-  },
-
-  components: {
-    DatePicker
   },
 
   mixins: [

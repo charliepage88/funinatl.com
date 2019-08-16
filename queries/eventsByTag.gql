@@ -28,6 +28,9 @@ query eventsByTag($slug: String!, $start_date: String!, $end_date: String!) {
           website
           is_family_friendly
           photo
+          thumb_mobile
+          thumb_tablet
+          thumb_desktop
           category {
             name
             slug

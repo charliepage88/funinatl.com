@@ -134,10 +134,10 @@
 
     <!-- List of Bands (if applicable) -->
     <template v-if="bands.length">
-      <hr class="mt-computer-4 mt-handheld-1" />
+      <hr class="mt-computer-3 mt-handheld-1" />
 
       <h3
-        class="subtitle is-2 is-size-4-tablet ml-1 mt-computer-4 mb-computer-4 mt-handheld-1 mb-handheld-2"
+        class="subtitle is-2 is-size-4-tablet ml-1 mt-computer-3 mb-computer-3 mt-handheld-1 mb-handheld-2"
       >
         Bands
       </h3>
@@ -145,22 +145,22 @@
       <div class="columns is-multiline ml-1 mb-2">
         <template v-for="(bandsChunk, index) in bands">
           <div
-            class="column is-5 box rounded-lg shadow-lg has-background-info mb-0 mr-1"
+            class="column is-5 box rounded-lg shadow-lg has-background-info mb-2 mr-1"
             v-for="band in bandsChunk"
             :key="band.id"
           >
             <div class="columns">
               <div class="column is-narrow" v-if="band.photo">
-                <figure
-                  class="image"
-                  :class="{ 'is-128x128': isDesktopOrWidescreen, 'is-64x64': !isDesktopOrWidescreen }"
-                >
+                <figure class="image is-128x128 is-hidden-touch">
+                  <img :alt="band.name" :src="band.photo" />
+                </figure>
+                <figure class="image is-64x64 is-hidden-desktop">
                   <img :alt="band.name" :src="band.photo" />
                 </figure>
               </div>
 
               <div class="column has-text-left">
-                <h3 class="subtitle is-4 is-size-6-tablet has-text-white">
+                <h3 class="title is-4 is-size-6-tablet has-text-white">
                   {{ band.name }}
                 </h3>
               </div>

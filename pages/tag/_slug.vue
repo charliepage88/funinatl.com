@@ -68,7 +68,6 @@
 import moment from 'moment'
 import get from 'lodash.get'
 import isEmpty from 'lodash.isempty'
-// import tagBySlug from '@/queries/tagBySlug'
 import eventsByTag from '@/queries/eventsByTag'
 import FilterByDate from '@/components/Events/FilterByDate'
 import EventsList from '@/components/Events/List'
@@ -93,13 +92,7 @@ export default {
   scrollToTop: true,
 
   async asyncData (context) {
-    let client = context.app.apolloProvider.defaultClient
-
-    const response = {
-      // tagBySlug: {},
-      eventsByTag: {}
-    }
-
+    // init start/end date
     if (!context.params.start_date) {
       context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
     }
@@ -108,13 +101,18 @@ export default {
       context.params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
     }
 
-    // response.tagBySlug = await client.query({
-    //     query: tagBySlug,
-    //     variables: context.params
-    //   })
-    //   .then(({ data }) => {
-    //     return data.tagBySlug
-    //   })
+    // return payload if available
+    let payload = get(context, 'payload', false)
+    if (payload) {
+      return payload
+    }
+
+    // fetch data from apollo
+    let client = context.app.apolloProvider.defaultClient
+
+    const response = {
+      eventsByTag: {}
+    }
 
     response.eventsByTag = await client.query({
         query: eventsByTag,
