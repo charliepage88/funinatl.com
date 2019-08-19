@@ -2,36 +2,36 @@
   <div :class="{ 'container is-fluid pl-4 pr-4': !isMobile, 'p-1 centered-container': isMobile }">
     <div class="centered-container" v-if="!isMobile">
       <div class="box shadow-md rounded">
-        <AboutContent />
+        <LoginForm />
       </div>
     </div>
 
-    <AboutContent v-if="isMobile" />
+    <LoginForm v-if="isMobile" />
   </div>
 </template>
 
 <script>
-import AboutContent from '@/components/Static/AboutContent'
+import LoginForm from '@/components/Auth/LoginForm'
 import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
-  name: 'about',
+  name: 'login',
 
   head () {
     return {
-      title: 'Atlanta Events - About | FunInATL',
+      title: 'Atlanta Events - Login | FunInATL',
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: 'About FunInATL and our mission to provide the best list of events going on in Atlanta.'
+          content: 'Login to your account on FunInATL to get more access to events going on in Atlanta.'
         }
       ]
     }
   },
 
   components: {
-    AboutContent
+    LoginForm
   },
 
   mixins: [

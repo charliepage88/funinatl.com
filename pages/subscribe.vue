@@ -17,6 +17,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
   name: 'subscribe',
 
+  head () {
+    return {
+      title: 'Atlanta Events - Subscribe | FunInATL',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Subscribe to the FunInATL newsletter to get updates on the best upcoming events in Atlanta.'
+        }
+      ]
+    }
+  },
+
   components: {
     SubscribeForm
   },

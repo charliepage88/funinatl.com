@@ -184,14 +184,6 @@ export default {
   },
 
   apollo: {
-    // tagBySlug: {
-    //   prefetch: ({ route }) => ({ slug: route.params.slug }),
-    //   variables() {
-    //     return { slug: this.$route.params.slug }
-    //   },
-    //   query: tagBySlug
-    // },
-
     eventsByTag: {
       prefetch: true,
       // prefetch: ({ route }) => ({ slug: route.params.slug }),

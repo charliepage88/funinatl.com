@@ -19,6 +19,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
 	name: 'get-listed',
 
+  head () {
+    return {
+      title: 'Atlanta Events - Get Listed | FunInATL',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Let FunInATL know about any music venues or businesses that host events in Atlanta.'
+        }
+      ]
+    }
+  },
+
   async asyncData (context) {
     // return payload if available
     let payload = get(context, 'payload', false)

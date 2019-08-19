@@ -208,7 +208,7 @@
     </footer>
 
     <b-loading :is-full-page="true" :active.sync="loading" />
-    <b-loading :is-full-page="true" :active="$apollo.loading" />
+    <b-loading :is-full-page="true" :active.sync="$apollo.loading" />
   </div>
 </template>
 
@@ -235,7 +235,8 @@ export default {
         email: null
       },
       userMenuOpen: false,
-      showMobileMenu: false
+      showMobileMenu: false,
+      isLoggedIn: false
     }
   },
 
@@ -268,7 +269,21 @@ export default {
 
     toggleMobileMenu () {
       this.showMobileMenu = !this.showMobileMenu
+    },
+
+    async logout() {
+      await this.$apolloHelpers.onLogout()
+
+      this.isLoggedIn = false
+
+      this.toastSuccess('You have logged out! Redirecting you to the home page.')
+
+      setTimeout(() => this.$router.push('/'), 1000)
     }
+  },
+
+  mounted () {
+    this.isLoggedIn = !!this.$apolloHelpers.getToken()
   }
 }
 </script>

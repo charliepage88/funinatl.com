@@ -73,7 +73,8 @@ export default {
     ],
     '@nuxtjs/sitemap',
     '@nuxtjs/dotenv',
-    '@nuxtjs/recaptcha'
+    '@nuxtjs/recaptcha',
+    '@nuxtjs/universal-storage'
   ],
 
   /*
@@ -85,7 +86,31 @@ export default {
 
   // Apollo Server Setup
   apollo: {
-    // tokenName: 'yourApolloTokenName', // optional, default: apollo-token
+    tokenName: 'funinatl', // optional, default: apollo-token
+    cookieAttributes: {
+      /**
+        * Define when the cookie will be removed. Value can be a Number
+        * which will be interpreted as days from time of creation or a
+        * Date instance. If omitted, the cookie becomes a session cookie.
+        */
+      expires: 7, // optional, default: 7 (days)
+
+      /**
+        * Define the path where the cookie is available. Defaults to '/'
+        */
+      path: '/', // optional
+      /**
+        * Define the domain where the cookie is available. Defaults to
+        * the domain of the page where the cookie was created.
+        */
+      domain: process.env.COOKIE_DOMAIN, // optional
+
+      /**
+        * A Boolean indicating if the cookie transmission requires a
+        * secure protocol (https). Defaults to false.
+        */
+      secure: false,
+    },
     // tokenExpires: 10, // optional, default: 7 (days)
     includeNodeModules: true, // optional, default: false (this includes graphql-tag for node_modules folder)
     // authenticationType: 'Basic', // optional, default: 'Bearer'
@@ -98,30 +123,9 @@ export default {
         fetchPolicy: 'cache-and-network',
       },
     },
+    errorHandler: '~/plugins/apollo-error-handler.js',
     clientConfigs: {
-      default: {
-        // required
-        httpEndpoint: process.env.GRAPHQL_ENDPOINT,
-        // optional
-        // See https://www.apollographql.com/docs/link/links/http.html#options
-        // httpLinkOptions: {
-        //   credentials: 'include'
-        // },
-        // headers: {
-        //   'Authorization: Bearer': 'TzDnhXuLrKMVTFqMLJTy5rDo1lvYSX3OF3Zau3e0'
-        // },
-        // You can use `wss` for secure connection (recommended in production)
-        // Use `null` to disable subscriptions
-        // wsEndpoint: 'ws://localhost:4000', // optional
-        wsEndpoint: null,
-        // LocalStorage token
-        // tokenName: 'funinatl', // optional
-        // Enable Automatic Query persisting with Apollo Engine
-        // persisting: true, // Optional
-        // Use websockets for everything (no HTTP)
-        // You need to pass a `wsEndpoint` for this to work
-        // websocketsOnly: false // Optional
-      }
+      default: '~/plugins/apollo-config.js'
     }
   },
 
@@ -159,6 +163,10 @@ export default {
   generate: {
     concurrency: 10,
     interval: 0,
+    exclude: [
+      '/auth/dashboard',
+      /^(?=.*\buser\b).*$/
+    ],
     async routes () {
       return await axios.get(`${process.env.API_ENDPOINT}/api/routes`)
         .then((res) => res.data.routes)

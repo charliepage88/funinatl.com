@@ -20,6 +20,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
 	name: 'submit-event',
 
+  head () {
+    return {
+      title: 'Atlanta Events - Submit Event | FunInATL',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Let FunInATL know about an upcoming event not already listed.'
+        }
+      ]
+    }
+  },
+
   async asyncData (context) {
     // return payload if available
     let payload = get(context, 'payload', false)

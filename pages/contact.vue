@@ -17,6 +17,19 @@ import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 export default {
 	name: 'contact',
 
+  head () {
+    return {
+      title: 'Atlanta Events - Contact | FunInATL',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Get in contact with FunInATL.'
+        }
+      ]
+    }
+  },
+
   components: {
     ContactForm
   },

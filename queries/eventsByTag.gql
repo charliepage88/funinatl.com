@@ -1,8 +1,11 @@
 query eventsByTag($slug: String!, $start_date: String!, $end_date: String!) {
   eventsByTag(slug: $slug, start_date: $start_date, end_date: $end_date) {
     tag {
+      id
       name
       slug
+      created_at
+      updated_at
     }
     events {
       label
