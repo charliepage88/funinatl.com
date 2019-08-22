@@ -307,7 +307,7 @@ export default {
   },
 
   mounted () {
-    this.isLoggedIn = !!this.$apolloHelpers.getToken()
+    this.isLoggedIn = !!this.$apolloHelpers.getToken('funinatl')
   }
 }
 </script>
