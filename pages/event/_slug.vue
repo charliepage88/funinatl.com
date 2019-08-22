@@ -35,24 +35,30 @@ export default {
 
   scrollToTop: true,
 
-  async asyncData (context) {
+  async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
+    // get payload locally if available
+    if (process.static && process.client) {
+      return await $axios.$get($payloadURL(route))
+    }
+
     // return payload if available
-    let payload = get(context, 'payload', false)
     if (payload) {
       return payload
     }
 
     // fetch data from apollo
-    let client = context.app.apolloProvider.defaultClient
+    let client = app.apolloProvider.defaultClient
 
     const event = await client.query({
       query: eventBySlug,
-      variables: context.params
+      variables: params
     }).then(({ data }) => {
       return data.eventBySlug
     })
 
-    return { eventBySlug: event }
+    return {
+      eventBySlug: event
+    }
   },
 
   components: {

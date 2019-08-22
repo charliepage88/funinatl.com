@@ -266,6 +266,9 @@ $footer-background-color: whitesmoke
   .has-text-centered-mobile
     text-align: center!important
 
+  .container.is-auth, .container.is-content
+    padding: 1rem
+
   // margin & padding helpers
   @for $i from 1 through 8
     // margin
@@ -368,6 +371,22 @@ $footer-background-color: whitesmoke
 
 // TABLET
 @media screen and (min-width: 481px) and (max-width: 1250px)
+  .container.is-auth
+    margin: 0 auto!important
+    width: 70%!important
+    padding: 1.25rem!important
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)
+    background-color: #fff!important
+    border-radius: 6px
+
+  .container.is-content
+    margin: 0 auto!important
+    width: 90%!important
+    padding: 1.25rem!important
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)
+    background-color: #fff!important
+    border-radius: 6px
+
   // margin & padding helpers
   @for $i from 1 through 8
     // margin
@@ -784,6 +803,22 @@ $footer-background-color: whitesmoke
 
 // DESKTOP OR WIDESCREEN
 @media screen and (min-width: 1251px)
+  .container.is-auth
+    margin: 0 auto!important
+    width: 50%!important
+    padding: 1.25rem!important
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)
+    background-color: #fff!important
+    border-radius: 6px
+
+  .container.is-content
+    margin: 0 auto!important
+    width: 80%!important
+    padding: 1.25rem!important
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06)
+    background-color: #fff!important
+    border-radius: 6px
+
   // margin & padding helpers
   @for $i from 1 through 8
     // margin
@@ -894,9 +929,17 @@ $footer-background-color: whitesmoke
   .is-bottom-computer-0
     bottom: 0!important
 
+// NOT MOBILE
+@media screen and (min-width: 481px)
+  .is-newsletter-column
+    margin-left: 5rem
+
+// width helpers
 .is-w-96
   width: 96px!important
 
 .is-w-128
   width: 128px!important
 
+.is-w-half
+  width: 50%!important

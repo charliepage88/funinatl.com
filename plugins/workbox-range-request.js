@@ -1,5 +1,5 @@
 workbox.routing.registerRoute(
-  /.*\.(mp4|webm)/,
+  /.*\.(jpeg|png|jpg)/,
   workbox.strategies.cacheFirst({
     plugins: [
       new workbox.rangeRequests.Plugin(),

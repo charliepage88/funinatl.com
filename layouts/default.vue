@@ -4,7 +4,6 @@
       class="navbar is-fixed-top is-primary"
       role="navigation"
       aria-label="main navigation"
-      :class="$mq"
     >
       <div class="navbar-brand">
         <nuxt-link to="/" class="navbar-item">
@@ -26,7 +25,11 @@
         </a>
       </div>
 
-      <div class="navbar-menu" :class="{ 'is-active': showMobileMenu }" @click.prevent="toggleMobileMenu">
+      <div
+        class="navbar-menu"
+        :class="{ 'is-active': showMobileMenu }"
+        @click.prevent="toggleMobileMenu"
+      >
         <div class="navbar-start">
           <nuxt-link to="/about" class="navbar-item" active-class="is-active">
             About
@@ -48,12 +51,12 @@
         <div class="navbar-end" v-if="1 === 2">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
+              <nuxt-link to="/auth/register" class="button is-primary" active-class="is-active">
                 <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
-              </a>
+              </nuxt-link>
+              <nuxt-link to="/auth/login" class="button is-light" active-class="is-active">
+                Login
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -66,10 +69,9 @@
 
     <footer class="footer">
       <div class="container">
-        <div class="columns" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
+        <div class="columns is-multiline">
           <div
-            class="column is-half-mobile"
-            :class="{ 'is-2': isDesktopOrWidescreen, 'is-narrow': !isDesktopOrWidescreen }"
+            class="column is-half-mobile is-one-sixth-desktop"
           >
             <h3 class="subtitle is-5 is-size-6-tablet">
               Categories
@@ -106,7 +108,7 @@
             </div>
           </div>
 
-          <div class="column is-half-mobile" :class="{ 'is-2': isDesktopOrWidescreen }">
+          <div class="column is-half-mobile is-one-sixth-desktop">
             <h3 class="subtitle is-5 is-size-6-tablet">
               Menu
             </h3>
@@ -145,26 +147,48 @@
           <div class="column is-full-mobile">
             <div class="is-centered">
               <div class="pt-2">
+                <!-- Desktop+ button -->
                 <nuxt-link
                   to="/get-listed"
-                  class="button is-info is-fullwidth"
-                  :class="{ 'is-large': isDesktopOrWidescreen, 'is-medium': !isDesktopOrWidescreen }"
+                  class="button is-info is-fullwidth is-large is-hidden-touch"
                 >
-                  <span class="icon is-large">
-                    <i class="fas fa-map fa-2x"></i>
+                  <span class="icon is-medium">
+                    <i class="fas fa-map fa-lg"></i>
+                  </span>
+                  <span>Get Listed</span>
+                </nuxt-link>
+
+                <!-- Mobile/Tablet button -->
+                <nuxt-link
+                  to="/get-listed"
+                  class="button is-info is-fullwidth is-medium is-hidden-desktop"
+                >
+                  <span class="icon is-medium">
+                    <i class="fas fa-map fa-lg"></i>
                   </span>
                   <span>Get Listed</span>
                 </nuxt-link>
               </div>
 
               <div class="pt-1">
+                <!-- Desktop+ button -->
                 <nuxt-link
                   to="/contact"
-                  class="button is-indigo is-fullwidth"
-                  :class="{ 'is-large': isDesktopOrWidescreen, 'is-medium': !isDesktopOrWidescreen }"
+                  class="button is-indigo is-fullwidth is-large is-hidden-touch"
                 >
-                  <span class="icon is-large">
-                    <i class="far fa-envelope fa-2x"></i>
+                  <span class="icon is-medium">
+                    <i class="far fa-envelope fa-lg"></i>
+                  </span>
+                  <span>Contact Us</span>
+                </nuxt-link>
+
+                <!-- Mobile/Tablet button -->
+                <nuxt-link
+                  to="/contact"
+                  class="button is-indigo is-fullwidth is-medium is-hidden-desktop"
+                >
+                  <span class="icon is-medium">
+                    <i class="far fa-envelope fa-lg"></i>
                   </span>
                   <span>Contact Us</span>
                 </nuxt-link>
@@ -172,7 +196,7 @@
             </div>
           </div>
 
-          <div class="column is-full-mobile" :class="{ 'is-newsletter-column': !isMobile }">
+          <div class="column is-full-mobile is-newsletter-column">
             <h3 class="subtitle is-5 is-size-6-tablet">
               Newsletter
             </h3>
@@ -182,7 +206,12 @@
             <form class="form" @submit.prevent="subscribe">
               <div class="field">
                 <div class="control">
-                  <input type="text" class="input" placeholder="Your email address" v-model="newsletter.email">
+                  <input
+                    type="email"
+                    class="input"
+                    placeholder="Your email address"
+                    v-model="newsletter.email"
+                  >
                 </div>
               </div>
 
@@ -214,14 +243,9 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'default',
-
-  mixins: [
-    ResponsiveMixin
-  ],
 
   computed: {
     ...mapState('site', [
@@ -292,15 +316,6 @@ export default {
 nav.navbar
   height: 110px!important
 
-  &.mobile
-    height: 80px!important
-
-    .is-brand-name
-      font-size: 1.5rem
-
-    .navbar-brand img
-      width: 300px
-
   .is-brand-name-container
     width: 300px!important
 
@@ -321,10 +336,18 @@ nav.navbar
     z-index: 0
     height: 100vh
 
-.is-newsletter-column
-  margin-left: 5rem
-
 .is-footer-text
   text-align: center
   margin-top: 3rem
+
+// MOBILE
+@media screen and (max-width: 480px)
+  nav.navbar
+    height: 80px!important
+
+    .is-brand-name
+      font-size: 1.5rem!important
+
+    .navbar-brand img
+      width: 300px
 </style>

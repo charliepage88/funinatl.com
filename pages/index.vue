@@ -116,6 +116,8 @@ export default {
     // return payload if available
     let payload = get(context, 'payload', false)
     if (payload) {
+      console.log('index -> eventsByPeriod -> payload')
+
       return payload
     }
 
@@ -133,6 +135,8 @@ export default {
       .then(({ data }) => {
         return data.eventsByPeriod
       })
+
+    console.log('index -> eventsByPeriod -> client')
 
     return response
   },

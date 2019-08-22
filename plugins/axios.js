@@ -1,4 +1,4 @@
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 export default function ({ $axios, redirect }) {
   $axios.onRequest(config => {
@@ -12,9 +12,11 @@ export default function ({ $axios, redirect }) {
     }
   })
 
+  /*
   let token = Cookies.get('token')
 
   if (typeof token !== 'undefined') {
     $axios.setToken(token, 'Bearer')
   }
+  */
 }

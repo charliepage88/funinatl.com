@@ -18,6 +18,12 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: '//kit.fontawesome.com/ed3def2da2.js' }
+    ],
+    noscript: [
+      { innerHTML: 'This website requires JavaScript.' }
     ]
   },
 
@@ -74,8 +80,43 @@ export default {
     '@nuxtjs/sitemap',
     '@nuxtjs/dotenv',
     '@nuxtjs/recaptcha',
-    '@nuxtjs/universal-storage'
+    '@nuxtjs/universal-storage',
+    'nuxt-purgecss',
+    'nuxt-payload-extractor'
   ],
+
+  /**
+  * Build properties
+  */
+  build: {
+    extractCSS: true
+  },
+
+  /**
+  * Render properties
+  */
+  render: {
+    csp: {
+      reportOnly: true,
+      hashAlgorithm: 'sha256',
+      unsafeInlineCompatiblity: true,
+      policies: {
+        'default-src': [ "'self'", '*.fontawesome.com', '*.gstatic.com', '*.google.com' ],
+        'img-src': [ "'self'", 'https:', '*.google-analytics.com' ],
+        // 'worker-src': [ "'self'", `blob:`, PRIMARY_HOSTS, '*.logrocket.io'],
+        'style-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', '*.googleapis.com' ],
+        'script-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', '*.fathom.adaptcms.com', '*.gstatic.com', '*.google-analytics.com', '*.google.com' ],
+        'connect-src': [ "'self'", '*.funinatl.com', '*.funinatl.test', '*.fathom.adaptcms.com', '*.google-analytics.com', '*.gstatic.com', '*.fontawesome.com', 'https://bea8buawo3.execute-api.us-east-1.amazonaws.com/' ],
+        'form-action': ["'self'"],
+        'frame-ancestors': ["'none'"],
+        'object-src': ["'none'"],
+        'base-uri': [ 'https://dev.funinatl.com', 'http://funinatl.test', 'https://www.funinatl.com' ],
+        'report-uri': [
+          `https://sentry.io/api/254487/security/?sentry_key=609cf649abb24452a77cee6da89fc11326c1f41a6d63405bae6f104ecbc5beac`
+        ]
+      }
+    }
+  },
 
   /*
   ** Axios module configuration
@@ -123,9 +164,32 @@ export default {
         fetchPolicy: 'cache-and-network',
       },
     },
-    errorHandler: '~/plugins/apollo-error-handler.js',
+    // errorHandler: '~/plugins/apollo-error-handler.js',
     clientConfigs: {
-      default: '~/plugins/apollo-config.js'
+      default: {
+        // required
+        httpEndpoint: process.env.GRAPHQL_ENDPOINT,
+        // optional
+        // See https://www.apollographql.com/docs/link/links/http.html#options
+        // httpLinkOptions: {
+        //   credentials: 'include'
+        // },
+        // headers: {
+        //   'Authorization: Bearer': 'TzDnhXuLrKMVTFqMLJTy5rDo1lvYSX3OF3Zau3e0'
+        // },
+        // You can use `wss` for secure connection (recommended in production)
+        // Use `null` to disable subscriptions
+        // wsEndpoint: 'ws://localhost:4000', // optional
+        wsEndpoint: null,
+        // LocalStorage token
+        // tokenName: 'funinatl', // optional
+        // Enable Automatic Query persisting with Apollo Engine
+        persisting: true, // Optional
+        // Use websockets for everything (no HTTP)
+        // You need to pass a `wsEndpoint` for this to work
+        // websocketsOnly: false // Optional,
+      }
+      // default: '~/plugins/apollo-config.js'
     }
   },
 
@@ -164,7 +228,6 @@ export default {
     concurrency: 10,
     interval: 0,
     exclude: [
-      '/auth/dashboard',
       /^(?=.*\buser\b).*$/
     ],
     async routes () {
