@@ -163,7 +163,9 @@ export default {
         }).then(({ data }) => data && data.register)
 
         await this.$apolloHelpers.onLogin(response.token, undefined, { expires: 7 })
-        // this.$storage.setCookie('funinatl_user', JSON.stringify(response.user))
+
+        this.$storage.setUniversal('funinatl', response.token)
+        this.$storage.setUniversal('funinatl_user', JSON.stringify(response.user))
 
         this.toastSuccess('You have signed up! Redirecting you to your dashboard now.')
 

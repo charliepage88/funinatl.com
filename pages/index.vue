@@ -51,27 +51,6 @@
                       </h4>
                     </div>
                   </div>
-
-                  <div class="level-right" v-if="isCustomDatesChoosen && 1 === 2">
-                    <div class="level-item">
-                      <b-dropdown hoverable aria-role="list" :mobile-modal="true">
-                        <button class="button is-info" slot="trigger">
-                          <span>Jump To Date</span>
-                          <b-icon pack="fas" icon="caret-down"></b-icon>
-                        </button>
-
-                        <b-dropdown-item
-                          aria-role="listitem"
-                          v-for="val in availableDates"
-                          :key="`date-${val.value}-${day.date}`"
-                          :v-scroll-to="`#events-${day.date}`"
-                          :has-link="true"
-                        >
-                          {{ val.formatted }}
-                        </b-dropdown-item>
-                      </b-dropdown>
-                    </div>
-                  </div>
                 </nav>
 
                 <events-list :events="day.events" />
@@ -103,40 +82,40 @@ export default {
 
   scrollToTop: true,
 
-  async asyncData (context) {
-    // init start/end date
-    if (!context.params.start_date) {
-      context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
-    }
-
-    if (!context.params.end_date) {
-      context.params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+  async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
+    // get payload locally if available
+    if (process.static && process.client) {
+      return await $axios.$get($payloadURL(route))
     }
 
     // return payload if available
-    let payload = get(context, 'payload', false)
     if (payload) {
-      console.log('index -> eventsByPeriod -> payload')
-
       return payload
     }
 
     // fetch data from apollo
-    let client = context.app.apolloProvider.defaultClient
+    let client = app.apolloProvider.defaultClient
 
     const response = {
       eventsByPeriod: {}
     }
 
+    // init start/end date
+    if (!params.start_date) {
+      params.start_date = moment().startOf('day').format('YYYY-MM-DD')
+    }
+
+    if (!params.end_date) {
+      params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+    }
+
     response.eventsByPeriod = await client.query({
         query: eventsByPeriod,
-        variables: context.params
+        variables: params
       })
       .then(({ data }) => {
         return data.eventsByPeriod
       })
-
-    console.log('index -> eventsByPeriod -> client')
 
     return response
   },
@@ -191,29 +170,6 @@ export default {
 
     hasEvents () {
       return !isEmpty(this.events)
-    },
-
-    availableDates () {
-      if (!this.hasEvents) {
-        return []
-      }
-
-      let dates = []
-      for (let i in this.events) {
-        let days = this.events[i].days
-
-        for (let k in days) {
-          let date = this.events[i].days[k].date
-
-          dates.push({
-            formatted: moment(date).format('dddd, MMMM Do'),
-            value: date
-          })
-        }
-      }
-
-      // return dates.slice(0, 10)
-      return dates
     },
 
     isCustomDatesChoosen () {

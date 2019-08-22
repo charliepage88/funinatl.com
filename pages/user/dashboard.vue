@@ -14,17 +14,16 @@ export default {
     'isAuth'
   ],
 
-  computed: {
-    user () {
-      let value = null
-      let user = this.$storage.getCookie('funinatl_user')
-
-      if (user) {
-        value = JSON.parse(user)
-      }
-
-      return value
+  data () {
+    return {
+      user: null
     }
+  },
+
+  mounted () {
+    let user = this.$storage.getUniversal('funinatl_user')
+
+    this.user = user
   }
 }
 </script>

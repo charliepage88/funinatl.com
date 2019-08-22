@@ -87,24 +87,28 @@ export default {
 
   scrollToTop: true,
 
-  async asyncData (context) {
-    // init start/end date
-    if (!context.params.start_date) {
-      context.params.start_date = moment().startOf('day').format('YYYY-MM-DD')
-    }
-
-    if (!context.params.end_date) {
-      context.params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+  async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
+    // get payload locally if available
+    if (process.static && process.client) {
+      return await $axios.$get($payloadURL(route))
     }
 
     // return payload if available
-    let payload = get(context, 'payload', false)
     if (payload) {
       return payload
     }
 
+    // init start/end date
+    if (!params.start_date) {
+      params.start_date = moment().startOf('day').format('YYYY-MM-DD')
+    }
+
+    if (!params.end_date) {
+      params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+    }
+
     // fetch data from apollo
-    let client = context.app.apolloProvider.defaultClient
+    let client = app.apolloProvider.defaultClient
 
     const response = {
       eventsByCategory: {}
@@ -112,7 +116,7 @@ export default {
 
     response.eventsByCategory = await client.query({
         query: eventsByCategory,
-        variables: context.params
+        variables: params
       })
       .then(({ data }) => {
         return data.eventsByCategory
