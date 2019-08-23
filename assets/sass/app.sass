@@ -8,6 +8,9 @@ $bulmaswatch-import-font: false
 // Components
 @import 'components/index'
 
+h1, h2, h3, h4, h5, h6
+  letter-spacing: 1px!important
+
 .has-cursor-pointer
   cursor: pointer!important
 
@@ -258,6 +261,15 @@ $bulmaswatch-import-font: false
 
 // MOBILE
 @media screen and (max-width: 480px)
+  .card
+    height: auto!important
+
+  .is-visible-tablet
+    display: none!important
+
+  .is-visible-desktop
+    display: none!important
+
   .is-fullwidth-mobile
     width: 100%!important
 
@@ -372,6 +384,12 @@ $bulmaswatch-import-font: false
 
 // TABLET
 @media screen and (min-width: 481px) and (max-width: 1250px)
+  .is-visible-mobile
+    display: none!important
+
+  .is-visible-desktop
+    display: none!important
+
   .container.is-auth
     margin: 0 auto!important
     width: 70%!important
@@ -702,6 +720,9 @@ $bulmaswatch-import-font: false
 
 // MOBILE OR TABLET
 @media screen and (max-width: 1250px)
+  .is-visible-computer
+    display: none!important
+
   // margin & padding helpers
   @for $i from 1 through 8
     // margin
@@ -804,6 +825,15 @@ $bulmaswatch-import-font: false
 
 // DESKTOP OR WIDESCREEN
 @media screen and (min-width: 1251px)
+  .is-visible-touch
+    display: none!important
+
+  .is-visible-mobile
+    display: none!important
+
+  .is-visible-tablet
+    display: none!important
+
   .container.is-auth
     margin: 0 auto!important
     width: 50%!important

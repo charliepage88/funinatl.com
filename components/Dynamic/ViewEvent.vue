@@ -1,10 +1,17 @@
 <template>
   <div>
     <!-- Main Event Info -->
-    <div class="columns relative" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
+    <div class="columns relative is-multiline">
       <div
         class="column is-full is-half-desktop is-half-widescreen has-text-centered-mobile"
       >
+        <!-- Show Event Photo up top for touch -->
+        <div class="is-visible-touch mb-1" v-if="event.photo">
+          <figure class="image">
+            <img :alt="event.name" :src="event.photo">
+          </figure>
+        </div>
+
         <h1 class="title is-1 is-size-2-tablet is-size-3-mobile">
           {{ event.name }}
         </h1>
@@ -57,10 +64,13 @@
           class="columns is-absolute-computer is-bottom-computer-0"
         >
           <div class="column is-narrow" v-if="event.location">
-            <div class="columns" :class="{ 'is-mobile': isTablet }">
+            <div class="columns is-mobile">
               <div class="column is-narrow pr-0" v-if="event.location.photo">
                 <nuxt-link :to="`/location/${event.location.slug}`">
-                  <figure class="image mr-mobile-1" :class="{ 'is-64x64': !isMobile }">
+                  <figure class="image mr-mobile-1 is-64x64 is-visible-touch">
+                    <img :alt="event.location.name" :src="event.location.photo">
+                  </figure>
+                  <figure class="image is-visible-computer">
                     <img :alt="event.location.name" :src="event.location.photo">
                   </figure>
                 </nuxt-link>
@@ -79,13 +89,23 @@
           <!-- family friendly (if active) -->
           <div class="column is-narrow" v-if="event.is_family_friendly">
             <div
-              class="tag is-warning p-px-22 is-fullwidth-mobile"
-              :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
+              class="tag is-warning p-px-22 is-medium is-visible-touch is-fullwidth-mobile"
             >
               <b-icon
                 icon="child"
                 pack="fas"
-                :size="isDesktopOrWidescreen ? 'is-large' : 'is-medium'"
+                size="is-medium"
+              />
+              <span>Family Friendly</span>
+            </div>
+
+            <div
+              class="tag is-warning p-px-22 is-large is-visible-computer"
+            >
+              <b-icon
+                icon="child"
+                pack="fas"
+                size="is-large"
               />
               <span>Family Friendly</span>
             </div>
@@ -94,13 +114,23 @@
           <!-- sold out (if active) -->
           <div class="column is-narrow" v-if="event.is_sold_out">
             <div
-              class="tag is-danger p-px-22 is-fullwidth-mobile"
-              :class="{ 'is-medium': !isDesktopOrWidescreen, 'is-large': isDesktopOrWidescreen }"
+              class="tag is-danger p-px-22 is-medium is-visible-touch is-fullwidth-mobile"
             >
               <b-icon
                 icon="times-circle"
                 pack="fas"
-                :size="isDesktopOrWidescreen ? 'is-large' : 'is-medium'"
+                size="is-medium"
+              />
+              <span>Sold Out</span>
+            </div>
+
+            <div
+              class="tag is-danger p-px-22 is-large is-visible-computer"
+            >
+              <b-icon
+                icon="times-circle"
+                pack="fas"
+                size="is-large"
               />
               <span>Sold Out</span>
             </div>
@@ -119,7 +149,7 @@
         </div>
       </div>
 
-      <div class="column is-full is-half-desktop is-half-widescreen">
+      <div class="column is-full is-half-desktop is-half-widescreen is-visible-computer">
         <figure class="image is-16by9" v-if="event.photo">
           <img :alt="event.name" :src="event.photo">
         </figure>
@@ -149,7 +179,7 @@
             v-for="band in bandsChunk"
             :key="band.id"
           >
-            <div class="columns">
+            <div class="columns is-mobile">
               <div class="column is-narrow" v-if="band.photo">
                 <figure class="image is-128x128 is-hidden-touch">
                   <img :alt="band.name" :src="band.photo" />
@@ -175,18 +205,12 @@
 <script>
 import chunk from 'lodash.chunk'
 import get from 'lodash.get'
-import eventBySlug from '@/queries/eventBySlug'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'view-event',
 
   props: [
     'event'
-  ],
-
-  mixins: [
-    ResponsiveMixin
   ],
 
   computed: {

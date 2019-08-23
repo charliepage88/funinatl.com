@@ -1,12 +1,6 @@
 <template>
-  <div :class="{ 'container is-fluid pl-4 pr-4': !isMobile, 'p-1 centered-container': isMobile }" v-if="event">
-    <div class="centered-container" v-if="!isMobile">
-      <div class="box shadow-md rounded">
-        <ViewEvent :event="event" />
-      </div>
-    </div>
-
-    <ViewEvent :event="event" v-if="isMobile" />
+  <div class="container is-fluid is-content">
+    <ViewEvent :event="event" />
   </div>
 </template>
 
@@ -14,7 +8,6 @@
 import moment from 'moment'
 import get from 'lodash.get'
 import eventBySlug from '@/queries/eventBySlug'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 import ViewEvent from '@/components/Dynamic/ViewEvent'
 
 export default {
@@ -64,10 +57,6 @@ export default {
   components: {
     ViewEvent
   },
-
-  mixins: [
-    ResponsiveMixin
-  ],
 
   computed: {
     event () {

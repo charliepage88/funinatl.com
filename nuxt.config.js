@@ -90,8 +90,18 @@ export default {
     '@nuxtjs/recaptcha',
     '@nuxtjs/universal-storage',
     'nuxt-purgecss',
-    'nuxt-payload-extractor'
+    'nuxt-payload-extractor',
+    '@nuxtjs/proxy'
   ],
+
+  /*
+  proxy: {
+    '/.netlify': {
+      target: process.env.GRAPHQL_HOST,
+      pathRewrite: { '^/.netlify/functions': '' }
+    }
+  },
+  */
 
   /**
   * Build properties
@@ -114,7 +124,7 @@ export default {
         // 'worker-src': [ "'self'", `blob:`, PRIMARY_HOSTS, '*.logrocket.io'],
         'style-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', '*.googleapis.com', 'https://fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
         'script-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', 'fathom.adaptcms.com', '*.gstatic.com', '*.google-analytics.com', '*.google.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
-        'connect-src': [ "'self'", '*.funinatl.com', '*.funinatl.test', 'fathom.adaptcms.com', '*.google-analytics.com', '*.gstatic.com', '*.fontawesome.com', 'https://bea8buawo3.execute-api.us-east-1.amazonaws.com/', '*.fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
+        'connect-src': [ "'self'", '*.funinatl.com', '*.funinatl.test', 'fathom.adaptcms.com', '*.google-analytics.com', '*.gstatic.com', '*.fontawesome.com', 'https://priceless-bhabha-0e3944.netlify.com/', '*.fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
         'form-action': ["'self'"],
         'font-src': [ "'self'", "*.fonts.googleapis.com", "*.fonts.gstatic.com", "https://fonts.gstatic.com/", "https://kit-free.fontawesome.com/" ],
         'frame-ancestors': ["'none'"],

@@ -6,57 +6,7 @@
       :key="`event-${event.slug}`"
     >
       <div class="card large">
-        <template v-if="!event.thumb_mobile && event.photo">
-          <div class="card-image" v-if="event.photo">
-            <NuxtLink :to="`/event/${event.slug}`">
-              <figure class="image">
-                <clazy-load class="clazy-load-wrapper" :src="event.photo" :ratio="0.1">
-                  <transition name="fade">
-                    <img :alt="event.name" class="event-image" :src="event.photo">
-                  </transition>
-                </clazy-load>
-              </figure>
-            </NuxtLink>
-          </div>
-        </template>
-
-        <template v-if="event.thumb_mobile">
-          <div class="card-image is-hidden-tablet" v-if="event.thumb_mobile">
-            <NuxtLink :to="`/event/${event.slug}`">
-              <figure class="image">
-                <clazy-load class="clazy-load-wrapper" :src="event.thumb_mobile" :ratio="0.1">
-                  <transition name="fade">
-                    <img :alt="event.name" class="event-image" :src="event.thumb_mobile">
-                  </transition>
-                </clazy-load>
-              </figure>
-            </NuxtLink>
-          </div>
-
-          <div class="card-image is-hidden-mobile is-hidden-desktop" v-if="event.thumb_tablet">
-            <NuxtLink :to="`/event/${event.slug}`">
-              <figure class="image">
-                <clazy-load class="clazy-load-wrapper" :src="event.thumb_tablet" :ratio="0.1">
-                  <transition name="fade">
-                    <img :alt="event.name" class="event-image" :src="event.thumb_tablet">
-                  </transition>
-                </clazy-load>
-              </figure>
-            </NuxtLink>
-          </div>
-
-          <div class="card-image is-hidden-touch" v-if="event.thumb_desktop">
-            <NuxtLink :to="`/event/${event.slug}`">
-              <figure class="image">
-                <clazy-load class="clazy-load-wrapper" :src="event.thumb_desktop" :ratio="0.1">
-                  <transition name="fade">
-                    <img :alt="event.name" class="event-image" :src="event.thumb_desktop">
-                  </transition>
-                </clazy-load>
-              </figure>
-            </NuxtLink>
-          </div>
-        </template>
+        <EventCardPhoto :event="event" />
 
         <div class="card-content">
           <div class="media">
@@ -79,13 +29,13 @@
             </div>
 
             <div class="media-content">
-              <h4 class="title is-3 is-size-4-mobile is-capitalized">
+              <h4 class="title is-3 is-size-2-tablet is-size-4-mobile is-capitalized">
                 <NuxtLink :to="`/event/${event.slug}`" class="has-text-black has-no-underline">
                   {{ event.name }}
                 </NuxtLink>
               </h4>
 
-              <h5 class="subtitle is-5 is-size-6-mobile is-capitalized">
+              <h5 class="subtitle is-5 is-size-3-tablet is-size-5-mobile is-capitalized">
                 <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
                   {{ event.location.name }}
                 </NuxtLink>
@@ -122,13 +72,13 @@
             </b-button>
 
             <!-- family friendly (if active) -->
-            <div class="is-hidden-tablet" v-if="event.is_family_friendly">
+            <div class="is-visible-touch" v-if="event.is_family_friendly">
               <b-button
                 type="is-warning"
                 icon-left="child"
                 icon-pack="fas"
-                size="is-large"
-                class="mt-2 is-fullwidth"
+                size="is-medium"
+                class="mt-1 is-centered"
               >
                 Family Friendly
               </b-button>
@@ -139,21 +89,8 @@
               {{ event.short_description | truncate(200) }}
             </p>
 
-            <!-- family friendly (if active) -->
-            <!-- <b-button
-              type="is-warning"
-              icon-left="child"
-              icon-pack="fas"
-              size="is-medium"
-              v-if="event.is_family_friendly"
-              class="is-centered"
-              :class="{ 'mt-1': !event.short_description }"
-            >
-              Family Friendly
-            </b-button> -->
-
-            <!-- tags list (if any) -->
-            <div class="tags absolute bottom-5 left-10 mb-0 mt-1" v-if="event.tags.length">
+            <!-- tags list (if any) - touch -->
+            <div class="is-visible-touch tags mb-0 mt-1" v-if="event.tags.length">
               <NuxtLink
                 v-for="tag in event.tags"
                 :key="tag.slug"
@@ -164,8 +101,20 @@
               </NuxtLink>
             </div>
 
-            <!-- family friendly (if active) -->
-            <div class="absolute bottom-10 right-10 is-hidden-mobile" v-if="event.is_family_friendly">
+            <!-- tags list (if any) - computer -->
+            <div class="is-visible-computer tags absolute bottom-5 left-10 mb-0 mt-1" v-if="event.tags.length">
+              <NuxtLink
+                v-for="tag in event.tags"
+                :key="tag.slug"
+                :to="`/tag/${tag.slug}`"
+                class="tag block is-info is-small has-text-white has-no-underline"
+              >
+                {{ tag.name }}
+              </NuxtLink>
+            </div>
+
+            <!-- family friendly (if active) - computer -->
+            <div class="absolute bottom-10 right-10 is-visible-computer" v-if="event.is_family_friendly">
               <b-button
                 type="is-warning"
                 icon-left="child"
@@ -190,9 +139,14 @@
 
 <script>
 import ResponsiveMixin from '@/mixins/ResponsiveMixin'
+import EventCardPhoto from '@/components/Dynamic/EventCardPhoto'
 
 export default {
   name: 'events-list',
+
+  components: {
+    EventCardPhoto
+  },
 
   mixins: [
     ResponsiveMixin
