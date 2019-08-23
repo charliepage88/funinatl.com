@@ -244,8 +244,8 @@ export default {
 
   // Generate
   generate: {
-    concurrency: 10,
-    interval: 0,
+    concurrency: 50,
+    // interval: 0,
     exclude: [
       /^(?=.*\buser\b).*$/
     ],
