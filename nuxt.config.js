@@ -119,7 +119,7 @@ export default {
       hashAlgorithm: 'sha256',
       // unsafeInlineCompatiblity: true,
       policies: {
-        'default-src': [ "'self'", '*.fontawesome.com', '*.gstatic.com', '*.google.com' ],
+        'default-src': [ "'self'", '*.fontawesome.com', '*.gstatic.com', '*.google.com', '*.funinatl.com' ],
         'img-src': [ "'self'", 'https:', '*.google-analytics.com' ],
         // 'worker-src': [ "'self'", `blob:`, PRIMARY_HOSTS, '*.logrocket.io'],
         'style-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', '*.googleapis.com', 'https://fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
