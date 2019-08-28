@@ -1,8 +1,8 @@
 <template>
-  <div v-if="category">
+  <div v-if="hasCategory">
     <filter-by-date @change="updateDate" />
 
-    <h1 class="title is-1 is-size-3-tablet has-text-centered pt-2">
+    <h1 class="title is-1 is-size-1-desktop is-size-3-tablet has-text-centered pt-2">
       {{ category.name }}
     </h1>
 
@@ -21,32 +21,9 @@
               <nav class="level">
                 <div class="level-left">
                   <div class="level-item">
-                    <h4
-                      class="subtitle is-4 mb-2"
-                      :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
-                    >
+                    <h4 class="subtitle is-4 mb-2 mt-mobile-2 mt-tablet-3 mt-computer-3">
                       {{ day.date | dayOfWeek }}
                     </h4>
-                  </div>
-                </div>
-
-                <div class="level-right" v-if="1 === 2">
-                  <div class="level-item">
-                    <b-dropdown hoverable aria-role="list" :mobile-modal="true">
-                      <button class="button is-info" slot="trigger">
-                        <span>Jump To Date</span>
-                        <b-icon pack="fas" icon="caret-down"></b-icon>
-                      </button>
-
-                      <b-dropdown-item
-                        aria-role="listitem"
-                        v-for="val in availableDates"
-                        :key="`date-${val.value}-${day.date}`"
-                        @click.prevent="jumpToDate(val.value)"
-                      >
-                        {{ val.formatted }}
-                      </b-dropdown-item>
-                    </b-dropdown>
                   </div>
                 </div>
               </nav>
@@ -67,7 +44,6 @@ import isEmpty from 'lodash.isempty'
 import eventsByCategory from '@/queries/eventsByCategory'
 import FilterByDate from '@/components/Events/FilterByDate'
 import EventsList from '@/components/Events/List'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'category-show',
@@ -125,10 +101,6 @@ export default {
     return response
   },
 
-  mixins: [
-    ResponsiveMixin
-  ],
-
   components: {
     FilterByDate,
     EventsList
@@ -145,6 +117,10 @@ export default {
 
     hasEvents () {
       return !isEmpty(this.events)
+    },
+
+    hasCategory () {
+      return !isEmpty(this.category)
     },
 
     availableDates () {
@@ -171,12 +147,20 @@ export default {
     },
 
     title () {
+      if (!this.hasCategory) {
+        return null
+      }
+
       let value = `Atlanta Events - ${this.category.name} | FunInATL`
 
       return value
     },
 
     description () {
+      if (!this.hasCategory) {
+        return null
+      }
+
       let value = `Atlanta events for category ${this.category.name}.`
 
       return value
@@ -184,14 +168,6 @@ export default {
   },
 
   apollo: {
-    // categoryBySlug: {
-    //   prefetch: ({ route }) => ({ slug: route.params.slug }),
-    //   variables() {
-    //     return { slug: this.$route.params.slug }
-    //   },
-    //   query: categoryBySlug
-    // },
-
     eventsByCategory: {
       // prefetch: ({ route }) => ({
       //   slug: route.params.slug,

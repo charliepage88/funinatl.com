@@ -67,10 +67,10 @@
             <div class="columns is-mobile">
               <div class="column is-narrow pr-0" v-if="event.location.photo">
                 <nuxt-link :to="`/location/${event.location.slug}`">
-                  <figure class="image mr-mobile-1 is-64x64 is-visible-touch">
+                  <figure class="image is-128x128 is-visible-touch">
                     <img :alt="event.location.name" :src="event.location.photo">
                   </figure>
-                  <figure class="image is-visible-computer">
+                  <figure class="image is-64x64 is-visible-computer">
                     <img :alt="event.location.name" :src="event.location.photo">
                   </figure>
                 </nuxt-link>
@@ -142,8 +142,8 @@
               target="_blank"
               class="button is-indigo is-medium is-fullwidth-mobile"
             >
-              <b-icon icon="ticket-alt" pack="fas" size="is-medium" />
-              <span class="ml-px-5">Venue Website</span>
+              <b-icon icon="ticket-alt" pack="fas" size="is-small" />
+              <span>Venue Website</span>
             </a>
           </div>
         </div>

@@ -1,24 +1,24 @@
 <template>
-  <div v-if="location">
+  <div v-if="hasLocation">
     <filter-by-date @change="updateDate" />
 
     <div class="columns is-centered pt-2">
-      <div class="column" :class="{ 'is-full': isTablet, 'is-6': isDesktopOrWidescreen }">
+      <div class="column is-full-tablet is-half-desktop">
         <div class="columns">
-          <div class="column is-one-quarter" v-if="location.thumb_medium && isDesktopOrWidescreen">
+          <div class="column is-one-quarter is-visible-computer">
             <figure class="image is-128x128">
               <img :alt="location.name" :src="location.thumb_medium">
             </figure>
           </div>
 
-          <div class="column is-one-quarter" v-if="location.photo && !isDesktopOrWidescreen">
+          <div class="column is-one-quarter is-visible-touch">
             <figure class="image">
               <img :alt="location.name" :src="location.photo">
             </figure>
           </div>
 
           <div class="column is-half has-text-centered">
-            <h1 class="title is-1 is-size-3-tablet">
+            <h1 class="title is-1 is-size-1-desktop is-size-3-tablet">
               {{ location.name }}
             </h1>
 
@@ -32,11 +32,10 @@
             <a
               :href="location.website"
               target="_blank"
-              class="button is-indigo is-large is-fullwidth-mobile"
-              :class="{ 'is-fullwidth': isDesktopOrWidescreen }"
+              class="button is-indigo is-large is-fullwidth"
             >
               <span class="icon is-large">
-                <i class="fas fa-link fa-2x"></i>
+                <i class="fas fa-link fa-lg"></i>
               </span>
               <span>Website</span>
             </a>
@@ -45,7 +44,7 @@
       </div>
     </div>
 
-    <section class="section pt-0" v-if="hasEvents">
+    <section class="section" v-if="hasEvents">
       <div class="centered-container">
         <div v-for="(row, index) in events" :key="row.label">
           <h3
@@ -60,10 +59,7 @@
               <nav class="level">
                 <div class="level-left">
                   <div class="level-item">
-                    <h4
-                      class="subtitle is-4 mb-2"
-                      :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
-                    >
+                    <h4 class="subtitle is-4 mb-2 mt-mobile-2 mt-tablet-3 mt-computer-3">
                       {{ day.date | dayOfWeek }}
                     </h4>
                   </div>
@@ -86,7 +82,6 @@ import isEmpty from 'lodash.isempty'
 import eventsByLocation from '@/queries/eventsByLocation'
 import FilterByDate from '@/components/Events/FilterByDate'
 import EventsList from '@/components/Events/List'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'location-show',
@@ -144,10 +139,6 @@ export default {
     return response
   },
 
-  mixins: [
-    ResponsiveMixin
-  ],
-
   components: {
     FilterByDate,
     EventsList
@@ -166,8 +157,12 @@ export default {
       return !isEmpty(this.events)
     },
 
+    hasLocation () {
+      return !isEmpty(this.location)
+    },
+
     addressUrl () {
-      if (isEmpty(this.location)) {
+      if (!this.hasLocation) {
         return null
       }
 
@@ -190,12 +185,20 @@ export default {
     },
 
     title () {
+      if (!this.hasLocation) {
+        return null
+      }
+
       let value = `Atlanta Events - ${this.location.name} | FunInATL`
 
       return value
     },
 
     description () {
+      if (!this.hasLocation) {
+        return null
+      }
+
       let value = `Atlanta events for ${this.location.name}.`
 
       return value
@@ -203,14 +206,6 @@ export default {
   },
 
   apollo: {
-    // locationBySlug: {
-    //   prefetch: ({ route }) => ({ slug: route.params.slug }),
-    //   variables() {
-    //     return { slug: this.$route.params.slug }
-    //   },
-    //   query: locationBySlug
-    // },
-
     eventsByLocation: {
       prefetch: true,
       // prefetch: ({ route }) => ({ slug: route.params.slug }),

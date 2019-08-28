@@ -29,13 +29,13 @@
             </div>
 
             <div class="media-content">
-              <h4 class="title is-3 is-size-2-tablet is-size-4-mobile is-capitalized">
+              <h4 class="title is-3 is-size-3-desktop is-size-2-tablet is-size-4-mobile is-capitalized">
                 <NuxtLink :to="`/event/${event.slug}`" class="has-text-black has-no-underline">
                   {{ event.name }}
                 </NuxtLink>
               </h4>
 
-              <h5 class="subtitle is-5 is-size-3-tablet is-size-5-mobile is-capitalized">
+              <h5 class="subtitle is-5 is-size-5-desktop is-size-3-tablet is-size-5-mobile is-capitalized">
                 <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
                   {{ event.location.name }}
                 </NuxtLink>

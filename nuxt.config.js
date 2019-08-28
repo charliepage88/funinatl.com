@@ -18,18 +18,22 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      {
-        rel: 'dns-prefetch',
-        href: '//fonts.gstatic.com'
-      },
-      {
-        rel: 'stylesheet',
-        href: '//fonts.googleapis.com/css?family=Nunito+Sans|Roboto|Helvetica+Neue'
-      }
+      // {
+      //   rel: 'dns-prefetch',
+      //   href: 'https://fonts.gstatic.com'
+      // },
+      // {
+      //   rel: 'stylesheet',
+      //   href: 'https://fonts.googleapis.com/css?family=Nunito+Sans|Roboto|Helvetica+Neue',
+      //   type: 'text/css'
+      // }
     ],
-    script: [
-      { src: '//kit.fontawesome.com/ed3def2da2.js' }
-    ],
+    // script: [
+      // { src: '/js/fontawesome.min.js', type: 'text/javascript' }
+    // ],
+    // script: [
+      // { src: 'https://kit.fontawesome.com/ed3def2da2.js', type: 'text/javascript' }
+    // ],
     noscript: [
       { innerHTML: 'This website requires JavaScript.' }
     ]
@@ -89,19 +93,9 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/recaptcha',
     '@nuxtjs/universal-storage',
-    'nuxt-purgecss',
+    // 'nuxt-purgecss',
     'nuxt-payload-extractor'
-    // '@nuxtjs/proxy'
   ],
-
-  /*
-  proxy: {
-    '/.netlify': {
-      target: process.env.GRAPHQL_HOST,
-      pathRewrite: { '^/.netlify/functions': '' }
-    }
-  },
-  */
 
   /**
   * Build properties
@@ -113,28 +107,37 @@ export default {
   /**
   * Render properties
   */
+  /*
   render: {
     csp: {
-      reportOnly: true,
+      // reportOnly: true,
       hashAlgorithm: 'sha256',
-      // unsafeInlineCompatiblity: true,
+      unsafeInlineCompatiblity: true,
       policies: {
-        'default-src': [ "'self'", '*.fontawesome.com', '*.gstatic.com', '*.google.com', '*.funinatl.com' ],
+        'default-src': [ "'self'", '*.fontawesome.com', '*.gstatic.com', '*.google.com', '*.funinatl.com', 'funinatl.test' ],
         'img-src': [ "'self'", 'https:', '*.google-analytics.com' ],
         // 'worker-src': [ "'self'", `blob:`, PRIMARY_HOSTS, '*.logrocket.io'],
-        'style-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', '*.googleapis.com', 'https://fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com/' ],
-        'script-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', '*.funinatl.test', 'fathom.adaptcms.com', '*.gstatic.com', '*.google-analytics.com', '*.google.com', 'https://keen-agnesi-3298d5.netlify.com', 'https://dev.funinatl.com', '*.netlify.com' ],
-        'connect-src': [ "'self'", '*.funinatl.com', '*.funinatl.test', 'fathom.adaptcms.com', '*.google-analytics.com', '*.gstatic.com', '*.fontawesome.com', 'https://priceless-bhabha-0e3944.netlify.com', '*.fonts.googleapis.com', 'https://keen-agnesi-3298d5.netlify.com', '*.netlify.com/' ],
+        'style-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', 'funinatl.test', '*.googleapis.com', 'https://fonts.googleapis.com', '*.netlify.com' ],
+        'script-src': [ "'self'", "'unsafe-inline'", '*.fontawesome.com', '*.funinatl.com', 'funinatl.test', 'fathom.adaptcms.com', '*.gstatic.com', '*.google-analytics.com', '*.google.com', '*.netlify.com' ],
+        'connect-src': [ "'self'", '*.funinatl.com', 'funinatl.test', 'fathom.adaptcms.com', '*.google-analytics.com', '*.gstatic.com', '*.fontawesome.com', '*.fonts.googleapis.com', '*.netlify.com' ],
         'form-action': ["'self'"],
-        'font-src': [ "'self'", "*.fonts.googleapis.com", "*.fonts.gstatic.com", "https://fonts.gstatic.com/", "https://kit-free.fontawesome.com/" ],
+        'font-src': [ "'self'", "*.fonts.googleapis.com", "*.fonts.gstatic.com", "https://fonts.gstatic.com/", '*.fontawesome.com' ],
         'frame-ancestors': ["'none'"],
         'object-src': ["'none'"],
-        'base-uri': [ 'https://dev.funinatl.com', 'http://funinatl.test', 'https://www.funinatl.com' ],
+        'base-uri': [
+          'dev.funinatl.com',
+          'funinatl.test',
+          'www.funinatl.com'
+        ],
         'report-uri': [
           `https://sentry.io/api/254487/security/?sentry_key=609cf649abb24452a77cee6da89fc11326c1f41a6d63405bae6f104ecbc5beac`
         ]
       }
     }
+  },
+  */
+  render: {
+    csp: false
   },
 
   /*
@@ -208,7 +211,6 @@ export default {
         // You need to pass a `wsEndpoint` for this to work
         // websocketsOnly: false // Optional,
       }
-      // default: '~/plugins/apollo-config.js'
     }
   },
 
@@ -245,7 +247,7 @@ export default {
   // Generate
   generate: {
     concurrency: 50,
-    // interval: 0,
+    interval: 10,
     exclude: [
       /^(?=.*\buser\b).*$/
     ],

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tag">
+  <div v-if="hasTag">
     <filter-by-date @change="updateDate" />
 
     <div class="columns is-centered p-2">
@@ -25,10 +25,7 @@
               <nav class="level">
                 <div class="level-left">
                   <div class="level-item">
-                    <h4
-                      class="subtitle is-4 mb-2"
-                      :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
-                    >
+                    <h4 class="subtitle is-4 mb-2 mt-mobile-2 mt-tablet-3 mt-computer-3">
                       {{ day.date | dayOfWeek }}
                     </h4>
                   </div>
@@ -51,7 +48,6 @@ import isEmpty from 'lodash.isempty'
 import eventsByTag from '@/queries/eventsByTag'
 import FilterByDate from '@/components/Events/FilterByDate'
 import EventsList from '@/components/Events/List'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'tag-show',
@@ -109,10 +105,6 @@ export default {
     return response
   },
 
-  mixins: [
-    ResponsiveMixin
-  ],
-
   components: {
     FilterByDate,
     EventsList
@@ -131,13 +123,25 @@ export default {
       return !isEmpty(this.events)
     },
 
+    hasTag () {
+      return !isEmpty(this.tag)
+    },
+
     title () {
+      if (!this.hasTag) {
+        return null
+      }
+
       let value = `Atlanta Events - ${this.tag.name} | FunInATL`
 
       return value
     },
 
     description () {
+      if (!this.hasTag) {
+        return null
+      }
+
       let value = `Atlanta events with tag ${this.tag.name}.`
 
       return value

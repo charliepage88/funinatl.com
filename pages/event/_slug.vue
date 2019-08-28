@@ -1,12 +1,12 @@
 <template>
-  <div class="container is-fluid is-content">
+  <div class="container is-fluid is-content" v-if="hasEvent">
     <ViewEvent :event="event" />
   </div>
 </template>
 
 <script>
 import moment from 'moment'
-import get from 'lodash.get'
+import isEmpty from 'lodash.isempty'
 import eventBySlug from '@/queries/eventBySlug'
 import ViewEvent from '@/components/Dynamic/ViewEvent'
 
@@ -63,7 +63,15 @@ export default {
       return this.eventBySlug
     },
 
+    hasEvent () {
+      return !isEmpty(this.event)
+    },
+
     title () {
+      if (!this.hasEvent) {
+        return null
+      }
+
       let value = `Atlanta Events - ${this.event.name} | `
 
       value += `${this.event.location.name} | ${this.event.category.name}`
@@ -74,6 +82,10 @@ export default {
     },
 
     description () {
+      if (!this.hasEvent) {
+        return null
+      }
+
       if (this.event.short_description) {
         return this.event.short_description
       }
