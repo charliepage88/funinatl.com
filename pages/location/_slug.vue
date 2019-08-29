@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="centered-container pl-computer-4 pr-computer-4 pt-0" v-if="hasEvents">
+    <div class="centered-container pl-computer-4 pr-computer-4 pl-handheld-1 pr-handheld-1 pt-0" v-if="hasEvents">
       <div v-for="(row, index) in events" :key="row.label">
         <h3
           class="subtitle has-text-centered is-2 mt-4"
