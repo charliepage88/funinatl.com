@@ -1,6 +1,6 @@
 <template>
   <div class="card-image" v-if="event">
-    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-mobile">
+    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-mobile" :aria-label="event.name">
       <figure class="image">
         <clazy-load class="clazy-load-wrapper" :src="event.thumb_mobile" :ratio="0.1">
           <transition name="fade">
@@ -10,7 +10,7 @@
       </figure>
     </NuxtLink>
 
-    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-tablet">
+    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-tablet" :aria-label="event.name">
       <figure class="image">
         <clazy-load class="clazy-load-wrapper" :src="event.thumb_tablet" :ratio="0.1">
           <transition name="fade">
@@ -20,7 +20,7 @@
       </figure>
     </NuxtLink>
 
-    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-computer">
+    <NuxtLink :to="`/event/${event.slug}`" class="is-visible-computer" :aria-label="event.name">
       <figure class="image">
         <clazy-load class="clazy-load-wrapper" :src="event.thumb_desktop" :ratio="0.1">
           <transition name="fade">

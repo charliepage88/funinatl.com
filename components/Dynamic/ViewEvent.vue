@@ -34,24 +34,26 @@
           </div>
 
           <div class="level-right">
-            <NuxtLink
+            <nuxt-link
               :to="`/category/${event.category.slug}`"
               class="tag is-success has-no-underline mr-computer-2 is-large"
+              :aria-label="event.category.name"
             >
               {{ event.category.name }}
-            </NuxtLink>
+            </nuxt-link>
           </div>
         </nav>
 
         <div class="tags" v-if="event.tags.length">
-          <NuxtLink
+          <nuxt-link
             v-for="(tag, tagIndex) in event.tags"
             :key="tag.slug"
             :to="`/tag/${tag.slug}`"
             class="tag is-info has-no-underline"
+            :aria-label="tag.name"
           >
             {{ tag.name }}
-          </NuxtLink>
+          </nuxt-link>
         </div>
 
         <div class="content mb-2" v-if="event.short_description">
@@ -66,7 +68,7 @@
           <div class="column is-narrow" v-if="event.location">
             <div class="columns is-mobile">
               <div class="column is-narrow pr-0" v-if="event.location.photo">
-                <nuxt-link :to="`/location/${event.location.slug}`">
+                <nuxt-link :to="`/location/${event.location.slug}`" :aria-label="event.location.name">
                   <figure class="image is-128x128 is-visible-touch">
                     <img :alt="event.location.name" :src="event.location.photo">
                   </figure>
@@ -77,7 +79,7 @@
               </div>
 
               <div class="column pl-1">
-                <nuxt-link :to="`/location/${event.location.slug}`">
+                <nuxt-link :to="`/location/${event.location.slug}`" :aria-label="event.location.name">
                   <h4 class="subtitle is-6 is-size-4-mobile is-size-6-tablet is-capitalized mt-1">
                     {{ event.location.name }}
                   </h4>
@@ -140,6 +142,7 @@
             <a
               :href="event.website"
               target="_blank"
+              rel="noopener"
               class="button is-indigo is-medium is-fullwidth-mobile"
             >
               <b-icon icon="ticket-alt" pack="fas" size="is-small" />

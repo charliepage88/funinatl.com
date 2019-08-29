@@ -19,7 +19,8 @@
                 :first-day-of-week="1"
                 :date-formatter="formatDate"
                 @input="changeDate('start_date')"
-                :mobile-native="false"
+                :mobile-native="true"
+                aria-label="Start date"
               />
             </b-field>
           </div>
@@ -36,7 +37,8 @@
                 :first-day-of-week="1"
                 :date-formatter="formatDate"
                 @input="changeDate('end_date')"
-                :mobile-native="false"
+                :mobile-native="true"
+                aria-label="End date"
               />
             </b-field>
           </div>
@@ -56,7 +58,7 @@ export default {
   data () {
     return {
       start_date: moment().startOf('day').toDate(),
-      end_date: moment().add(2, 'week').toDate(),
+      end_date: moment().add(10, 'day').toDate(),
       minDate: moment().startOf('day').toDate(),
       maxDate: moment().add(2, 'month').toDate()
     }

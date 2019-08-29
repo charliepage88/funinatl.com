@@ -1,8 +1,8 @@
 <template>
   <section class="hero is-info is-bold">
-    <div class="hero-body" :class="{ 'pb-1 pt-1': isMobile }">
-      <div class="columns" :class="{ 'is-multiline': !isDesktopOrWidescreen }">
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-third': isDesktopOrWidescreen }">
+    <div class="hero-body pb-mobile-1 pt-mobile-1">
+      <div class="columns is-multiline">
+        <div class="column is-half-tablet is-one-third-desktop">
           <b-field class="relative search-input-container">
             <input
               class="input is-large"
@@ -16,6 +16,7 @@
               @keydown="enter($event)"
               ref="searchInput"
               :loading="loading"
+              aria-label="Search for an event"
             >
 
             <div class="box absolute has-no-results p-2" v-if="hasNoResults">
@@ -77,7 +78,7 @@
           </b-field>
         </div>
 
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
+        <div class="column is-half-tablet is-one-fifth-desktop">
           <b-field v-if="categories && categories.length">
             <b-select
               v-model="filters.category"
@@ -88,6 +89,7 @@
               @input="updateFilter"
               :loading="loading"
               class="is-fullwidth"
+              aria-label="Filter by category"
             >
               <option
                 v-for="category in categories"
@@ -100,7 +102,7 @@
           </b-field>
         </div>
 
-        <div class="column" :class="{ 'is-half': isTablet, 'is-one-fifth': isDesktopOrWidescreen }">
+        <div class="column is-half-tablet is-one-fifth-desktop">
           <b-field v-if="locations && locations.length">
             <b-select
               v-model="filters.location"
@@ -111,6 +113,7 @@
               @input="updateFilter"
               :loading="loading"
               class="is-fullwidth"
+              aria-label="Filter by location"
             >
               <option
                 v-for="location in locations"
@@ -123,10 +126,7 @@
           </b-field>
         </div>
 
-        <div
-          class="column mt-1"
-          :class="{ 'is-one-quarter': isTablet, 'is-2': isDesktop, 'is-one-fifth': isWidescreen }"
-        >
+        <div class="column mt-1 is-one-quarter-tablet is-narrow-computer">
           <b-field>
             <b-checkbox
               v-model="filters.is_family_friendly"
@@ -138,10 +138,7 @@
           </b-field>
         </div>
 
-        <div
-          class="column has-text-right"
-          :class="{ 'is-one-quarter': isTablet }"
-        >
+        <div class="column is-one-quarter-tablet is-narrow-computer has-text-right">
           <button class="button is-large is-danger is-fullwidth-mobile" @click.prevent="reset">
             Reset
           </button>
@@ -155,7 +152,7 @@
 import { mapState } from 'vuex'
 import moment from 'moment'
 import SearchMixin from '@/mixins/SearchMixin'
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
+// import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 
 export default {
   name: 'search',
@@ -174,7 +171,7 @@ export default {
 
   mixins: [
     SearchMixin,
-    ResponsiveMixin
+    // ResponsiveMixin
   ],
 
   watch: {
@@ -248,14 +245,13 @@ export default {
     },
 
     reFocus () {
-      if (!this.isMobile) {
-        let self = this
-        setTimeout(() => {
-          if (self.$refs && typeof self.$refs.searchInput !== 'undefined') {
-            self.$refs.searchInput.focus()
-          }
-        }, 100)
-      }
+      // if (!this.isMobile) {
+      setTimeout(() => {
+        if (this.$refs && typeof this.$refs.searchInput !== 'undefined') {
+          this.$refs.searchInput.focus()
+        }
+      }, 100)
+      // }
     },
 
     prepareResponseData (results) {

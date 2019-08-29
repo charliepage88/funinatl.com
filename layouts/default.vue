@@ -6,8 +6,8 @@
       aria-label="main navigation"
     >
       <div class="navbar-brand">
-        <nuxt-link to="/" class="navbar-item">
-          <img src="/images/funinatl-bg.png" width="395" height="90">
+        <nuxt-link to="/" class="navbar-item" aria-label="Homepage">
+          <img src="/images/funinatl-bg.png" alt="FunInATL" width="395" height="90">
           <span class="is-brand-name">FunInATL</span>
         </nuxt-link>
 
@@ -211,6 +211,7 @@
                     class="input"
                     placeholder="Your email address"
                     v-model="newsletter.email"
+                    aria-label="Your email address"
                   >
                 </div>
               </div>
@@ -227,7 +228,7 @@
             <p class="is-footer-text">
               Copyright &copy;2016-2019
               <br />
-              <a href="https://www.charliepage88.com" target="_blank">
+              <a href="https://www.charliepage88.com" target="_blank" rel="noopener">
                 Charles Page
               </a>
             </p>

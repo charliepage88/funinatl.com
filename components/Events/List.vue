@@ -11,7 +11,7 @@
         <div class="card-content">
           <div class="media">
             <div class="media-left" v-if="event.location.thumb_small">
-              <NuxtLink :to="`/location/${event.location.slug}`">
+              <nuxt-link :to="`/location/${event.location.slug}`" :aria-label="event.location.name">
                 <figure class="image is-128x128">
                   <clazy-load class="clazy-load-wrapper" :src="event.location.thumb_small" :ratio="0.1">
                     <transition name="fade">
@@ -19,26 +19,26 @@
                     </transition>
                   </clazy-load>
                 </figure>
-              </NuxtLink>
+              </nuxt-link>
 
               <span class="tag is-success is-medium is-w-128">
-                <NuxtLink :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline">
+                <nuxt-link :to="`/category/${event.category.slug}`" class="has-text-white has-no-underline" :aria-label="event.category.name">
                   {{ event.category.name }}
-                </NuxtLink>
+                </nuxt-link>
               </span>
             </div>
 
             <div class="media-content">
               <h4 class="title is-3 is-size-3-desktop is-size-2-tablet is-size-4-mobile is-capitalized">
-                <NuxtLink :to="`/event/${event.slug}`" class="has-text-black has-no-underline">
+                <nuxt-link :to="`/event/${event.slug}`" class="has-text-black has-no-underline" :aria-label="event.name">
                   {{ event.name }}
-                </NuxtLink>
+                </nuxt-link>
               </h4>
 
               <h5 class="subtitle is-5 is-size-5-desktop is-size-3-tablet is-size-5-mobile is-capitalized">
-                <NuxtLink :to="`/location/${event.location.slug}`" class="has-no-underline">
+                <nuxt-link :to="`/location/${event.location.slug}`" class="has-no-underline" :aria-label="event.location.name">
                   {{ event.location.name }}
-                </NuxtLink>
+                </nuxt-link>
               </h5>
             </div>
           </div>
@@ -91,26 +91,28 @@
 
             <!-- tags list (if any) - touch -->
             <div class="is-visible-touch tags mb-0 mt-1" v-if="event.tags.length">
-              <NuxtLink
+              <nuxt-link
                 v-for="tag in event.tags"
                 :key="tag.slug"
                 :to="`/tag/${tag.slug}`"
                 class="tag block is-info is-small has-text-white has-no-underline"
+                :aria-label="tag.name"
               >
                 {{ tag.name }}
-              </NuxtLink>
+              </nuxt-link>
             </div>
 
             <!-- tags list (if any) - computer -->
             <div class="is-visible-computer tags absolute bottom-5 left-10 mb-0 mt-1" v-if="event.tags.length">
-              <NuxtLink
+              <nuxt-link
                 v-for="tag in event.tags"
                 :key="tag.slug"
                 :to="`/tag/${tag.slug}`"
                 class="tag block is-info is-small has-text-white has-no-underline"
+                :aria-label="tag.name"
               >
                 {{ tag.name }}
-              </NuxtLink>
+              </nuxt-link>
             </div>
 
             <!-- family friendly (if active) - computer -->
@@ -125,12 +127,6 @@
               </b-button>
             </div>
           </div>
-
-          <footer class="card-footer" v-if="1 === 2">
-            <p class="card-footer-item">
-
-            </p>
-          </footer>
         </div>
       </div>
     </div>
@@ -138,7 +134,6 @@
 </template>
 
 <script>
-import ResponsiveMixin from '@/mixins/ResponsiveMixin'
 import EventCardPhoto from '@/components/Dynamic/EventCardPhoto'
 
 export default {
@@ -147,10 +142,6 @@ export default {
   components: {
     EventCardPhoto
   },
-
-  mixins: [
-    ResponsiveMixin
-  ],
 
   props: {
     events: {

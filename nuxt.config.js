@@ -75,7 +75,8 @@ export default {
     '@nuxtjs/apollo',
     [ 'nuxt-buefy', { 
       css: true,
-      materialDesignIcons: false
+      materialDesignIcons: false,
+      defaultIconPack: 'fas'
     }],
     [
       'nuxt-mq',
@@ -241,6 +242,9 @@ export default {
   // Nuxt PWA -> Manifest
   manifest: {
     name: 'FunInATL',
+    short_name: 'FunInATL',
+    start_url: process.env.PUBLIC_URL,
+    display: 'standalone',
     lang: 'en'
   },
 

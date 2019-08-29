@@ -29,36 +29,32 @@
     <filter-by-date @change="updateDate" />
 
     <template v-show="mode === 'all'">
-      <section class="section pt-0" v-if="hasEvents">
-        <div class="centered-container">
-          <div v-for="(row, index) in events" :key="row.label">
-            <h3
-              class="subtitle has-text-centered is-2 mt-4"
-            >
-              {{ row.label }}
-            </h3>
+      <div class="centered-container pl-computer-4 pr-computer-4 pt-0" v-if="hasEvents">
+        <div v-for="(row, index) in events" :key="row.label">
+          <h3
+            class="subtitle has-text-centered is-2 mt-4"
+          >
+            {{ row.label }}
+          </h3>
 
-            <template v-if="row.days && row.days.length">
-              <div v-for="day in row.days" :key="day.date" :id="`events-${day.date}`">
-                <nav class="level">
-                  <div class="level-left">
-                    <div class="level-item">
-                      <h4
-                        class="subtitle is-4 mb-2"
-                        :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
-                      >
-                        {{ day.date | dayOfWeek }}
-                      </h4>
-                    </div>
-                  </div>
-                </nav>
+          <template v-if="row.days && row.days.length">
+            <div v-for="day in row.days" :key="day.date" :id="`events-${day.date}`">
+              <nav class="level">
+                <div class="level-left">
+                  <h4
+                    class="subtitle is-4 mb-2"
+                    :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
+                  >
+                    {{ day.date | dayOfWeek }}
+                  </h4>
+                </div>
+              </nav>
 
-                <events-list :events="day.events" />
-              </div>
-            </template>
-          </div>
+              <events-list :events="day.events" />
+            </div>
+          </template>
         </div>
-      </section>
+      </div>
     </template>
 
     <template v-show="mode === 'recommended'">
@@ -106,7 +102,7 @@ export default {
     }
 
     if (!params.end_date) {
-      params.end_date = moment().add(2, 'week').format('YYYY-MM-DD')
+      params.end_date = moment().add(10, 'day').format('YYYY-MM-DD')
     }
 
     response.eventsByPeriod = await client.query({
@@ -149,9 +145,9 @@ export default {
       mode: 'all',
       today: moment().startOf('day'),
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().add(2, 'week').format('YYYY-MM-DD'),
+      end_date: moment().add(10, 'day').format('YYYY-MM-DD'),
       start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date_original: moment().add(2, 'week').format('YYYY-MM-DD')
+      end_date_original: moment().add(10, 'day').format('YYYY-MM-DD')
     }
   },
 
