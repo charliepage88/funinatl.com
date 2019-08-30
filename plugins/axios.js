@@ -1,9 +1,7 @@
-// import Cookies from 'js-cookie'
-
-export default function ({ $axios, redirect }) {
-  $axios.onRequest(config => {
-    console.log('Making request to ' + config.url)
-  })
+export default function ({ $axios, redirect, app }) {
+  // $axios.onRequest(config => {
+    // console.log('Making request to ' + config.url)
+  // })
 
   $axios.onError(error => {
     const code = parseInt(error.response && error.response.status)
@@ -12,11 +10,9 @@ export default function ({ $axios, redirect }) {
     }
   })
 
-  /*
-  let token = Cookies.get('token')
+  let token = app.$apolloHelpers.getToken('funinatl')
 
   if (typeof token !== 'undefined') {
     $axios.setToken(token, 'Bearer')
   }
-  */
 }

@@ -43,7 +43,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/newsletter/subscribe`, form)
+      const resp = await this.$axios.post(`/api/newsletter/subscribe`, form)
 
       result = true
     } catch (err) {
@@ -62,7 +62,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      await this.$axios.post(`${process.env.API_ENDPOINT}/api/events/submit`, form)
+      await this.$axios.post(`/api/events/submit`, form)
 
       result = true
     } catch (err) {
@@ -86,7 +86,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      await this.$axios.post(`${process.env.API_ENDPOINT}/api/locations/submit`, form)
+      await this.$axios.post(`/api/locations/submit`, form)
 
       result = true
     } catch (err) {
@@ -110,7 +110,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      await this.$axios.post(`${process.env.API_ENDPOINT}/api/contact/submit`, form)
+      await this.$axios.post(`/api/contact/submit`, form)
 
       result = true
     } catch (err) {
@@ -141,7 +141,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/register`, data)
+      const resp = await this.$axios.post(`/api/register`, data)
 
       result = true
     } catch (err) {
@@ -159,7 +159,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/confirm-email`, data)
+      const resp = await this.$axios.post(`/api/confirm-email`, data)
 
       result = true
 
@@ -187,7 +187,7 @@ const actions = {
       try {
         commit('setLoading', true)
 
-        let resp = await this.$axios.$get(`${process.env.API_ENDPOINT}/api/user`)
+        let resp = await this.$axios.$get(`/api/user`)
 
         commit('setUser', resp)
       } catch (err) {
@@ -207,7 +207,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      let resp = await this.$axios.$put(`${process.env.API_ENDPOINT}/api/user`, data)
+      let resp = await this.$axios.$put(`/api/user`, data)
 
       result = true
 
@@ -230,7 +230,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/forgot-password`, data)
+      const resp = await this.$axios.post(`/api/forgot-password`, data)
 
       result = true
 
@@ -250,7 +250,7 @@ const actions = {
     try {
       commit('setLoading', true)
 
-      const resp = await this.$axios.post(`${process.env.API_ENDPOINT}/api/reset-password`, data)
+      const resp = await this.$axios.post(`/api/reset-password`, data)
 
       result = true
 
