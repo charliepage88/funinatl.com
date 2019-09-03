@@ -14,15 +14,13 @@
       The current website is in the earlier stages, so please feel free to contact us with any feedback!
     </p>
 
-    <div class="columns is-centered">
-      <div class="column">
-        <nuxt-link to="/contact" class="button is-indigo is-large is-fullwidth">
-          <span class="icon is-large">
-            <i class="far fa-envelope fa-lg"></i>
-          </span>
-          <span>Contact Us</span>
-        </nuxt-link>
-      </div>
+    <div class="is-centered has-text-centered">
+      <nuxt-link to="/contact" class="button is-indigo is-large is-fullwidth-mobile">
+        <span class="icon is-large">
+          <i class="fas fa-envelope fa-lg"></i>
+        </span>
+        <span>Contact Us</span>
+      </nuxt-link>
     </div>
   </div>
 </template>

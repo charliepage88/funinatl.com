@@ -177,7 +177,7 @@
                   class="button is-indigo is-fullwidth is-large is-hidden-touch"
                 >
                   <span class="icon is-medium">
-                    <i class="far fa-envelope fa-lg"></i>
+                    <i class="fas fa-envelope fa-lg"></i>
                   </span>
                   <span>Contact Us</span>
                 </nuxt-link>
@@ -188,7 +188,7 @@
                   class="button is-indigo is-fullwidth is-medium is-hidden-desktop"
                 >
                   <span class="icon is-medium">
-                    <i class="far fa-envelope fa-lg"></i>
+                    <i class="fas fa-envelope fa-lg"></i>
                   </span>
                   <span>Contact Us</span>
                 </nuxt-link>
@@ -238,7 +238,6 @@
     </footer>
 
     <b-loading :is-full-page="true" :active.sync="loading" />
-    <b-loading :is-full-page="true" :active.sync="$apollo.loading" />
   </div>
 </template>
 

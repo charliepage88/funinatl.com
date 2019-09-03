@@ -57,10 +57,7 @@
           <div v-for="day in row.days" :key="day.date" :id="`events-${day.date}`">
             <nav class="level">
               <div class="level-left">
-                <h4
-                  class="subtitle is-4 mb-2"
-                  :class="{ 'mt-2': isMobile, 'mt-3': !isMobile }"
-                >
+                <h4 class="subtitle is-4 mb-2 mt-mobile-2 mt-tablet-3 mt-computer-3">
                   {{ day.date | dayOfWeek }}
                 </h4>
               </div>
@@ -75,6 +72,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 import get from 'lodash.get'
 import isEmpty from 'lodash.isempty'
@@ -129,7 +127,14 @@ export default {
 
     response.eventsByLocation = await client.query({
         query: eventsByLocation,
-        variables: params
+        variables: params,
+        watchLoading (isLoading) {
+          if (isLoading) {
+            this.startLoading()
+          } else {
+            this.stopLoading()
+          }
+        }
       })
       .then(({ data }) => {
         return data.eventsByLocation
@@ -215,7 +220,14 @@ export default {
           end_date: this.end_date
         }
       },
-      query: eventsByLocation
+      query: eventsByLocation,
+      watchLoading (isLoading) {
+        if (isLoading) {
+          this.startLoading()
+        } else {
+          this.stopLoading()
+        }
+      }
     }
   },
 
@@ -227,6 +239,11 @@ export default {
   },
 
   methods: {
+    ...mapActions('site', [
+      'startLoading',
+      'stopLoading'
+    ]),
+
     updateDate (key, val) {
       let date = moment(val).format('YYYY-MM-DD')
 

@@ -61,7 +61,8 @@ export default {
     '~plugins/filters.js',
     '~plugins/axios.js',
     '~plugins/mq.js',
-    { src: '~plugins/toast.js', ssr: false }
+    { src: '~plugins/toast.js', ssr: false },
+    { src: '~plugins/back-to-top.js', ssr: false, mode: 'client' }
   ],
 
   /*

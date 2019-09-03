@@ -280,7 +280,14 @@ export default {
 
     response.categories = await client.query({
         query: Categories,
-        variables: params
+        variables: params,
+        watchLoading (isLoading) {
+          if (isLoading) {
+            this.startLoading()
+          } else {
+            this.stopLoading()
+          }
+        }
       })
       .then(({ data }) => {
         return data.categories
@@ -288,7 +295,14 @@ export default {
 
     response.locations = await client.query({
         query: Locations,
-        variables: params
+        variables: params,
+        watchLoading (isLoading) {
+          if (isLoading) {
+            this.startLoading()
+          } else {
+            this.stopLoading()
+          }
+        }
       })
       .then(({ data }) => {
         return data.locations
@@ -300,12 +314,26 @@ export default {
 	apollo: {
     categories: {
       prefetch: true,
-      query: Categories
+      query: Categories,
+      watchLoading (isLoading) {
+        if (isLoading) {
+          this.startLoading()
+        } else {
+          this.stopLoading()
+        }
+      }
     },
 
     locations: {
       prefetch: true,
-      query: Locations
+      query: Locations,
+      watchLoading (isLoading) {
+        if (isLoading) {
+          this.startLoading()
+        } else {
+          this.stopLoading()
+        }
+      }
     }
   },
 
@@ -346,7 +374,9 @@ export default {
 
   methods: {
     ...mapActions('site', [
-      'submitEvent'
+      'submitEvent',
+      'startLoading',
+      'stopLoading'
     ]),
 
     async submit () {

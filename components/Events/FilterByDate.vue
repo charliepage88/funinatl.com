@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
 import moment from 'moment'
 
 export default {
@@ -65,20 +64,11 @@ export default {
   },
 
   methods: {
-    ...mapActions('site', [
-      'startLoading',
-      'stopLoading'
-    ]),
-
     formatDate (date) {
       return moment(date).format('YYYY-MM-DD')
     },
 
     changeDate (key) {
-      this.startLoading()
-
-      setTimeout(() => this.stopLoading(), 1500)
-
       this.$emit('change', key, this[key])
     }
   }

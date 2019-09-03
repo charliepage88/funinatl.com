@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import moment from 'moment'
 import isEmpty from 'lodash.isempty'
 import eventBySlug from '@/queries/eventBySlug'
@@ -44,7 +45,14 @@ export default {
 
     const event = await client.query({
       query: eventBySlug,
-      variables: params
+      variables: params,
+      watchLoading (isLoading) {
+        if (isLoading) {
+          this.startLoading()
+        } else {
+          this.stopLoading()
+        }
+      }
     }).then(({ data }) => {
       return data.eventBySlug
     })
@@ -98,6 +106,13 @@ export default {
     }
   },
 
+  methods: {
+    ...mapActions('site', [
+      'startLoading',
+      'stopLoading'
+    ])
+  },
+
   apollo: {
     eventBySlug: {
       prefetch: ({ route }) => ({ slug: route.params.slug }),
@@ -106,7 +121,14 @@ export default {
           slug: this.$route.params.slug
         }
       },
-      query: eventBySlug
+      query: eventBySlug,
+      watchLoading (isLoading) {
+        if (isLoading) {
+          this.startLoading()
+        } else {
+          this.stopLoading()
+        }
+      }
     }
   }
 }
