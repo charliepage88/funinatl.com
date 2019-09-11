@@ -251,9 +251,10 @@ export default {
 
   // Generate
   generate: {
-    concurrency: 50,
-    interval: 10,
+    concurrency: 100,
+    interval: 5,
     exclude: [
+      /^(?=.*\bauth\b).*$/,
       /^(?=.*\buser\b).*$/
     ],
     async routes () {
