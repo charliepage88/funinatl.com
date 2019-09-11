@@ -91,23 +91,12 @@
           <!-- family friendly (if active) -->
           <div class="column is-narrow" v-if="event.is_family_friendly">
             <div
-              class="tag is-warning p-px-22 is-medium is-visible-touch is-fullwidth-mobile"
+              class="tag is-warning p-px-22 is-medium is-fullwidth-mobile"
             >
               <b-icon
                 icon="child"
                 pack="fas"
                 size="is-medium"
-              />
-              <span>Family Friendly</span>
-            </div>
-
-            <div
-              class="tag is-warning p-px-22 is-large is-visible-computer"
-            >
-              <b-icon
-                icon="child"
-                pack="fas"
-                size="is-large"
               />
               <span>Family Friendly</span>
             </div>
