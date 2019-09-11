@@ -10,7 +10,9 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "staging": "cp .env.staging .env && nuxt build",
+    "production": "cp .env.production .env && nuxt build"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc12",
