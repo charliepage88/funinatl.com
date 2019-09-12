@@ -2,6 +2,8 @@ import pkg from './package'
 import axios from 'axios'
 require('dotenv').config()
 
+let nuxt
+
 export default {
   // SSR app
   mode: 'universal',
@@ -27,6 +29,9 @@ export default {
       //   href: 'https://fonts.googleapis.com/css?family=Nunito+Sans|Roboto|Helvetica+Neue',
       //   type: 'text/css'
       // }
+    ],
+    script: [
+      { src: 'https://polyfill.io/v2/polyfill.min.js?features=IntersectionObserver', body: true }
     ],
     // script: [
       // { src: '/js/fontawesome.min.js', type: 'text/javascript' }
@@ -103,7 +108,14 @@ export default {
   * Build properties
   */
   build: {
-    extractCSS: true
+    extractCSS: true,
+    quiet: false,
+    // parallel: true,
+    postcss: {
+      plugins: {
+        'autoprefixer': {}
+      }
+    }
   },
 
   /**
@@ -249,17 +261,39 @@ export default {
     lang: 'en'
   },
 
+  hooks: {
+    ready (_nuxt) {
+      nuxt = _nuxt
+    }
+  },
+
   // Generate
   generate: {
-    concurrency: 100,
-    interval: 5,
+    workers: 3,
+    concurrency: 50,
+    workerConcurrency: 50,
+    interval: 100,
     exclude: [
-      /^(?=.*\bauth\b).*$/,
       /^(?=.*\buser\b).*$/
     ],
-    async routes () {
-      return await axios.get(`${process.env.API_ENDPOINT}/api/routes`)
-        .then((res) => res.data.routes)
+    routes (callback, params) {
+      axios.get(`${process.env.API_ENDPOINT}/api/routes?params=${JSON.stringify(params)}`)
+        .then((res) => {
+          let routes = res.data.routes
+
+          callback(null, routes)
+        })
+        .catch(callback)
+    },
+    done ({ duration, errors, workerInfo }) {
+      console.log('DONE')
+      console.log(workerInfo)
+
+      nuxt.callHook('generate:done')
+
+      if (errors.length) {
+        console.error(errors)
+      }
     }
   },
 

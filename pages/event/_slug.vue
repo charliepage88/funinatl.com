@@ -32,16 +32,22 @@ export default {
   async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
     // get payload locally if available
     if (process.static && process.client) {
+      console.log(`payloadURL: ${$payloadURL(route)}`)
+
       return await $axios.$get($payloadURL(route))
     }
 
     // return payload if available
     if (payload) {
+      // console.log('payload')
+
       return payload
     }
 
     // fetch data from apollo
     let client = app.apolloProvider.defaultClient
+
+    console.log('graphql')
 
     const event = await client.query({
       query: eventBySlug,
