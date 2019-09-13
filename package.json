@@ -12,7 +12,9 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "staging": "cp .env.staging .env && nuxt-generate -b -v 4 --fail-on-page-error",
     "production": "cp .env.production .env && nuxt-generate -b -v 4 --fail-on-page-error",
-    "local": "cp .env.local .env && nuxt-generate -b -v 4 --fail-on-page-error"
+    "local": "cp .env.local .env && nuxt-generate -b -v 4 --fail-on-page-error",
+    "copy": "cp -r dist/* public/",
+    "deploy": "mkdir dist && cp -r public/* dist/"
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc12",
@@ -38,7 +40,6 @@
     "nuxt-generate-cluster": "^2.6.0",
     "nuxt-mq": "^2.0.0",
     "nuxt-payload-extractor": "^0.0.12",
-    "nuxt-purgecss": "^0.2.1",
     "sass-loader": "^7.3.1",
     "vanilla-back-to-top": "^7.2.0",
     "vue": "2.6.10",

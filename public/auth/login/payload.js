@@ -1,0 +1,1 @@
+window.__NUXT__={layout:"default",data:[{}],error:null,state:{loading:!1,site:{loading:!1,errors:{}},storage:{}},serverRendered:!0,apollo:{defaultClient:Object.create(null)}}
