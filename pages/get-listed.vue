@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-fluid is-content">
+  <div class="container is-fluid is-content" v-if="hasCategories">
     <form @submit.prevent="submit">
       <h1 class="title is-1 is-size-2-tablet">Get Listed</h1>
 
@@ -232,9 +232,14 @@ export default {
     RecaptchaMixin
   ],
 
+  computed: {
+    hasCategories () {
+      return (this.categories && this.categories.length)
+    }
+  },
+
 	apollo: {
     categories: {
-      prefetch: true,
       query: Categories,
       watchLoading (isLoading) {
         if (isLoading) {
@@ -242,6 +247,9 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      skip () {
+        return this.hasCategories
       }
     }
   },

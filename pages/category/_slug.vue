@@ -126,29 +126,6 @@ export default {
       return !isEmpty(this.category)
     },
 
-    availableDates () {
-      if (!this.hasEvents) {
-        return []
-      }
-
-      let dates = []
-      for (let i in this.events) {
-        let days = this.events[i].days
-
-        for (let k in days) {
-          let date = this.events[i].days[k].date
-
-          dates.push({
-            formatted: moment(date).format('dddd, MMMM Do'),
-            value: date
-          })
-        }
-      }
-
-      // return dates.slice(0, 10)
-      return dates
-    },
-
     title () {
       if (!this.hasCategory) {
         return null
@@ -167,16 +144,23 @@ export default {
       let value = `Atlanta events for category ${this.category.name}.`
 
       return value
+    },
+
+    isCustomDatesChoosen () {
+      let startDateChange = (this.start_date_original !== this.start_date)
+      let endDateChange = (this.end_date_original !== this.end_date)
+
+      return (startDateChange || endDateChange)
     }
   },
 
   apollo: {
     eventsByCategory: {
-      // prefetch: ({ route }) => ({
-      //   slug: route.params.slug,
-      //   start_date: route.params.start_date
-      // }),
-      prefetch: true,
+      prefetch: ({ route }) => ({
+        slug: route.params.slug,
+        start_date: get(route.params, 'start_date', null),
+        end_date: get(route.params, 'end_date', null)
+      }),
       variables() {
         return {
           slug: this.$route.params.slug,
@@ -191,6 +175,9 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      skip () {
+        return (this.hasEvents && this.hasCategory && !this.isCustomDatesChoosen)
       }
     }
   },
@@ -198,7 +185,9 @@ export default {
   data () {
     return {
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().add(10, 'day').format('YYYY-MM-DD')
+      end_date: moment().add(10, 'day').format('YYYY-MM-DD'),
+      start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
+      end_date_original: moment().add(10, 'day').format('YYYY-MM-DD')
     }
   },
 

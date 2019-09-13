@@ -1,4 +1,5 @@
 export default (error, context) => {
-  console.log(error)
-  context.error({ statusCode: 304, message: 'Server error' })
+  console.error(error)
+
+  context.error({ statusCode: 500, message: 'Server error' })
 }

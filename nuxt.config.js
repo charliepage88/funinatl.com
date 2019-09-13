@@ -109,7 +109,7 @@ export default {
   */
   build: {
     extractCSS: true,
-    quiet: false,
+    // quiet: false,
     // parallel: true,
     postcss: {
       plugins: {
@@ -197,10 +197,10 @@ export default {
       // For example: default query options
       $query: {
         loadingKey: 'loading',
-        fetchPolicy: 'cache-and-network',
+        fetchPolicy: 'cache-first',
       },
     },
-    // errorHandler: '~/plugins/apollo-error-handler.js',
+    errorHandler: '~/plugins/apollo-error-handler.js',
     clientConfigs: {
       default: {
         // required
@@ -269,10 +269,10 @@ export default {
 
   // Generate
   generate: {
-    workers: 3,
-    concurrency: 50,
-    workerConcurrency: 50,
-    interval: 100,
+    workers: 2,
+    concurrency: 200,
+    workerConcurrency: 200,
+    // interval: 100,
     exclude: [
       /^(?=.*\buser\b).*$/
     ],
@@ -286,9 +286,6 @@ export default {
         .catch(callback)
     },
     done ({ duration, errors, workerInfo }) {
-      console.log('DONE')
-      console.log(workerInfo)
-
       nuxt.callHook('generate:done')
 
       if (errors.length) {

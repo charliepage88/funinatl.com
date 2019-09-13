@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-fluid is-content">
+  <div class="container is-fluid is-content" v-if="hasCategories && hasLocations">
     <form @submit.prevent="submit">
       <h1 class="title is-1 is-size-2-tablet">Submit Event</h1>
 
@@ -262,9 +262,7 @@ export default {
   async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
     // get payload locally if available
     if (process.static && process.client) {
-      const abc = await $axios.$get($payloadURL(route))
-
-      return abc
+      return await $axios.$get($payloadURL(route))
     }
 
     // return payload if available
@@ -313,9 +311,18 @@ export default {
     return response
   },
 
+  computed: {
+    hasCategories () {
+      return (this.categories && this.categories.length)
+    },
+
+    hasLocations () {
+      return (this.locations && this.locations.length)
+    }
+  },
+
 	apollo: {
     categories: {
-      prefetch: true,
       query: Categories,
       watchLoading (isLoading) {
         if (isLoading) {
@@ -323,11 +330,13 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      skip () {
+        return this.hasCategories
       }
     },
 
     locations: {
-      prefetch: true,
       query: Locations,
       watchLoading (isLoading) {
         if (isLoading) {
@@ -335,6 +344,9 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      skip () {
+        return this.hasLocations
       }
     }
   },

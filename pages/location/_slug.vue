@@ -206,13 +206,23 @@ export default {
       let value = `Atlanta events for ${this.location.name}.`
 
       return value
+    },
+
+    isCustomDatesChoosen () {
+      let startDateChange = (this.start_date_original !== this.start_date)
+      let endDateChange = (this.end_date_original !== this.end_date)
+
+      return (startDateChange || endDateChange)
     }
   },
 
   apollo: {
     eventsByLocation: {
-      prefetch: true,
-      // prefetch: ({ route }) => ({ slug: route.params.slug }),
+      prefetch: ({ route }) => ({
+        slug: route.params.slug,
+        start_date: get(route.params, 'start_date', null),
+        end_date: get(route.params, 'end_date', null)
+      }),
       variables() {
         return {
           slug: this.$route.params.slug,
@@ -227,6 +237,9 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      skip () {
+        return (this.hasEvents && this.hasLocation && !this.isCustomDatesChoosen)
       }
     }
   },
@@ -234,7 +247,9 @@ export default {
   data () {
     return {
       start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().add(10, 'day').format('YYYY-MM-DD')
+      end_date: moment().add(10, 'day').format('YYYY-MM-DD'),
+      start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
+      end_date_original: moment().add(10, 'day').format('YYYY-MM-DD')
     }
   },
 

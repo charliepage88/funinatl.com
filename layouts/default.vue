@@ -64,7 +64,7 @@
     </nav>
 
     <section class="section is-content has-background-white-bis pr-0 pl-0">
-      <nuxt></nuxt>
+      <nuxt />
     </section>
 
     <footer class="footer">

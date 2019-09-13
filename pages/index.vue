@@ -29,7 +29,7 @@
     <filter-by-date @change="updateDate" />
 
     <template v-show="mode === 'all'">
-      <div class="centered-container pl-computer-4 pr-computer-4 pl-handheld-1 pr-handheld-1 pt-0" v-if="hasEvents">
+      <div class="centered-container pl-computer-4 pr-computer-4 pl-handheld-1 pr-handheld-1 pt-0" v-if="hasEvents && !isLoading">
         <div v-for="(row, index) in events" :key="row.label">
           <h3
             class="subtitle has-text-centered is-2 mt-4"
@@ -126,12 +126,22 @@ export default {
     FilterByDate
   },
 
+  watch: {
+    loadingQueriesCount (newVal, oldVal) {
+      console.log('loadingQueriesCount')
+      console.log(`newVal: ${newVal}`)
+      console.log(`oldVal: ${oldVal}`)
+    }
+  },
+
   apollo: {
     eventsByPeriod: {
-      prefetch: true,
+      prefetch: ({ route }) => ({
+        start_date: get(route.params, 'start_date', null),
+        end_date: get(route.params, 'end_date', null)
+      }),
       variables() {
         return {
-          slug: this.$route.params.slug,
           start_date: this.start_date,
           end_date: this.end_date
         }
@@ -143,18 +153,11 @@ export default {
         } else {
           this.stopLoading()
         }
+      },
+      loadingKey: 'loadingQueriesCount',
+      skip () {
+        return (this.hasEvents && !this.isCustomDatesChoosen)
       }
-    }
-  },
-
-  data () {
-    return {
-      mode: 'all',
-      today: moment().startOf('day'),
-      start_date: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date: moment().add(10, 'day').format('YYYY-MM-DD'),
-      start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
-      end_date_original: moment().add(10, 'day').format('YYYY-MM-DD')
     }
   },
 
@@ -180,6 +183,21 @@ export default {
       let endDateChange = (this.end_date_original !== this.end_date)
 
       return (startDateChange || endDateChange)
+    },
+
+    isLoading () {
+      return (this.loadingQueriesCount !== 0)
+    }
+  },
+
+  data () {
+    return {
+      mode: 'all',
+      start_date: moment().startOf('day').format('YYYY-MM-DD'),
+      end_date: moment().add(10, 'day').format('YYYY-MM-DD'),
+      start_date_original: moment().startOf('day').format('YYYY-MM-DD'),
+      end_date_original: moment().add(10, 'day').format('YYYY-MM-DD'),
+      loadingQueriesCount: 0
     }
   },
 
