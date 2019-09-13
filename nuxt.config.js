@@ -269,9 +269,9 @@ export default {
 
   // Generate
   generate: {
-    workers: 2,
-    concurrency: 200,
-    workerConcurrency: 200,
+    workers: 3,
+    concurrency: 300,
+    workerConcurrency: 300,
     // interval: 100,
     exclude: [
       /^(?=.*\buser\b).*$/
