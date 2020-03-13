@@ -79,7 +79,7 @@ export default {
       icon: false
     }],
     '@nuxtjs/apollo',
-    [ 'nuxt-buefy', { 
+    [ 'nuxt-buefy', {
       css: true,
       materialDesignIcons: false,
       defaultIconPack: 'fas'
@@ -110,7 +110,7 @@ export default {
   build: {
     extractCSS: true,
     // quiet: false,
-    // parallel: true,
+    parallel: true,
     postcss: {
       plugins: {
         'autoprefixer': {}
@@ -269,21 +269,22 @@ export default {
 
   // Generate
   generate: {
-    workers: 3,
-    concurrency: 300,
+    workers: 2,
+    concurrency: 500,
     workerConcurrency: 300,
     // interval: 100,
     exclude: [
       /^(?=.*\buser\b).*$/
     ],
-    routes (callback, params) {
-      axios.get(`${process.env.API_ENDPOINT}/api/routes?params=${JSON.stringify(params)}`)
+    async routes (callback, params) {
+      return await axios.get(`${process.env.API_ENDPOINT}/api/routes?params=${JSON.stringify(params)}`)
         .then((res) => {
           let routes = res.data.routes
 
-          callback(null, routes)
+          return routes
+          // callback(null, routes)
         })
-        .catch(callback)
+        // .catch(callback)
     },
     done ({ duration, errors, workerInfo }) {
       nuxt.callHook('generate:done')
