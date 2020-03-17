@@ -55,7 +55,7 @@
     </template>
 
     <template v-show="mode === 'recommended'">
-      <span>recommended yo</span>
+      <!-- <span>recommended yo</span> -->
     </template>
   </div>
 </template>
