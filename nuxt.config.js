@@ -110,7 +110,7 @@ export default {
   build: {
     extractCSS: true,
     // quiet: false,
-    parallel: true,
+    parallel: false,
     postcss: {
       plugins: {
         'autoprefixer': {}
