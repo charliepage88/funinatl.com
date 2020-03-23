@@ -922,10 +922,10 @@
     ts-node "^8"
     tslib "^1"
 
-"@fortawesome/fontawesome-free@^5.12.1":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.12.1.tgz#2a98fea9fbb8a606ddc79a4680034e9d5591c550"
-  integrity sha512-ZtjIIFplxncqxvogq148C3hBLQE+W3iJ8E4UvJ09zIJUgzwLcROsWwFDErVSXY2Plzao5J9KUYNHKHMEUYDMKw==
+"@fortawesome/fontawesome-free@^5.13.0":
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.13.0.tgz#fcb113d1aca4b471b709e8c9c168674fbd6e06d9"
+  integrity sha512-xKOeQEl5O47GPZYIMToj6uuA2syyFlq9EMSl2ui0uytjY9xbe8XS0pexNWmxrdcCyNGyDmLyYw5FtKsalBUeOg==
 
 "@nuxt/babel-preset-app@2.12.0":
   version "2.12.0"
@@ -3125,10 +3125,10 @@ bulma@0.7.5:
   resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
   integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
 
-bulmaswatch@^0.7.5:
-  version "0.7.5"
-  resolved "https://registry.yarnpkg.com/bulmaswatch/-/bulmaswatch-0.7.5.tgz#1f20f3dccdf12e5f1b4a8a60dac2a41c8ad1f26c"
-  integrity sha512-Rc9rSvMR6qqOXaVrKsE1y0lSwKtIClL505us/uwvPUkCRscJAezv46OoP/RlSOeGZWnmFk9Ea10vhZ0Qn4srIg==
+bulmaswatch@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/bulmaswatch/-/bulmaswatch-0.8.0.tgz#11057ea5ecc1765de0f7049dd2bdbe3a0afbc992"
+  integrity sha512-ubqgGrUXL/BM0dhG309lmR9BQnV7kjp1vXhqGOE6xqOR+qHjHpuqxACNbBCWn+uSXhTAyE7VnmXffc9qQkm3xg==
 
 busboy@^0.3.1:
   version "0.3.1"
@@ -4787,14 +4787,19 @@ eslint-ast-utils@^1.1.0:
     lodash.get "^4.4.2"
     lodash.zip "^4.2.0"
 
-eslint-config-prettier@^6.10.0:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.10.0.tgz#7b15e303bf9c956875c948f6b21500e48ded6a7f"
-  integrity sha512-AtndijGte1rPILInUdHjvKEGbIV06NuvPrqlIEaEaWtbtvJh464mDeyGMdZEQMsGvC0ZVkiex1fSNcC4HAbRGg==
+eslint-config-prettier@^6.10.1:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.10.1.tgz#129ef9ec575d5ddc0e269667bf09defcd898642a"
+  integrity sha512-svTy6zh1ecQojvpbJSgH3aei/Rt7C6i090l5f2WQ4aB05lYHeZIR1qL4wZyyILTbtmnbHP5Yn8MrsOJMGa8RkQ==
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-config-standard@>=14.1.0, eslint-config-standard@^14.1.0:
+eslint-config-standard@>=14.1.1:
+  version "14.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-14.1.1.tgz#830a8e44e7aef7de67464979ad06b406026c56ea"
+  integrity sha512-Z9B+VR+JIXRxz21udPTL9HpFMyoMUEeX1G251EQ6e05WD9aPVtVBn09XUmZ259wCMlCDmYDSZG62Hhm+ZTJcUg==
+
+eslint-config-standard@^14.1.0:
   version "14.1.0"
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-14.1.0.tgz#b23da2b76fe5a2eba668374f246454e7058f15d4"
   integrity sha512-EF6XkrrGVbvv8hL/kYa/m6vnvmUT+K82pJJc4JJVMM6+Qgqh0pnwprSxdduDLB9p/7bIxD+YV5O0wfb8lmcPbA==
@@ -4903,12 +4908,13 @@ eslint-plugin-node@>=11.0.0, eslint-plugin-node@^11.0.0:
     resolve "^1.10.1"
     semver "^6.1.0"
 
-eslint-plugin-nuxt@>=0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-nuxt/-/eslint-plugin-nuxt-0.5.1.tgz#8d39bd727d2142a6fab04661b9c95e48856fa81c"
-  integrity sha512-LkjznzUcJBzLiiYjcTTPtpN8yPmrGCsfr5CqFadViTJPpEr8TXum7K3cZ5MIiqokxTemG69joZGimG/tQGdIbg==
+eslint-plugin-nuxt@>=0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-nuxt/-/eslint-plugin-nuxt-0.5.2.tgz#638cdfd0fc0473d285ca848e7e30b8b8e6f59f91"
+  integrity sha512-kOWUSrix6h+gGTCe6He51ett065yAzXsMiteKkBo5pdjc94A3gBMBrWtRZGyZGv91P1wRcJpF8l4CWMhNm3oWg==
   dependencies:
-    eslint-plugin-vue "^6.1.2"
+    eslint-plugin-vue "^6.2.2"
+    semver "^7.1.3"
     vue-eslint-parser "^7.0.0"
 
 eslint-plugin-prettier@^3.1.2:
@@ -8145,7 +8151,7 @@ nuxt-payload-extractor@^1.0.0:
   resolved "https://registry.yarnpkg.com/nuxt-payload-extractor/-/nuxt-payload-extractor-1.0.0.tgz#50251ad397014ae04b4edf37169ccb41f153f0a6"
   integrity sha512-OqntZtaWYQ60Sg03b5MewLfn05CodjP0EEPgcEKOc635Lcj/l6njyDoCu5dzCqISf86jFNpThYLjFGvPeuDt5Q==
 
-nuxt@^2.11.0:
+nuxt@^2.12.0:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.12.0.tgz#b81794edc023352bd100532e5192f0d1b49ec67b"
   integrity sha512-odEBOWQ6QSYhal7R9hZxHidm1kpTc2PoDL3w8a541PRSyzZFfVnWla7fRXOyMANbzfO8U7wpwq++eia8vnBr0A==
@@ -9372,10 +9378,10 @@ prettier@^1.18.2:
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
   integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
 
-prettier@^1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
-  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
+prettier@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.1.tgz#3f00ac71263be34684b2b2c8d7e7f63737592dac"
+  integrity sha512-piXGBcY1zoFOG0MvHpNE5reAGseLmaCRifQ/fmfF49BcYkInEs/naD/unxGNAeOKFA5+JxVrPyMvMlpzcd20UA==
 
 pretty-bytes@^5.3.0:
   version "5.3.0"
