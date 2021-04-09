@@ -6,7 +6,7 @@ let nuxt
 
 export default {
   // SSR app
-  mode: 'universal',
+  ssr: true,
 
   /*
   ** Headers of the page
@@ -111,11 +111,11 @@ export default {
     extractCSS: true,
     // quiet: false,
     parallel: false,
-    postcss: {
-      plugins: {
-        'autoprefixer': {}
-      }
-    }
+    // postcss: {
+    //   plugins: {
+    //     'autoprefixer': {}
+    //   }
+    // }
   },
 
   /**

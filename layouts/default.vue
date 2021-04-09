@@ -76,7 +76,7 @@
             <h3 class="subtitle is-5 is-size-6-tablet">
               Categories
             </h3>
-            
+
             <div class="block">
               <nuxt-link to="/category/music" class="has-text-primary" exact-active-class="is-active">
                 Music
@@ -226,9 +226,9 @@
 
           <div class="column">
             <p class="is-footer-text">
-              Copyright &copy;2016-2019
+              Copyright &copy;2016-2021
               <br />
-              <a href="https://www.charliepage88.com" target="_blank" rel="noopener">
+              <a href="https://www.charlespage.me" target="_blank" rel="noopener">
                 Charles Page
               </a>
             </p>

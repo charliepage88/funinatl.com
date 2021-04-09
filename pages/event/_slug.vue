@@ -31,7 +31,7 @@ export default {
 
   async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
     // get payload locally if available
-    if (typeof $payloadURL !== 'undefined' && process.static && process.client) {
+    if (process.static && process.client && $payloadURL) {
       console.debug(`payloadURL: ${$payloadURL(route)}`)
 
       return await $axios.$get($payloadURL(route))
@@ -82,6 +82,8 @@ export default {
         return null
       }
 
+      console.log(this.event.name)
+
       let value = `Atlanta Events - ${this.event.name} | `
 
       value += `${this.event.location.name} | ${this.event.category.name}`
@@ -118,11 +120,11 @@ export default {
   apollo: {
     eventBySlug: {
       prefetch: ({ route }) => ({
-        slug: route.params.slug
+        slug: get(route.params, 'slug', null)
       }),
       variables() {
         return {
-          slug: this.$route.params.slug
+          slug: get(this.$route.params, 'slug', null)
         }
       },
       query: eventBySlug,
