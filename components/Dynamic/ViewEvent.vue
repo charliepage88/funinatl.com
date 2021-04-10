@@ -29,7 +29,7 @@
         <nav class="level is-mobile mb-4">
           <div class="level-left">
             <h3 class="subtitle is-4 is-size-5-tablet is-size-5-mobile">
-              Price: {{ event.price }}
+              Price: <span v-html="event.price" />
             </h3>
           </div>
 
@@ -171,22 +171,27 @@
             v-for="band in bandsChunk"
             :key="band.id"
           >
-            <div class="columns is-mobile">
-              <div class="column is-narrow" v-if="band.photo">
-                <figure class="image is-128x128 is-hidden-touch">
-                  <img :alt="band.name" :src="band.photo" />
-                </figure>
-                <figure class="image is-64x64 is-hidden-desktop">
-                  <img :alt="band.name" :src="band.photo" />
-                </figure>
-              </div>
+            <nuxt-link
+              :to="`/band/${band.slug}`"
+              :aria-label="band.slug"
+            >
+              <div class="columns is-mobile">
+                <div class="column is-narrow" v-if="band.photo">
+                  <figure class="image is-128x128 is-hidden-touch">
+                    <img :alt="band.name" :src="band.photo" />
+                  </figure>
+                  <figure class="image is-64x64 is-hidden-desktop">
+                    <img :alt="band.name" :src="band.photo" />
+                  </figure>
+                </div>
 
-              <div class="column has-text-left">
-                <h3 class="title is-4 is-size-6-tablet has-text-white">
-                  {{ band.name }}
-                </h3>
+                <div class="column has-text-left">
+                  <h3 class="title is-4 is-size-6-tablet has-text-white">
+                    {{ band.name }}
+                  </h3>
+                </div>
               </div>
-            </div>
+            </nuxt-link>
           </div>
         </template>
       </div>

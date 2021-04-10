@@ -67,9 +67,8 @@
               type="is-light"
               class="is-centered"
               size="is-large"
-            >
-              {{ event.price }}
-            </b-button>
+              v-html="event.price"
+            />
 
             <!-- family friendly (if active) -->
             <div class="is-visible-touch" v-if="event.is_family_friendly">
