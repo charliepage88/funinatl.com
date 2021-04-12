@@ -65,7 +65,7 @@ export default {
 
   async asyncData ({ $axios, $payloadURL, route, app, params, payload }) {
     // get payload locally if available
-    if (typeof $payloadURL !== 'undefined' && process.static && process.client) {
+    if (process.static && process.client && $payloadURL) {
       return await $axios.$get($payloadURL(route))
     }
 

@@ -7,6 +7,7 @@ let nuxt
 export default {
   // SSR app
   ssr: true,
+  target: 'static',
 
   /*
   ** Headers of the page
@@ -101,7 +102,7 @@ export default {
     '@nuxtjs/recaptcha',
     '@nuxtjs/universal-storage',
     // 'nuxt-purgecss',
-    'nuxt-payload-extractor'
+    // 'nuxt-payload-extractor'
   ],
 
   /**
@@ -269,10 +270,11 @@ export default {
 
   // Generate
   generate: {
+    fallback: true,
     workers: 2,
     concurrency: 500,
     workerConcurrency: 300,
-    // interval: 100,
+    interval: 1200,
     exclude: [
       /^(?=.*\buser\b).*$/
     ],

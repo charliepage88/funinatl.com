@@ -82,8 +82,6 @@ export default {
         return null
       }
 
-      console.log(this.event.name)
-
       let value = `Atlanta Events - ${this.event.name} | `
 
       value += `${this.event.location.name} | ${this.event.category.name}`
