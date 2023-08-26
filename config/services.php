@@ -31,27 +31,4 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'webhooks' => [
-        'sync' => [
-            'staging_token'    => env('WEBHOOK_SYNC_STAGING_TOKEN'),
-            'staging_url'      => env('WEBHOOK_SYNC_STAGING_URL'),
-            'production_token' => env('WEBHOOK_SYNC_PRODUCTION_TOKEN'),
-            'production_url'   => env('WEBHOOK_SYNC_PRODUCTION_URL')
-        ]
-    ],
-
-    'spotify' => [
-        'client_id' => env('SPOTIFY_CLIENT_ID'),
-        'secret'    => env('SPOTIFY_CLIENT_SECRET')
-    ],
-
-    'oauth' => [
-        'client_id' => env('OAUTH_CLIENT_ID'),
-        'client_secret' => env('OAUTH_CLIENT_SECRET')
-    ],
-
-    's3' => [
-        'cdn_url' => env('ASSETS_S3_URL'),
-        'cdn_bucket' => env('ASSETS_S3_BUCKET')
-    ],
 ];
