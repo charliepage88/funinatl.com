@@ -9,10 +9,20 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @inertiaHead
   </head>
-  <body>
+  <body class="min-h-screen font-sans antialiased">
     @inertia
-    <div id="app">
-      {{ $slot }}
-    </div>
+    <x-main>
+      <div id="app">
+        <x-slot:content>{{ $slot }}</x-slot:content>
+      </div>
+
+      <!-- Footer area -->
+        <x-slot:footer>
+            <hr />
+            <div class="p-6">
+                Footer
+            </div>
+        </x-slot:footer>
+    </x-main>
   </body>
 </html>

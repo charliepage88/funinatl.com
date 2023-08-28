@@ -10,6 +10,9 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+
+        // Add mary
+        "./vendor/robsontenorio/mary/src/View/Components/**/*.php"
     ],
 
     theme: {
@@ -20,5 +23,5 @@ export default {
         },
     },
 
-    plugins: [forms, typography],
+    plugins: [forms, typography, require('daisyui')],
 };
