@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@theme {
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+  --color-primary: oklch(70% 0.2 195);
+  --color-primary-content: oklch(98% 0.01 195);
+}
