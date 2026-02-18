@@ -1,9 +1,0 @@
-{
-  bands {
-    id
-    name
-    slug
-    photo
-    spotify_url
-  }
-}

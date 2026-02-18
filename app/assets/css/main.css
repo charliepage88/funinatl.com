@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Nunito Sans', 'Helvetica Neue', sans-serif;
+
+  /* Bulmaswatch Lux exact colors */
+  --color-primary:      #222222;
+  --color-info:         #3298dc;
+  --color-info-dark:    #2180c0;
+  --color-success:      #4bbf73;
+  --color-warning:      #ffdd57;
+  --color-danger:       #d9534f;
+  --color-indigo:       #6610f2;
+  --color-whitesmoke:   #f5f5f5;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #fff;
+}
+
+/* Make Bulma-style footer whitesmoke */
+footer {
+  background-color: #f5f5f5;
+}
+
+/* VueDatePicker — match site theme */
+.dp__theme_light {
+  --dp-primary-color: #3298dc;
+  --dp-primary-text-color: #fff;
+  --dp-border-color: #dbdbdb;
+  --dp-menu-border-color: #dbdbdb;
+  --dp-border-radius: 4px;
+  --dp-font-family: var(--font-sans);
+  --dp-font-size: 0.875rem;
+}
