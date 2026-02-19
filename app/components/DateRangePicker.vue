@@ -54,8 +54,8 @@ function fmt(d: Date | null): string {
 }
 
 // Wide bounds so historical data works
-const minDate = new Date('2015-01-01')
-const maxDate = new Date('2030-12-31')
+const minDate = new Date('2021-01-01')
+const maxDate = new Date('2026-12-31')
 
 const startDate = ref<Date | null>(props.start ? strToDate(props.start) : null)
 const endDate = ref<Date | null>(props.end ? strToDate(props.end) : null)

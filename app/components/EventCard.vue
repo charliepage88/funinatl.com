@@ -81,7 +81,7 @@
       </div>
 
       <!-- Price -->
-      <div class="flex justify-center mb-2">
+      <div v-if="event.price" class="flex justify-center mb-2">
         <span
           class="inline-block bg-gray-100 text-gray-800 text-sm font-medium px-4 py-1.5 rounded"
           v-html="event.price"

@@ -28,8 +28,8 @@ useHead({ title: 'FunInATL – Atlanta Events' })
 
 const { get } = useApi()
 
-const DEFAULT_START = '2021-01-01'
-const DEFAULT_END = '2021-12-31'
+const DEFAULT_START = '2026-01-01'
+const DEFAULT_END = '2026-12-31'
 // defaults set above
 const fmt = (d: Date) => d.toISOString().split('T')[0]
 

@@ -427,7 +427,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-n1Zyxd3a.mjs')
+    component: () => import('./index-B6lF59Lc.mjs')
   },
   {
     name: "contact",
@@ -452,17 +452,17 @@ const _routes = [
   {
     name: "tag-slug",
     path: "/tag/:slug()",
-    component: () => import('./_slug_-CjcbUtAb.mjs')
+    component: () => import('./_slug_-CmUR4Kwd.mjs')
   },
   {
     name: "band-slug",
     path: "/band/:slug()",
-    component: () => import('./_slug_-ZZtD8V-a.mjs')
+    component: () => import('./_slug_-CZyyFOzC.mjs')
   },
   {
     name: "event-slug",
     path: "/event/:slug()",
-    component: () => import('./_slug_-k7ObVnR7.mjs')
+    component: () => import('./_slug_-DGWfwkOG.mjs')
   },
   {
     name: "submit-event",
@@ -483,12 +483,12 @@ const _routes = [
   {
     name: "category-slug",
     path: "/category/:slug()",
-    component: () => import('./_slug_-CdwX7Xjs.mjs')
+    component: () => import('./_slug_-DbEibEPL.mjs')
   },
   {
     name: "location-slug",
     path: "/location/:slug()",
-    component: () => import('./_slug_-Cn-UOXvZ.mjs')
+    component: () => import('./_slug_-LVYzjqoO.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {

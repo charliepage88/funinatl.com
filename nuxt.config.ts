@@ -14,6 +14,14 @@ export default defineNuxtConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (warning.code === 'SOURCEMAP_ERROR' || warning.message.includes('@tailwindcss/vite')) return
+          warn(warning)
+        },
+      },
+    },
   },
 
   runtimeConfig: {
