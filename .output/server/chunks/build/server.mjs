@@ -427,7 +427,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-C5o7grdf.mjs')
+    component: () => import('./index-DTaog1vn.mjs')
   },
   {
     name: "contact",
@@ -457,7 +457,7 @@ const _routes = [
   {
     name: "band-slug",
     path: "/band/:slug()",
-    component: () => import('./_slug_-27UJz4n_.mjs')
+    component: () => import('./_slug_-BtvP87UA.mjs')
   },
   {
     name: "event-slug",

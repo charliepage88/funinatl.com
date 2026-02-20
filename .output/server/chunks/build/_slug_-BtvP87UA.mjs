@@ -24,8 +24,6 @@ import 'pinia';
 import 'vue-router';
 import 'perfect-debounce';
 
-const DEFAULT_START = "2021-01-01";
-const DEFAULT_END = "2021-12-31";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "[slug]",
   __ssrInlineRender: true,
@@ -34,6 +32,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const route = useRoute();
     const slug = computed(() => route.params.slug);
     const { get } = useApi();
+    const fmt = (d) => d.toISOString().split("T")[0];
+    const today = /* @__PURE__ */ new Date();
+    const nextWeek = new Date(today);
+    const DEFAULT_START = fmt(today);
+    nextWeek.setDate(today.getDate() + 7);
+    const year = nextWeek.getFullYear();
+    const month = String(nextWeek.getMonth() + 1).padStart(2, "0");
+    const day = String(nextWeek.getDate()).padStart(2, "0");
+    const DEFAULT_END = `${year}-${month}-${day}`;
     const dateStart = ref(DEFAULT_START);
     const dateEnd = ref(DEFAULT_END);
     const { data, pending } = ([__temp, __restore] = withAsyncContext(() => useAsyncData(
@@ -59,9 +66,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       const _component_EventList = __nuxt_component_1;
       _push(`<div${ssrRenderAttrs(_attrs)}>`);
       if (unref(pending)) {
-        _push(`<div class="flex justify-center py-20"> @@@ <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-info"></div></div>`);
+        _push(`<div class="flex justify-center py-20"><div class="animate-spin rounded-full h-10 w-10 border-b-2 border-info"></div></div>`);
       } else if (unref(band)) {
-        _push(`<div> ### `);
+        _push(`<div>`);
         _push(ssrRenderComponent(_component_DateRangePicker, {
           start: unref(dateStart),
           end: unref(dateEnd),
@@ -93,4 +100,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=_slug_-27UJz4n_.mjs.map
+//# sourceMappingURL=_slug_-BtvP87UA.mjs.map

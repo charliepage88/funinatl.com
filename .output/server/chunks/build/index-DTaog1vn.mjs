@@ -102,8 +102,6 @@ _sfc_main$1.setup = (props, ctx) => {
   return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
 };
 const __nuxt_component_0 = Object.assign(_sfc_main$1, { __name: "SearchBar" });
-const DEFAULT_START = "2026-01-01";
-const DEFAULT_END = "2026-12-31";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "index",
   __ssrInlineRender: true,
@@ -111,6 +109,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     let __temp, __restore;
     useHead({ title: "FunInATL – Atlanta Events" });
     const { get } = useApi();
+    const fmt = (d) => d.toISOString().split("T")[0];
+    const today = /* @__PURE__ */ new Date();
+    const nextWeek = new Date(today);
+    const DEFAULT_START = fmt(today);
+    nextWeek.setDate(today.getDate() + 7);
+    const year = nextWeek.getFullYear();
+    const month = String(nextWeek.getMonth() + 1).padStart(2, "0");
+    const day = String(nextWeek.getDate()).padStart(2, "0");
+    const DEFAULT_END = `${year}-${month}-${day}`;
     const dateStart = ref(DEFAULT_START);
     const dateEnd = ref(DEFAULT_END);
     const activeFilters = ref({ category: "", location: "", is_family_friendly: false });
@@ -182,4 +189,4 @@ _sfc_main.setup = (props, ctx) => {
 };
 
 export { _sfc_main as default };
-//# sourceMappingURL=index-C5o7grdf.mjs.map
+//# sourceMappingURL=index-DTaog1vn.mjs.map

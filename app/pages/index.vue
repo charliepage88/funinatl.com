@@ -28,10 +28,25 @@ useHead({ title: 'FunInATL – Atlanta Events' })
 
 const { get } = useApi()
 
-const DEFAULT_START = '2026-01-01'
-const DEFAULT_END = '2026-12-31'
 // defaults set above
 const fmt = (d: Date) => d.toISOString().split('T')[0]
+
+const today = new Date();
+const nextWeek = new Date(today);
+
+const DEFAULT_START = fmt(today)
+// Add 7 days to the current date. The setDate() method automatically handles
+// month and year rollovers.
+nextWeek.setDate(today.getDate() + 7);
+
+// Get year, month, and day components
+const year = nextWeek.getFullYear();
+// Months are 0-indexed in JavaScript, so add 1.
+const month = String(nextWeek.getMonth() + 1).padStart(2, '0');
+const day = String(nextWeek.getDate()).padStart(2, '0');
+
+// Return the date string in YYYY-MM-DD format
+const DEFAULT_END = `${year}-${month}-${day}`;
 
 const dateStart = ref(DEFAULT_START)
 const dateEnd = ref(DEFAULT_END)
