@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between navbar-height">
         <!-- Brand: logo image + name, matching original -->
         <NuxtLink to="/" class="flex items-center gap-2 text-white no-underline shrink-0 relative" aria-label="Homepage">
-          <img :src="logoSrc" alt="FunInATL" class="hidden sm:block" style="max-height: 90px;" />
+          <img :src="logoSrc" alt="FunInATL" class="block" style="max-height: 90px;" />
           <span class="navbar-brand-name font-bold tracking-tight absolute" style="left: 30px; font-size: 2rem;">FunInATL</span>
         </NuxtLink>
 

@@ -427,7 +427,7 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-B6lF59Lc.mjs')
+    component: () => import('./index-C5o7grdf.mjs')
   },
   {
     name: "contact",
@@ -452,12 +452,12 @@ const _routes = [
   {
     name: "tag-slug",
     path: "/tag/:slug()",
-    component: () => import('./_slug_-CmUR4Kwd.mjs')
+    component: () => import('./_slug_-B8uNJ0pB.mjs')
   },
   {
     name: "band-slug",
     path: "/band/:slug()",
-    component: () => import('./_slug_-CZyyFOzC.mjs')
+    component: () => import('./_slug_-27UJz4n_.mjs')
   },
   {
     name: "event-slug",
@@ -483,12 +483,12 @@ const _routes = [
   {
     name: "category-slug",
     path: "/category/:slug()",
-    component: () => import('./_slug_-DbEibEPL.mjs')
+    component: () => import('./_slug_-e-zFjn32.mjs')
   },
   {
     name: "location-slug",
     path: "/location/:slug()",
-    component: () => import('./_slug_-LVYzjqoO.mjs')
+    component: () => import('./_slug_-Dh3Cltvz.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -896,7 +896,7 @@ const plugins = [
   components_plugin_4kY4pyzJIYX99vmMAAIorFf3CnAaptHitJgf7JxiED8
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-DY7buyMi.mjs').then((m) => m.default || m))
+  default: defineAsyncComponent(() => import('./default-eC0DDscM.mjs').then((m) => m.default || m))
 };
 const routeRulesMatcher = _routeRulesMatcher;
 const LayoutLoader = defineComponent({

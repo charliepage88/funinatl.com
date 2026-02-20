@@ -4,7 +4,7 @@
       <div class="flex flex-wrap gap-3 items-start">
 
         <!-- Search input with autocomplete -->
-        <div class="relative flex-1 min-w-64">
+        <div class="relative flex-1 min-w-32">
           <input
             ref="inputEl"
             v-model="query"

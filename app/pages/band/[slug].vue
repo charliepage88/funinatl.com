@@ -1,23 +1,27 @@
 <template>
-  <div v-if="band">
-    <DateRangePicker :start="dateStart" :end="dateEnd" @change="onDateChange" />
-
-    <div class="flex justify-center pt-6 pb-4 px-4">
-      <div class="flex flex-wrap items-center gap-6 justify-center">
-        <div v-if="band.photo" class="shrink-0">
-          <img :src="band.photo" :alt="band.name" class="w-32 h-32 object-cover rounded" />
-        </div>
-        <div class="text-center">
-          <h1 class="text-4xl font-semibold text-gray-800 capitalize">{{ band.name }}</h1>
-        </div>
-      </div>
+  <div>
+    <div v-if="pending" class="flex justify-center py-20">
+      @@@
+      <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-info" />
     </div>
+    <div v-else-if="band">
+      ###
+      <DateRangePicker :start="dateStart" :end="dateEnd" @change="onDateChange" />
 
-    <div class="container mx-auto px-4 lg:px-16 pt-0 pb-10">
-      <div v-if="pending" class="flex justify-center py-20">
-        <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-info" />
+      <div class="flex justify-center pt-6 pb-4 px-4">
+        <div class="flex flex-wrap items-center gap-6 justify-center">
+          <div v-if="band.photo" class="shrink-0">
+            <img :src="band.photo" :alt="band.name" class="w-32 h-32 object-cover rounded" />
+          </div>
+          <div class="text-center">
+            <h1 class="text-4xl font-semibold text-gray-800 capitalize">{{ band.name }}</h1>
+          </div>
+        </div>
       </div>
-      <EventList v-else :groups="data?.events || []" />
+
+      <div class="container mx-auto px-4 lg:px-16 pt-0 pb-10">
+        <EventList :groups="events || []" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,7 +45,13 @@ const { data, pending } = await useAsyncData(
   { watch: [dateStart, dateEnd] }
 )
 
+console.log(data.value)
+console.log(pending.value)
+
 const band = computed(() => data.value?.band)
+const events = computed(() => data.value?.events)
+
+console.log(band.value)
 
 useHead(() => ({
   title: band.value ? `Atlanta Events – ${band.value.name} | FunInATL` : 'Artist – FunInATL',

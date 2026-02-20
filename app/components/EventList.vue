@@ -6,7 +6,7 @@
 
     <template v-for="group in groups" :key="group.label">
       <!-- Period label (e.g. "This Week", "Next Week") -->
-      <h3 class="text-3xl font-semibold text-center text-gray-800 mt-10 mb-4">
+      <h3 class="text-3xl font-semibold text-center text-gray-800 mt-4 mb-4">
         {{ group.label }}
       </h3>
 
